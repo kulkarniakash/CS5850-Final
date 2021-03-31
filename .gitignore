@@ -1,0 +1,5 @@
+*.lib
+*.dll
+*.a
+project-solution/**
+.vs
