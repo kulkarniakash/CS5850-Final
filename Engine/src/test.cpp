@@ -40,15 +40,15 @@ int main(int argc, char* argv[])
 	}
 
 	// Create an OpenGL context (so we can use OpenGL functions)
-	SDL_GLContext context = SDL_GL_CreateContext(window);
+	// SDL_GLContext context = SDL_GL_CreateContext(window);
 
-	// if we failed to create a context
-	if (!context)
-	{
-		// we'll print out an error message and exit
-		std::cerr << "Error failed to create a context\n!";
-		return 2;
-	}
+	// // if we failed to create a context
+	// if (!context)
+	// {
+	// 	// we'll print out an error message and exit
+	// 	std::cerr << "Error failed to create a context\n!";
+	// 	return 2;
+	// }
 
 	if (TTF_Init() < 0) {
 		printf("SDL TTF error: could not initialize SDL_ttf\n");
@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
 	TTF_Quit();
 
 	// Destroy the context
-	SDL_GL_DeleteContext(context);
+	//SDL_GL_DeleteContext(context);
 
 	// Destroy the window
 	SDL_DestroyWindow(window);
