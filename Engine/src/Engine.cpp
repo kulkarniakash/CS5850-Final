@@ -1,11 +1,11 @@
 #include <Engine.hpp>
 
-const string fontPath = "assets/lazy.ttf";
-const string imagePath = "assets/BGSky.jpg";
-const string musicPath = "assets/bgmusic.wav";
+const std::string fontPath = "assets/lazy.ttf";
+const std::string imagePath = "assets/BGSky.jpg";
+const std::string musicPath = "assets/bgmusic.wav";
 
 TTF_Font *font = NULL;
-SDL_Color tcolor = NULL;
+SDL_Color tcolor;
 SDL_Window *window = NULL;
 SDL_Renderer *gRenderer = NULL;
 
@@ -21,7 +21,18 @@ Mix_Music *bgMusic = NULL;
 
 bool running = true; // used to determine if we're running the game
 
-void Engine::InitializeGraphicsSubSystem()
+SDL_Event event; // used to store any events from the OS
+
+Engine::Engine()
+{
+}
+
+// Proper shutdown and destroy initialized objects
+Engine::~Engine()
+{
+}
+
+int Engine::InitializeGraphicsSubSystem()
 {
     // Initialize SDL with video
     SDL_Init(SDL_INIT_VIDEO);
@@ -82,12 +93,12 @@ void Engine::InitializeGraphicsSubSystem()
         Mix_VolumeMusic(30);
         Mix_PlayMusic(bgMusic, -1);
     }
+
+    return 0;
 }
 
-void Engine::Input(bool running)
+void Engine::Input()
 {
-    SDL_Event event; // used to store any events from the OS
-
     while (SDL_PollEvent(&event))
     {
         // determine if the user still wants to have the window open

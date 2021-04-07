@@ -18,7 +18,7 @@ public:
     /**
    * Input engine
    */
-    void Input(bool running);
+    void Input();
     /**
    * Per frame update
    * @param dt The delta time between 2 consecutive frames
@@ -46,5 +46,5 @@ public:
    * Request to startup the Graphics Subsystem
    */
   //TODO: setup a graphics subsystem
-    void InitializeGraphicsSubSystem();
+    int InitializeGraphicsSubSystem();
 };
