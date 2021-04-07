@@ -18,7 +18,7 @@ public:
     /**
    * Input engine
    */
-    void Input(bool *quit);
+    void Input(bool running);
     /**
    * Per frame update
    * @param dt The delta time between 2 consecutive frames
