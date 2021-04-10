@@ -9,7 +9,7 @@
 #include <SDL_opengl.h>
 #endif*/
 
-int main()
+int main(int argc, char* argv[])
 {
 	std::cout << "Running platformer game " << std::endl;
 	// Create an instance of an object for our engine
