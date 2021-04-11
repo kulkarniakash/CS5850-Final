@@ -3,6 +3,10 @@
 
 #include <iostream>
 #include <SDL_Headers.hpp>
+#include <GameObject.hpp>
+#include <TransformComponent.hpp>
+#include <SpriteComponent.hpp>
+#include <ControllerComponent.hpp>
 
 /*#if defined(MINGW) || defined(LINUX)
 #include <SDL2/SDL.h>
@@ -93,6 +97,18 @@ int main(int argc, char* argv[])
 		Mix_PlayMusic(bgMusic, -1);
 	}
 
+
+	GameObject testGameObject = GameObject("testGameObject");
+	Vec2 testVec(10, 10);
+	Vec2 testVec2(1, 1);
+	TransformComponent testTransform(testVec, testVec2);
+	ControllerComponent testController;
+	SpriteComponent testSprite(&testGameObject, gRenderer, "./assets/blinky.png", 50, 50);
+	testGameObject.addTransformComponent(&testTransform);
+	testGameObject.addControllerComponent(&testController);
+	testGameObject.addSpriteComponent(&testSprite);
+	
+
 	SDL_Event event;	 // used to store any events from the OS
 	bool running = true; // used to determine if we're running the game
 
@@ -114,6 +130,9 @@ int main(int argc, char* argv[])
 
 		SDL_RenderCopy(gRenderer, img_texture, NULL, NULL);
 		SDL_RenderCopy(gRenderer, txt_texture, NULL, NULL);
+		
+		testGameObject.update();
+		testGameObject.render();
 		SDL_RenderPresent(gRenderer);
 
 		// Swap OpenGL buffers

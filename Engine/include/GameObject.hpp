@@ -3,33 +3,44 @@
 #include <stdio.h>
 #include <string>
 #include <TransformComponent.hpp>
-#include <SpriteComponent.hpp>
+//#include <SpriteComponent.hpp>
 #include <ControllerComponent.hpp>
-
+class SpriteComponent;
 
 class GameObject {
 public:
     
     //constructs a gameObject with no components
-    GameObject();
+    GameObject(std::string gameObjectName);
     
     //constructs a GameObject with components
-    GameObject(std::shared_ptr<TransformComponent> transformComponent, std::shared_ptr<ControllerComponent> controllerComponent, std::shared_ptr<SpriteComponent> spriteComponent);
+    //GameObject(TransformComponent transformComponent, ControllerComponent controllerComponent, SpriteComponent spriteComponent);
     
     ~GameObject();
+
+    void addTransformComponent(TransformComponent* transformComponent);
+
+    void addControllerComponent(ControllerComponent* controllerComponent);
+
+    void addSpriteComponent(SpriteComponent* spriteComponent);
     
     //gets the TransformComponent
-    std::shared_ptr<TransformComponent> getTransformComponent();
+    TransformComponent* getTransformComponent();
     
     //gets the ControllerComponent
-    std::shared_ptr<ControllerComponent> getControllerComponent();
+    ControllerComponent* getControllerComponent();
     
     //gets the SpriteComponent
-    std::shared_ptr<SpriteComponent> getSpriteComponent();
+    SpriteComponent* getSpriteComponent();
+
+    void render();
+
+    void update();
     
 private:
-    std::shared_ptr<TransformComponent> m_transformComponent;
-    std::shared_ptr<ControllerComponent> m_controllerComponent;
-    std::shared_ptr<SpriteComponent> m_spriteComponent;
+    std::string m_gameObjectName;
+    TransformComponent* m_transformComponent;
+    ControllerComponent* m_controllerComponent;
+    SpriteComponent* m_spriteComponent;
 };
 #endif 

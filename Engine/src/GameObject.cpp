@@ -1,23 +1,41 @@
 #include <GameObject.hpp>
+#include <SpriteComponent.hpp>
 
-GameObject::GameObject() {
-    
-}
-
-GameObject::GameObject(std::shared_ptr<TransformComponent> transformComponent, std::shared_ptr<ControllerComponent> controllerComponent, std::shared_ptr<SpriteComponent> spriteComponent): m_transformComponent(transformComponent), m_spriteComponent(spriteComponent), m_controllerComponent(controllerComponent) {
-    
+GameObject::GameObject(std::string gameObjectName) {
+    m_gameObjectName = gameObjectName;
 }
 
 GameObject::~GameObject() {
     
 }
 
-std::shared_ptr<TransformComponent> GameObject::getTransformComponent() {
+TransformComponent* GameObject::getTransformComponent() {
     return m_transformComponent;
 }
-std::shared_ptr<SpriteComponent> GameObject::getSpriteComponent() {
+SpriteComponent* GameObject::getSpriteComponent() {
     return m_spriteComponent;
 }
-std::shared_ptr<ControllerComponent> GameObject::getControllerComponent() {
+ControllerComponent* GameObject::getControllerComponent() {
     return m_controllerComponent;
+}
+
+void GameObject::addTransformComponent(TransformComponent* transformComponent) {
+    m_transformComponent = transformComponent;
+}
+
+void GameObject::addControllerComponent(ControllerComponent* controllerComponent) {
+    m_controllerComponent = controllerComponent;
+}
+
+void GameObject::addSpriteComponent(SpriteComponent* spriteComponent) {
+    m_spriteComponent = spriteComponent;
+}
+
+void GameObject::render() {
+   m_spriteComponent->render();
+}
+
+void GameObject::update() {
+    m_transformComponent->update();
+    m_spriteComponent->update(0,0,6);
 }

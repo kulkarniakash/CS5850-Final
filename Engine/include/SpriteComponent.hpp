@@ -5,11 +5,12 @@
 #include <SDL_Headers.hpp>
 #include <Vec2.hpp>
 #include <TransformComponent.hpp>
+#include <GameObject.hpp>
 
 class SpriteComponent { 
 public:
     //constructor for SpriteComponent
-    SpriteComponent(std::shared_ptr<TransformComponent> transformComponent, std::shared_ptr<SDL_Texture> texture, std::shared_ptr<SDL_Renderer> * ren, std::string filePath);
+    SpriteComponent(GameObject* gameObject, SDL_Renderer* ren, std::string filePath, int width, int height);
     
     //destructor fpr SpriteComponent
     ~SpriteComponent();
@@ -23,18 +24,16 @@ public:
     //Updates our sprite
     void update(int x, int y, int frame);
     
-    //loads the image of our sprite
-    void loadImage(std::string filePath, SDL_Renderer * ren);
-    
-    
 
 private:
     int m_frame = 0;
-    
-    std::string m_filePath;
-    std::string m_animationName;
+    int m_width;
+    int m_height;
 
-    std::shared_ptr<TransformComponent> m_transformComponent;
+    GameObject* m_gameObject;
+    
+    // std::string m_filePath;
+    std::string m_animationName;
     
     SDL_Surface * m_spriteSheet;
     SDL_Texture * m_texture;
