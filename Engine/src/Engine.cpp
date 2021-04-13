@@ -156,52 +156,15 @@ void Engine::Shutdown()
     SDL_Quit();
 }
 
+void test() {
+	printf("Just testing\n");
+}
+
 // Include the pybindings
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;
 
-
-/**
-   * Constructor of Engine
-   */
-Engine();
-/**
-* Destructor
-*/
-~Engine();
-/**
-* Input engine
-*/
-void Input();
-/**
-* Per frame update
-* @param dt The delta time between 2 consecutive frames
-*/
-void Update(float dt);
-/**
-* Per frame render. Renders everything
-*/
-void Render();
-/**
-* Main Game Loop that runs forever
-*/
-void MainGameLoop();
-/**
-* Initialization and shutdown pattern
-* Explicitly call 'Start' to launch the engine
-*/
-void Start();
-/**
-* Initialization and shutdown pattern
-* Explicitly call 'Shutdown' to terminate the engine
-*/
-void Shutdown();
-/**
-* Request to startup the Graphics Subsystem
-*/
-//TODO: setup a graphics subsystem
-int InitializeGraphicsSubSystem();
 
 // NOTE: the following code has not been tested!! It most likely won't work 
 // but just serves as a template
@@ -214,16 +177,15 @@ int InitializeGraphicsSubSystem();
 //  The magic here is in 'template metaprogramming'
 PYBIND11_MODULE(Engine, m) {
 	m.doc() = "our game engine as a library"; // Optional docstring
-
-	py::class_<Engine>(m, "Engine")
+	m.def("test", &test);
+	/*py::class_<Engine>(m, "Engine")
 		.def(py::init<>())   // our constructor
 		.def("input", &Engine::Input) // Expose member methods
-		.def("update", &Engine::Update)
 		.def("render", &Engine::Render)
 		.def("main_game_loop", &Engine::MainGameLoop)
 		.def("start", &Engine::Start)
 		.def("shutdown", &Engine::Shutdown)
-		.def("initialize_graphics_subsystem", &Engine::InitializeGraphicsSubSystem);
+		.def("initialize_graphics_subsystem", &Engine::InitializeGraphicsSubSystem);*/
 	// We do not need to expose everything to our users!
 	//            .def("getSDLWindow", &SDLGraphicsProgram::getSDLWindow, py::return_value_policy::reference) 
 }
