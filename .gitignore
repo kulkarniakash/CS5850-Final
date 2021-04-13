@@ -7,3 +7,4 @@ project-solution/**
 *.exe
 *.la
 Engine/include/SDL2/**
+.vscode
