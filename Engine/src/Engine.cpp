@@ -8,8 +8,6 @@ const std::string musicPath = "assets/bgmusic.wav";
 
 TTF_Font *font = NULL;
 SDL_Color tcolor;
-SDL_Window *window = NULL;
-SDL_Renderer *gRenderer = NULL;
 
 SDL_Surface *txt_surf = NULL;
 SDL_Texture *txt_texture = NULL;
@@ -20,6 +18,9 @@ SDL_RWops *rwop;
 SDL_Texture *img_texture = NULL;
 
 Mix_Music *bgMusic = NULL;
+
+int SCREEN_WIDTH = 640;
+int SCREEN_HEIGHT = 480;
 
 bool running = true; // used to determine if we're running the game
 
@@ -34,27 +35,12 @@ Engine::~Engine()
 {
 }
 
-int Engine::InitializeGraphicsSubSystem()
+void Engine::InitializeGraphicsSubSystem()
 {
-    // Initialize SDL with video
-    SDL_Init(SDL_INIT_VIDEO);
+    this->renderer = new GraphicsEngineRenderer(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    // Create an SDL window
-    window = SDL_CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_OPENGL);
-    gRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-    // if failed to create a window
-    if (!window)
-    {
-        // we'll print an error message and exit
-        std::cerr << "Error failed to create window!\n";
-        return 1;
-    }
-
-    if (TTF_Init() < 0)
-    {
-        printf("SDL TTF error: could not initialize SDL_ttf\n");
-        return -1;
+    if (nullptr == renderer) {
+        exit(1);
     }
 
     font = TTF_OpenFont(fontPath.c_str(), 28);
@@ -62,7 +48,6 @@ int Engine::InitializeGraphicsSubSystem()
     if (!font)
     {
         printf("SDL TTF error: could not load font\n");
-        return -1;
     }
 
     tcolor = SDL_Color();
@@ -70,7 +55,7 @@ int Engine::InitializeGraphicsSubSystem()
     tcolor.g = 150;
     tcolor.b = 60;
     txt_surf = TTF_RenderText_Solid(font, "This is a Test!", tcolor);
-    txt_texture = SDL_CreateTextureFromSurface(gRenderer, txt_surf);
+    txt_texture = SDL_CreateTextureFromSurface(renderer->GetRenderer(), txt_surf);
 
     rwop = SDL_RWFromFile(imagePath.c_str(), "rb");
     image = IMG_LoadJPG_RW(rwop);
@@ -79,7 +64,7 @@ int Engine::InitializeGraphicsSubSystem()
         printf("SDL Image Error: could not load image\n");
     }
 
-    img_texture = SDL_CreateTextureFromSurface(gRenderer, image);
+    img_texture = SDL_CreateTextureFromSurface(renderer->GetRenderer(), image);
 
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
     {
@@ -95,8 +80,6 @@ int Engine::InitializeGraphicsSubSystem()
         Mix_VolumeMusic(30);
         Mix_PlayMusic(bgMusic, -1);
     }
-
-    return 0;
 }
 
 void Engine::Input()
@@ -111,13 +94,19 @@ void Engine::Input()
 
 void Engine::Render()
 {
-    // glClear(GL_COLOR_BUFFER_BIT);
-    SDL_SetRenderDrawColor(gRenderer, 0x0, 0x0, 0x0, 0xFF);
-    SDL_RenderClear(gRenderer);
+    // // glClear(GL_COLOR_BUFFER_BIT);
+    // SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
+    // SDL_RenderClear(renderer);
 
-    SDL_RenderCopy(gRenderer, img_texture, NULL, NULL);
-    SDL_RenderCopy(gRenderer, txt_texture, NULL, NULL);
-    SDL_RenderPresent(gRenderer);
+    // SDL_RenderCopy(renderer, img_texture, NULL, NULL);
+    // SDL_RenderCopy(renderer, txt_texture, NULL, NULL);
+    // SDL_RenderPresent(renderer);
+
+    renderer->SetRenderDrawColor(0x0, 0x0, 0x0, 0xFF);
+    renderer->RenderClear();
+    SDL_RenderCopy(renderer->GetRenderer(), img_texture, NULL, NULL);
+    SDL_RenderCopy(renderer->GetRenderer(), txt_texture, NULL, NULL);
+    renderer->RenderPresent();
 }
 
 void Engine::MainGameLoop()
@@ -132,7 +121,7 @@ void Engine::MainGameLoop()
 
 void Engine::Start()
 {
-    if (gRenderer != nullptr)
+    if (renderer != nullptr)
     {
         std::cout << "Initializing Graphics Subsystem\n";
     }
@@ -144,24 +133,13 @@ void Engine::Start()
 
 void Engine::Shutdown()
 {
-    TTF_CloseFont(font);
-    TTF_Quit();
-
-    // Destroy the context
-    //SDL_GL_DeleteContext(context);
-
-    // Destroy the window
-    SDL_DestroyWindow(window);
-
-    // And quit SDL
-    SDL_Quit();
+    delete renderer;
 }
 
 // // Include the pybindings
 // #include <pybind11/pybind11.h>
 
 // namespace py = pybind11;
-
 
 // /**
 //    * Constructor of Engine
@@ -204,7 +182,7 @@ void Engine::Shutdown()
 // //TODO: setup a graphics subsystem
 // int InitializeGraphicsSubSystem();
 
-// // NOTE: the following code has not been tested!! It most likely won't work 
+// // NOTE: the following code has not been tested!! It most likely won't work
 // // but just serves as a template
 
 // // Creates a macro function that will be called
@@ -222,5 +200,5 @@ void Engine::Shutdown()
 // 		.def("shutdown", &Engine::Shutdown)
 // 		.def("initialize_graphics_subsystem", &Engine::InitializeGraphicsSubSystem);
 // 	// We do not need to expose everything to our users!
-// 	//            .def("getSDLWindow", &SDLGraphicsProgram::getSDLWindow, py::return_value_policy::reference) 
+// 	//            .def("getSDLWindow", &SDLGraphicsProgram::getSDLWindow, py::return_value_policy::reference)
 // }

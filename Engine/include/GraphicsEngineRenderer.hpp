@@ -47,4 +47,4 @@ class GraphicsEngineRenderer {
     SDL_Window* m_window;
     // SDL Renderer
     SDL_Renderer* m_renderer = nullptr;
-}
+};
