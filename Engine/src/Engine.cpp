@@ -156,9 +156,7 @@ void Engine::Shutdown()
     SDL_Quit();
 }
 
-void test() {
-	printf("Just testing\n");
-}
+
 
 // Include the pybindings
 #include <pybind11/pybind11.h>
@@ -177,15 +175,15 @@ namespace py = pybind11;
 //  The magic here is in 'template metaprogramming'
 PYBIND11_MODULE(Engine, m) {
 	m.doc() = "our game engine as a library"; // Optional docstring
-	m.def("test", &test);
-	/*py::class_<Engine>(m, "Engine")
+	py::class_<Engine>(m, "Engine")
 		.def(py::init<>())   // our constructor
 		.def("input", &Engine::Input) // Expose member methods
 		.def("render", &Engine::Render)
 		.def("main_game_loop", &Engine::MainGameLoop)
 		.def("start", &Engine::Start)
 		.def("shutdown", &Engine::Shutdown)
-		.def("initialize_graphics_subsystem", &Engine::InitializeGraphicsSubSystem);*/
+		.def("initialize_graphics_subsystem", &Engine::InitializeGraphicsSubSystem);
 	// We do not need to expose everything to our users!
 	//            .def("getSDLWindow", &SDLGraphicsProgram::getSDLWindow, py::return_value_policy::reference) 
 }
+
