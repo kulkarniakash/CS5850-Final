@@ -1,4 +1,9 @@
 #include <iostream>
+#include <SDL_Headers.hpp>
+#include <GameObject.hpp>
+#include <TransformComponent.hpp>
+#include <SpriteComponent.hpp>
+#include <ControllerComponent.hpp>
 #include <Engine.hpp>
 
 /*#if defined(MINGW) || defined(LINUX)
