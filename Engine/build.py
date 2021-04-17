@@ -18,7 +18,7 @@ LIBRARIES=""            # What libraries do we want to include
 if platform.system()=="Linux":
     LINK_DIR = ''
     ARGUMENTS="-D LINUX" # -D is a #define sent to preprocessor
-    INCLUDE_DIR="-I ./include/ -I ./../common/thirdparty/glm/ -I/usr/include/SDL2"
+    INCLUDE_DIR="-I ./include/ -I ./../common/thirdparty/glm/ -I/usr/include/SDL2 -I./pybind11/include/ `python3.8 -m pybind11 --includes`"
     LIBRARIES="-lSDL2 -ldl -lSDL2_ttf -lSDL2_mixer -lSDL2_image"
 elif platform.system()=="Darwin":
     LINK_DIR = ''

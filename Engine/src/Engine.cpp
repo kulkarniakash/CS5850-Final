@@ -1,4 +1,5 @@
 // pybind taken from Akash's and Kimin's lab
+//Engine class taken from Sumanth's assignment-2, written by Shreyas Shivashankar
 #include <Engine.hpp>
 #include "ResourceManager.hpp"
 
@@ -203,3 +204,70 @@ PYBIND11_MODULE(Engine, m) {
 	//            .def("getSDLWindow", &SDLGraphicsProgram::getSDLWindow, py::return_value_policy::reference) 
 }
 
+// // Include the pybindings
+// #include <pybind11/pybind11.h>
+
+// namespace py = pybind11;
+
+
+// /**
+//    * Constructor of Engine
+//    */
+// Engine();
+// /**
+// * Destructor
+// */
+// ~Engine();
+// /**
+// * Input engine
+// */
+// void Input();
+// /**
+// * Per frame update
+// * @param dt The delta time between 2 consecutive frames
+// */
+// void Update(float dt);
+// /**
+// * Per frame render. Renders everything
+// */
+// void Render();
+// /**
+// * Main Game Loop that runs forever
+// */
+// void MainGameLoop();
+// /**
+// * Initialization and shutdown pattern
+// * Explicitly call 'Start' to launch the engine
+// */
+// void Start();
+// /**
+// * Initialization and shutdown pattern
+// * Explicitly call 'Shutdown' to terminate the engine
+// */
+// void Shutdown();
+// /**
+// * Request to startup the Graphics Subsystem
+// */
+// //TODO: setup a graphics subsystem
+// int InitializeGraphicsSubSystem();
+
+// // NOTE: the following code has not been tested!! It most likely won't work 
+// // but just serves as a template
+
+// // Creates a macro function that will be called
+// // whenever the module is importe`python3.8 -m pybind11 --includes`e metaprogramming'
+// PYBIND11_MODULE(Engine, m) {
+// 	m.doc() = "our game engine as a library"; // Optional docstring
+
+// 	py::class_<Engine>(m, "Engine")
+// 		.def(py::init<>())   // our constructor
+// 		.def("input", &Engine::Input) // Expose member methods
+// 		.def("update", &Engine::Update)
+// 		.def("render", &Engine::Render)
+// 		.def("main_game_loop", &Engine::MainGameLoop)
+// 		.def("start", &Engine::Start)
+// 		.def("shutdown", &Engine::Shutdown)
+// 		.def("initialize_graphics_subsystem", &Engine::InitializeGraphicsSubSystem);
+// 	// We do not need to expose everything to our users!
+// 	//            .def("getSDLWindow", &SDLGraphicsProgram::getSDLWindow, py::return_value_policy::reference) 
+// }
