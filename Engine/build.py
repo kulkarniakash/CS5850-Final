@@ -27,7 +27,7 @@ elif platform.system()=="Darwin":
     LIBRARIES="-F/Library/Frameworks -framework SDL2 -F/Library/Frameworks -framework SDL2_mixer -F/Library/Frameworks -framework SDL2_ttf -F/Library/Frameworks -framework SDL2_image"
 elif platform.system()=="Windows":
     COMPILER="g++ -std=c++17" # Note we use g++ here as it is more likely what you have
-    ARGUMENTS="-D MINGW -std=c++17 -static-libgcc -static-libstdc++" 
+    ARGUMENTS="-g -D MINGW -std=c++17 -static-libgcc -static-libstdc++" 
     INCLUDE_DIR="-I./include/ -I./../common/thirdparty/old/glm/"
     LINK_DIR = "-L./lib/"
     EXECUTABLE="engine"
