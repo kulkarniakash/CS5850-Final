@@ -23,12 +23,14 @@ Engine::~Engine()
 
 int Engine::InitializeGraphicsSubSystem()
 {
+	quit = false;
     // Initialize SDL with video
     SDL_Init(SDL_INIT_VIDEO);
 	SDL_Renderer* gRenderer = NULL;
 
 	if (ResourceManager::getInstance().addWindow("window", "The Team", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL)) {
 		printf("Error: Could not load window\n");
+		quit = true;
 		return -1;
 	}
 
@@ -50,6 +52,7 @@ int Engine::InitializeGraphicsSubSystem()
     if (TTF_Init() < 0)
     {
         printf("SDL TTF error: could not initialize SDL_ttf\n");
+		quit = true;
         return -1;
     }
 
@@ -99,13 +102,29 @@ void Engine::Input()
     {
         // determine if the user still wants to have the window open
         // (this basically checks if the user has pressed 'X')
-        running = event.type != SDL_QUIT;
+        quit = event.type == SDL_QUIT;
+
+		const Uint8* keystate = SDL_GetKeyboardState(NULL);
+
+		if (keystate[SDL_SCANCODE_Q]) {
+			quit = true;
+		}
     }
+}
+
+bool Engine::programEnded() {
+	return quit;
+}
+
+void Engine::clear() {
+	SDL_Renderer* gRenderer = ResourceManager::getInstance().getResourceSDLRenderer("gRenderer");
+	SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 0xFF);
+	SDL_RenderClear(gRenderer);
 }
 
 void Engine::Render()
 {
-	SDL_Texture* bgimage = ResourceManager::getInstance().getResourceSDLTexture(imagePath.c_str());
+	/*SDL_Texture* bgimage = ResourceManager::getInstance().getResourceSDLTexture(imagePath.c_str());
 	TTF_Font* font = ResourceManager::getInstance().getResourceFont(fontPath);
 	SDL_Renderer* gRenderer = ResourceManager::getInstance().getResourceSDLRenderer("gRenderer");
 	SDL_Color tcolor = SDL_Color();
@@ -123,7 +142,19 @@ void Engine::Render()
     SDL_RenderPresent(gRenderer);
 
 	SDL_DestroyTexture(txt_texture);
-	SDL_FreeSurface(txt_surf);
+	SDL_FreeSurface(txt_surf);*/
+	clear();
+	for (auto itr : gameObjs) {
+		itr->render();
+	}
+}
+
+void Engine::delay(int seconds) {
+	SDL_Delay(seconds);
+}
+
+void Engine::addGameObject(GameObject* obj) {
+	gameObjs.insert(obj);
 }
 
 void Engine::MainGameLoop()

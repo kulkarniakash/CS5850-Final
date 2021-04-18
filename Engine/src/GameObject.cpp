@@ -32,10 +32,11 @@ void GameObject::addSpriteComponent(SpriteComponent* spriteComponent) {
 }
 
 void GameObject::render() {
+   m_spriteComponent->updatePosition(m_transformComponent->getPosition());
    m_spriteComponent->render();
 }
 
 void GameObject::update() {
     m_transformComponent->update();
-    m_spriteComponent->update(Vec2(0, 0) ,6);
+    
 }

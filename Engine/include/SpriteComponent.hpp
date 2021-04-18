@@ -8,10 +8,12 @@
 #include <GameObject.hpp>
 #include "ResourceManager.hpp"
 
+
+
 class SpriteComponent { 
 public:
     //constructor for SpriteComponent
-    SpriteComponent(std::string filePath, Vec2 pos, float width, float height);
+    SpriteComponent(std::string filePath, SDL_Rect dest, SDL_Rect src);
     
     //destructor fpr SpriteComponent
     ~SpriteComponent();
@@ -23,13 +25,13 @@ public:
     void render();
     
     //Updates our sprite
-    void update(Vec2 pos, int frame);
+    void updateFrame(int frame);
+
+	void updatePosition(Vec2 pos);
     
 
 private:
     int m_frame = 0;
-    float m_width;
-    float m_height;
 
 	SDL_Rect m_src;
 	SDL_Rect m_dest;

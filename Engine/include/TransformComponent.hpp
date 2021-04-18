@@ -11,20 +11,17 @@ public:
     //destructs component
     ~TransformComponent();
     
-    //updates position();
     void update();
     
-    //get our x position
-    float getXPosition();
-    
-    //get our y position
-    float getYPosition();
+	Vec2 getPosition();
     
     //sets the position of the object
     void setPosition(const Vec2 & position);
     
     //sets the velocity of the object
     void setVelocity(const Vec2 & velocity);
+
+	Vec2 getVelocity();
     
 private:
     Vec2 m_position;

@@ -11,24 +11,21 @@ TransformComponent::~TransformComponent() {
 }
 
 void TransformComponent::update() {
-    m_position.x += m_velocity.x;
-    m_position.y += m_velocity.y;
+	m_position += m_velocity;
 }
 
 void TransformComponent::setPosition(const Vec2 & position) {
-    m_position.x = position.x;
-    m_position.y = position.y;
+	m_position = position;
 }
 
 void TransformComponent::setVelocity(const Vec2 & velocity) {
-    m_velocity.x = velocity.x;
-    m_velocity.y = velocity.y;
+	m_velocity = velocity;
 }
 
-float TransformComponent::getXPosition() {
-    return m_position.x;
-}
-float TransformComponent::getYPosition() {
-    return m_position.y;
+Vec2 TransformComponent::getPosition() {
+	return m_position;
 }
 
+Vec2 TransformComponent::getVelocity() {
+	return m_velocity;
+}

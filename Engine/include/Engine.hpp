@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string>
 #include <SDL_Headers.hpp>
+#include <unordered_set>
+#include <GameObject.hpp>
 
 //Engine class was taken from Sumanth's assignment-2 repo. Written by Shreyas Shivashankar.
 class Engine
@@ -50,6 +52,19 @@ public:
    */
   //TODO: setup a graphics subsystem
     int InitializeGraphicsSubSystem();
+
+	bool programEnded();
+
+	void clear();
+
+	void delay(int seconds);
+
+	void addGameObject(GameObject* obj);
+
+private:
+
+	bool quit;
+	std::unordered_set<GameObject*> gameObjs;
 };
 
 
