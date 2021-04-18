@@ -6,11 +6,12 @@
 #include <Vec2.hpp>
 #include <TransformComponent.hpp>
 #include <GameObject.hpp>
+#include "ResourceManager.hpp"
 
 class SpriteComponent { 
 public:
     //constructor for SpriteComponent
-    SpriteComponent(GameObject* gameObject, SDL_Renderer* ren, std::string filePath, int width, int height);
+    SpriteComponent(std::string filePath, Vec2 pos, float width, float height);
     
     //destructor fpr SpriteComponent
     ~SpriteComponent();
@@ -22,23 +23,21 @@ public:
     void render();
     
     //Updates our sprite
-    void update(int x, int y, int frame);
+    void update(Vec2 pos, int frame);
     
 
 private:
     int m_frame = 0;
-    int m_width;
-    int m_height;
+    float m_width;
+    float m_height;
 
-    GameObject* m_gameObject;
-    
+	SDL_Rect m_src;
+	SDL_Rect m_dest;
+
     // std::string m_filePath;
     std::string m_animationName;
     
-    SDL_Surface * m_spriteSheet;
     SDL_Texture * m_texture;
-    SDL_Rect m_src;
-    SDL_Rect m_dest;
     SDL_Renderer * m_renderer;
 };
 #endif

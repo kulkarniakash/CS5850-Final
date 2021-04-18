@@ -1,3 +1,5 @@
+#ifndef ENGINE
+#define ENGINE
 #include <iostream>
 #include <stdlib.h>
 #include <string>
@@ -49,3 +51,6 @@ public:
   //TODO: setup a graphics subsystem
     int InitializeGraphicsSubSystem();
 };
+
+
+#endif

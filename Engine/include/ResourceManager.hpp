@@ -1,4 +1,5 @@
 // NOTE: Most of the following code was written by Zejun Li from Akash's previous team (wecook)
+
 #ifndef RESOURCE_MANAGER
 #define RESOURCE_MANAGER
 

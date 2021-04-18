@@ -37,5 +37,5 @@ void GameObject::render() {
 
 void GameObject::update() {
     m_transformComponent->update();
-    m_spriteComponent->update(0,0,6);
+    m_spriteComponent->update(Vec2(0, 0) ,6);
 }

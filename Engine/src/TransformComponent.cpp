@@ -31,3 +31,4 @@ float TransformComponent::getXPosition() {
 float TransformComponent::getYPosition() {
     return m_position.y;
 }
+
