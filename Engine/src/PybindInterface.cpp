@@ -46,7 +46,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def("update", &TransformComponent::update);
 
 	py::class_<SpriteComponent>(m, "SpriteComponent")
-		.def(py::init<std::string, Vec2, float, float>())   // our constructor
+		.def(py::init<std::string, Vec2, float, float>())
 		.def("perform_animation", &SpriteComponent::performAnimation) // Expose member methods
 		.def("render", &SpriteComponent::render)
 		.def("update", &SpriteComponent::update);
@@ -64,6 +64,7 @@ PYBIND11_MODULE(Engine, m) {
 			[](const Vec2& vec) {
 				return "{x = " + std::to_string(vec.x) + ", y = " + std::to_string(vec.y) + "}";
 			});
+
 	// We do not need to expose everything to our users!
 	//            .def("getSDLWindow", &SDLGraphicsProgram::getSDLWindow, py::return_value_policy::reference) 
 }

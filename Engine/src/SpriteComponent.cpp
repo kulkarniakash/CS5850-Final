@@ -6,9 +6,9 @@ SpriteComponent::SpriteComponent(std::string filePath, Vec2 pos, float width, fl
     m_height = height;
 	m_renderer = ResourceManager::getInstance().getResourceSDLRenderer("gRenderer");
 	if (!m_renderer) {
-		printf("Error: failed to load renderer\n");
+		std::cout<<"Error: failed to load renderer\n";
 	}
-	printf("entered\n");
+	std::cout<<"entered\n";
 
 	m_dest = SDL_Rect();
 
@@ -22,6 +22,7 @@ SpriteComponent::SpriteComponent(std::string filePath, Vec2 pos, float width, fl
 	}
 	else {
 		ResourceManager::getInstance().addJPG(filePath, "gRenderer");
+		m_texture = ResourceManager::getInstance().getResourceSDLTexture(filePath);
 	}
 
 

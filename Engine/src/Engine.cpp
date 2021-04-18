@@ -90,8 +90,6 @@ int Engine::InitializeGraphicsSubSystem()
 		return -1;
 	}
 
-	std::cout << "Engine exit\n";
-
     return 0;
 }
 
