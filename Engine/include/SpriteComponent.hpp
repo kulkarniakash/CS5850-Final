@@ -29,8 +29,12 @@ public:
 
 protected:
     bool m_flipped;
-    int m_frame;
+    int m_frame=0;
     SDL_Rect m_src;
+    std::map<std::string, std::pair<int, int>> m_animations;
+    std::pair<int, int> m_frameRange;
+    int m_animationSpeed;
+    std::string m_currentAction;
 	SDL_Rect m_dest;
     
     SDL_Texture * m_texture;
