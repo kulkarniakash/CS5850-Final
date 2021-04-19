@@ -8,51 +8,53 @@
 #include <unordered_map>
 #include <GameObject.hpp>
 #include <string>
+#include <GraphicsEngineRenderer.hpp>
+
 
 //Engine class was taken from Sumanth's assignment-2 repo. Written by Shreyas Shivashankar.
 class Engine
 {
 
 public:
-    /**
+  /**
    * Constructor of Engine
    */
-    Engine();
-    /**
+  Engine();
+  /**
    * Destructor
    */
-    ~Engine();
-    /**
+  ~Engine();
+  /**
    * Input engine
    */
-    void Input();
-    /**
+  void Input();
+  /**
    * Per frame update
    * @param dt The delta time between 2 consecutive frames
    */
-    void Update(float dt);
-    /**
+  void Update(float dt);
+  /**
    * Per frame render. Renders everything
    */
-    void Render();
-    /**
+  void Render();
+  /**
    * Main Game Loop that runs forever
    */
-    void MainGameLoop();
-    /**
+  void MainGameLoop();
+  /**
    * Initialization and shutdown pattern
    * Explicitly call 'Start' to launch the engine
    */
-    void Start();
-    /**
+  void Start();
+  /**
    * Initialization and shutdown pattern
    * Explicitly call 'Shutdown' to terminate the engine
    */
-    void Shutdown();
-    /**
+  void Shutdown();
+  /**
    * Request to startup the Graphics Subsystem
    */
-  //TODO: setup a graphics subsystem
+
     int InitializeGraphicsSubSystem();
 
 	bool programEnded();
@@ -67,7 +69,7 @@ private:
 
 	bool quit;
 	std::unordered_set<GameObject*> gameObjs;
+	// GraphicsEngineRenderer* renderer = nullptr;
 };
-
-
 #endif
+

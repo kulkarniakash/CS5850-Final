@@ -3,10 +3,27 @@
 #include <Engine.hpp>
 #include <iostream>
 #include "ResourceManager.hpp"
+#include "GlobalAttributes.hpp"
 
 const std::string fontPath = "assets/lazy.ttf";
 const std::string imagePath = "assets/BGSky.jpg";
 const std::string musicPath = "assets/bgmusic.wav";
+
+	/*TTF_Font *font = NULL;
+	SDL_Color tcolor;
+
+	SDL_Surface *txt_surf = NULL;
+	SDL_Texture *txt_texture = NULL;
+
+	SDL_Surface *image;
+	SDL_RWops *rwop;
+
+	SDL_Texture *img_texture = NULL;
+
+	Mix_Music *bgMusic = NULL;*/
+
+extern int SCREEN_WIDTH;
+extern int SCREEN_HEIGHT;
 
 bool running = true; // used to determine if we're running the game
 
@@ -23,6 +40,18 @@ Engine::~Engine()
 
 int Engine::InitializeGraphicsSubSystem()
 {
+	TTF_Font *font = NULL;
+	SDL_Color tcolor;
+
+	SDL_Surface *txt_surf = NULL;
+	SDL_Texture *txt_texture = NULL;
+
+	SDL_Surface *image;
+	SDL_RWops *rwop;
+
+	SDL_Texture *img_texture = NULL;
+
+	Mix_Music *bgMusic = NULL;
 	quit = false;
     // Initialize SDL with video
     SDL_Init(SDL_INIT_VIDEO);
@@ -39,32 +68,19 @@ int Engine::InitializeGraphicsSubSystem()
 	SDL_Window* window = ResourceManager::getInstance().getResourceSDLWindow("window");
     gRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-	
-
-    // if failed to create a window
-    /*if (!window)
-    {
-        // we'll print an error message and exit
-        std::cerr << "Error failed to create window!\n";
-        return 1;
-    }*/
-
-    if (TTF_Init() < 0)
-    {
-        printf("SDL TTF error: could not initialize SDL_ttf\n");
+	if (TTF_Init() < 0)
+	{
+		printf("SDL TTF error: could not initialize SDL_ttf\n");
 		quit = true;
-        return -1;
-    }
+		return -1;
+	}
 
-   /* font = TTF_OpenFont(fontPath.c_str(), 28);
+    // this->renderer = new GraphicsEngineRenderer(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    if (!font)
-    {
-        printf("SDL TTF error: could not load font\n");
-        return -1;
+    /*if (nullptr == renderer) {
+        exit(1);
+
     }*/
-
-   
 
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
     {
@@ -147,6 +163,12 @@ void Engine::Render()
 	for (auto itr : gameObjs) {
 		itr->render();
 	}
+
+	/*renderer->SetRenderDrawColor(0x0, 0x0, 0x0, 0xFF);
+	renderer->RenderClear();
+	SDL_RenderCopy(renderer->GetRenderer(), img_texture, NULL, NULL);
+	SDL_RenderCopy(renderer->GetRenderer(), txt_texture, NULL, NULL);
+	renderer->RenderPresent();*/
 }
 
 void Engine::delay(int seconds) {
@@ -155,6 +177,13 @@ void Engine::delay(int seconds) {
 
 void Engine::addGameObject(GameObject* obj) {
 	gameObjs.insert(obj);
+    // // glClear(GL_COLOR_BUFFER_BIT);
+    // SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
+    // SDL_RenderClear(renderer);
+
+    // SDL_RenderCopy(renderer, img_texture, NULL, NULL);
+    // SDL_RenderCopy(renderer, txt_texture, NULL, NULL);
+    // SDL_RenderPresent(renderer);
 }
 
 void Engine::MainGameLoop()
@@ -202,5 +231,6 @@ void Engine::Shutdown()
     // And quit SDL
     SDL_Quit();
 }
+
 
 

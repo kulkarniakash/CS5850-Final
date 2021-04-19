@@ -19,10 +19,10 @@ SOURCE="./src/*.cpp"
 ARGUMENTS="-D LINUX -std=c++14 -shared -fPIC"
 
 # Which directories do we want to include.
-INCLUDE_DIR="-I ./include/ -I./pybind11/include/ `python3.5 -m pybind11 --includes`"
+INCLUDE_DIR="-I ./include/ -I./pybind11/include/ `python3.8 -m pybind11 --includes`"
 
 # What libraries do we want to include
-LIBRARIES="-lSDL2 -ldl `python3.5-config --ldflags`"
+LIBRARIES="-lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer -ldl `python3.8-config --ldflags`"
 
 # The name of our module
 EXECUTABLE="Engine.so"
