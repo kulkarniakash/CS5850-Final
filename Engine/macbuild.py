@@ -22,7 +22,8 @@ ARGUMENTS="-D MAC -std=c++14 -shared -fPIC"
 INCLUDE_DIR="-I ./include/ -I./pybind11/include/ -I/Library/Frameworks/SDL2.framework/Headers `python3.5 -m pybind11 --includes`"
 
 # What libraries do we want to include
-LIBRARIES="-L./lib/ -F/Library/Frameworks -framework SDL2 `python3.5-config --ldflags`"
+
+LIBRARIES="-F/Library/Frameworks -framework SDL2 -F/Library/Frameworks -framework SDL2_mixer -F/Library/Frameworks -framework SDL2_ttf -F/Library/Frameworks -framework SDL2_image `python3.5-config --includes --ldflags`"
 
 # The name of our executable
 EXECUTABLE="Engine.so"
