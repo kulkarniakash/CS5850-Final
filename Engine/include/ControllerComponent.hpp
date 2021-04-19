@@ -12,7 +12,8 @@ public:
     
     //handles the input of the controller, returns the string of the event 
     std::string handleInput(SDL_Event event);
-    
+
+	// void addInputBinding(std::string, py::object)
     
 private:
 };

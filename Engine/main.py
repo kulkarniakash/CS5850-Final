@@ -6,23 +6,40 @@ import Engine
 engine = Engine.Engine()
 engine.initialize_graphics_subsystem()
 
-dest = Engine.Rect()
-src = Engine.Rect()
-dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 300
-src.x, src.y, src.w, src.h = 0, 0, -1, -1
-sprite = Engine.SpriteComponent("./assets/BGSky.jpg", dest, src)
 
-obj = Engine.GameObject("sky")
-obj.add_sprite_component(sprite)
+
+class Sky(Engine.GameObject):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def sprite_init(self):
+        dest = Engine.Rect()
+        src = Engine.Rect()
+        dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 300
+        src.x, src.y, src.w, src.h = 0, 0, -1, -1
+        self.sprite = Engine.SpriteComponent("./assets/BGSky.jpg", dest, src)
+        super().add_sprite_component(self.sprite)
+        
+sky = Sky("sky")
+sky.sprite_init()
+    
+##sky.sprite_init()
+
 tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
-obj.add_transform_component(tran)
-engine.add_game_object(obj)
+sky.add_transform_component(tran)
+
+##obj = Engine.GameObject("sky")
+##obj.add_sprite_component(sprite)
+##tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
+##obj.add_transform_component(tran)
+
+engine.add_game_object(sky)
 engine.start()
 
 
 while not engine.program_ended():
     engine.input()
-    obj.update()
+    sky.update()
     engine.clear()
     engine.render()
     engine.delay(20)

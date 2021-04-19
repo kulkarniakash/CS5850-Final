@@ -5,7 +5,9 @@
 #include <string>
 #include <SDL_Headers.hpp>
 #include <unordered_set>
+#include <unordered_map>
 #include <GameObject.hpp>
+#include <string>
 
 //Engine class was taken from Sumanth's assignment-2 repo. Written by Shreyas Shivashankar.
 class Engine

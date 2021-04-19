@@ -7,6 +7,7 @@
 #include "SpriteComponent.hpp"
 #include "Vec2.hpp"
 #include "SDL_Headers.hpp"
+#include "ResourceManager.hpp"
 
 namespace py = pybind11;
 
@@ -18,6 +19,7 @@ namespace py = pybind11;
 //  The magic here is in 'template metaprogramming'
 PYBIND11_MODULE(Engine, m) {
 	m.doc() = "our game engine as a library"; // Optional docstring
+
 	py::class_<Engine>(m, "Engine")
 		.def(py::init<>())   // our constructor
 		.def("input", &Engine::Input) // Expose member methods
@@ -58,7 +60,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def("update", &TransformComponent::update);
 
 	py::class_<SpriteComponent>(m, "SpriteComponent")
-		.def(py::init<std::string, SDL_Rect, SDL_Rect>())
+		.def(py::init<std::string, SDL_Rect, SDL_Rect>(), py::return_value_policy::reference)
 		.def("render", &SpriteComponent::render)
 		.def("update_frame", &SpriteComponent::updateFrame)
 		.def("update_postion", &SpriteComponent::updatePosition);
