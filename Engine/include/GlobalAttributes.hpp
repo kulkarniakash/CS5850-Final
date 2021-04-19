@@ -3,10 +3,7 @@
 #include <unordered_map>
 #include <SDL_Headers.hpp>
 
-const std::unordered_map<std::string, Uint8> keymap{
-	{"S", SDL_SCANCODE_S}
-};
-
-int SCREEN_WIDTH = 640;
-int SCREEN_HEIGHT = 480;
+extern const std::unordered_map<std::string, Uint8> keymap;
+extern int SCREEN_WIDTH;
+extern int SCREEN_HEIGHT;
 #endif

@@ -22,11 +22,32 @@ class Sky(Engine.GameObject):
         
 sky = Sky("sky")
 sky.sprite_init()
-    
-##sky.sprite_init()
+
+def go_up():
+    sky.update_velocity(Engine.Vec2(0, -1))
+    sky.update()
+
+def go_down():
+    sky.update_velocity(Engine.Vec2(0, 1))
+    sky.update()
+
+def go_right():
+    sky.update_velocity(Engine.Vec2(1, 0))
+    sky.update()
+
+def go_left():
+    sky.update_velocity(Engine.Vec2(-1, 0))
+    sky.update()
 
 tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
 sky.add_transform_component(tran)
+control = Engine.ControllerComponent()
+control.add_input_binding("W", go_up)
+control.add_input_binding("S", go_down)
+control.add_input_binding("A", go_left)
+control.add_input_binding("D", go_right)
+
+sky.add_controller_component(control)
 
 ##obj = Engine.GameObject("sky")
 ##obj.add_sprite_component(sprite)
@@ -39,20 +60,8 @@ engine.start()
 
 while not engine.program_ended():
     engine.input()
-    sky.update()
     engine.clear()
     engine.render()
     engine.delay(20)
 engine.shutdown()
-
-##Shift main loop outside engine and into python
-##Let controller take in an input key and an function object
-##Complete the sprite class
-##Double check pybinding to make sure references are returned correctly
-##Circular referencing of game object and sprite components
-##Decouple transform from sprite
-##In update function of sprite, the user should not have to worry about
-##The sprite sheet at all. Instead, the only thing the user should be
-##able to control is the frame
-##src rectangle in sprite needs more work
 

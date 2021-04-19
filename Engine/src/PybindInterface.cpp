@@ -49,7 +49,9 @@ PYBIND11_MODULE(Engine, m) {
 		.def("get_controller_component", &GameObject::getControllerComponent, py::return_value_policy::reference)
 		.def("get_sprite_component", &GameObject::getSpriteComponent, py::return_value_policy::reference)
 		.def("update", &GameObject::update)
-		.def("render", &GameObject::render);
+		.def("render", &GameObject::render)
+		.def("update_position", &GameObject::updatePosition)
+		.def("update_velocity", &GameObject::updateVelocity);
 
 	py::class_<TransformComponent>(m, "TransformComponent")
 		.def(py::init<const Vec2&, const Vec2&>())   // our constructor
@@ -67,9 +69,9 @@ PYBIND11_MODULE(Engine, m) {
 
 
 	py::class_<ControllerComponent>(m, "ControllerComponent")
-		.def(py::init<>());   // our constructor
+		.def(py::init<>())   // our constructor
+		.def("add_input_binding", &ControllerComponent::addInputBinding);
 		
-
 	py::class_<Vec2>(m, "Vec2")
 		.def(py::init<float, float>())
 		.def_readwrite("x", &Vec2::x)

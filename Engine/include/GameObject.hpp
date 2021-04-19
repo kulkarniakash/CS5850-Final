@@ -33,6 +33,10 @@ public:
     //gets the SpriteComponent
     SpriteComponent* getSpriteComponent();
 
+	void updatePosition(Vec2 pos);
+
+	void updateVelocity(Vec2 vel);
+
     void render();
 
     void update();

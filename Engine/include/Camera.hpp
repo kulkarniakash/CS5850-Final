@@ -2,14 +2,13 @@
 
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
-#pragma once
+#include "GlobalAttributes.hpp"
 
 // Include our custom headers.
 #include <Vec2.hpp>
 
 // Store screen's width and height into two extern const integers.
-extern const int SCREEN_WIDTH;
-extern const int SCREEN_HEIGHT;
+
 
 /**
  * @brief A enum class for direction.

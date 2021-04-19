@@ -22,9 +22,6 @@ const std::string musicPath = "assets/bgmusic.wav";
 
 	Mix_Music *bgMusic = NULL;*/
 
-extern int SCREEN_WIDTH;
-extern int SCREEN_HEIGHT;
-
 bool running = true; // used to determine if we're running the game
 
 SDL_Event event; // used to store any events from the OS
@@ -124,6 +121,17 @@ void Engine::Input()
 
 		if (keystate[SDL_SCANCODE_Q]) {
 			quit = true;
+		}
+
+		for (auto obj : gameObjs) {
+			ControllerComponent* contcomp = obj->getControllerComponent();
+			std::string* keys = contcomp->getKeys();
+			int size = contcomp->getKeysNum();
+			for (int i = 0; i < size; i++) {
+				if (keystate[keymap.at(keys[i])]) {
+					contcomp->executeCallback(keys[i]);
+				}
+			}
 		}
     }
 }

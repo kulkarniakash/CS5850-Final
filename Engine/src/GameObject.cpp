@@ -40,3 +40,11 @@ void GameObject::update() {
     m_transformComponent->update();
     
 }
+
+void GameObject::updatePosition(Vec2 pos) {
+	m_transformComponent->setPosition(pos);
+}
+
+void GameObject::updateVelocity(Vec2 vel) {
+	m_transformComponent->setVelocity(vel);
+}
