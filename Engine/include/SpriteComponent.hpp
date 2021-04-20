@@ -25,7 +25,6 @@ public:
 	float getWidth();
 
 	float getHeight();
-    
 
 protected:
     bool m_flipped;
