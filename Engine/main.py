@@ -15,29 +15,29 @@ class Sky(Engine.GameObject):
     def sprite_init(self):
         dest = Engine.Rect()
         src = Engine.Rect()
-        dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 300
+        dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 150
         src.x, src.y, src.w, src.h = 0, 0, -1, -1
-        self.sprite = Engine.SpriteComponent("./assets/BGSky.jpg", dest, src)
+        self.sprite = Engine.SpriteComponent("./assets/biden.jpg", dest, src)
         super().add_sprite_component(self.sprite)
         
 sky = Sky("sky")
 sky.sprite_init()
 
-def go_up():
-    sky.update_velocity(Engine.Vec2(0, -1))
-    sky.update()
+def go_up(obj):
+    obj.update_velocity(Engine.Vec2(0, -1))
+    obj.update()
 
-def go_down():
-    sky.update_velocity(Engine.Vec2(0, 1))
-    sky.update()
+def go_down(obj):
+    obj.update_velocity(Engine.Vec2(0, 1))
+    obj.update()
 
-def go_right():
-    sky.update_velocity(Engine.Vec2(1, 0))
-    sky.update()
+def go_right(obj):
+    obj.update_velocity(Engine.Vec2(1, 0))
+    obj.update()
 
-def go_left():
-    sky.update_velocity(Engine.Vec2(-1, 0))
-    sky.update()
+def go_left(obj):
+    obj.update_velocity(Engine.Vec2(-1, 0))
+    obj.update()
 
 tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
 sky.add_transform_component(tran)
@@ -60,6 +60,7 @@ engine.start()
 
 while not engine.program_ended():
     engine.input()
+    engine.update()
     engine.clear()
     engine.render()
     engine.delay(20)

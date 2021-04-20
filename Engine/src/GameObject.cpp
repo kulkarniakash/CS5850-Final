@@ -25,6 +25,7 @@ void GameObject::addTransformComponent(TransformComponent* transformComponent) {
 
 void GameObject::addControllerComponent(ControllerComponent* controllerComponent) {
     m_controllerComponent = controllerComponent;
+	m_controllerComponent->addGameObject(this);
 }
 
 void GameObject::addSpriteComponent(SpriteComponent* spriteComponent) {

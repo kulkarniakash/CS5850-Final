@@ -28,12 +28,15 @@ public:
 
 	int getKeysNum();
 
-	void executeCallback(std::string key);
+	void executeCallback();
+
+	void setKeyTo(int key, bool value);
 
 	void addGameObject(GameObject* gameObj);
     
 private:
 	std::unordered_map<std::string, py::object> keyToFuncMap;
+	std::unordered_map<std::string, bool> keypressed;
 	GameObject* m_gameobject;
 };
 #endif 

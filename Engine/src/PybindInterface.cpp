@@ -31,7 +31,8 @@ PYBIND11_MODULE(Engine, m) {
 		.def("program_ended", &Engine::programEnded)
 		.def("clear", &Engine::clear)
 		.def("delay", &Engine::delay)
-		.def("add_game_object", &Engine::addGameObject);
+		.def("add_game_object", &Engine::addGameObject)
+		.def("update", &Engine::update);
 
 	py::class_<SDL_Rect>(m, "Rect")
 		.def(py::init<>())
