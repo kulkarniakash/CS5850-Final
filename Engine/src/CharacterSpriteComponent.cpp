@@ -19,7 +19,8 @@ void CharacterSpriteComponent::addAnimation(const std::string& animationName, co
     std::cout << "Inserted Animation " << animationName << std::endl;
 }
 
-void CharacterSpriteComponent::performAnimation(const std::string & animationName, const bool& isFlipped) {
+void CharacterSpriteComponent::performAnimation(const std::string & animationName, const bool& isFlipped, float animSpeed) {
+    m_animationSpeed = animSpeed;
     auto it = m_animations.find(animationName);
 
 	if(it != m_animations.end()){

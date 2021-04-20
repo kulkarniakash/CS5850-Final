@@ -20,8 +20,9 @@ public:
     /*! Plays an action with given name.
         *  @param animationName name of action to play
         *  @param isFlipped whether to play the action while rendering frames flipped around
+        *  @param animSpeed speed of the animation
     */
-    void performAnimation(const std::string & animationName, const bool& isFlipped);
+    void performAnimation(const std::string & animationName, const bool& isFlipped, float animSpeed);
     
     //Updates our sprite
     void updateFrame();
@@ -36,7 +37,7 @@ private:
     std::map<std::string, std::pair<int, int>> m_animations;
     std::pair<int, int> m_frameRange;
     int m_actualFrame = 0;
-    int m_animationSpeed = 1;
+    float m_animationSpeed = 1;
     bool m_loopAction = true;
     std::string m_currentAction;
 

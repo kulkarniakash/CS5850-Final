@@ -48,7 +48,7 @@ class Character(Engine.GameObject):
         super().add_character_sprite_component(self.character_sprite)
         
     def update_animation(self):
-        self.character_sprite.perform_animation("idle", True)
+        self.character_sprite.perform_animation("idle", True, 3)
 
 character = Character("character")
 character.character_sprite_init()
