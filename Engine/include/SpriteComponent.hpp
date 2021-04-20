@@ -19,12 +19,6 @@ public:
     //destructor fpr SpriteComponent
     ~SpriteComponent();
 
-
-    void addAnimation(const std::string& animationName, const int& startFrame, const int& endFrame);
-    
-    //allows that sprite to perform an animation
-    void performAnimation(const std::string & animationName, const bool& isFlipped);
-    
     //renders our sprite
     void render();
     
@@ -32,17 +26,11 @@ public:
     void updateFrame(int frame);
 
 	void updatePosition(Vec2 pos);
-    
 
-private:
-    std::map<std::string, std::pair<int, int>> m_animations;
-    std::pair<int, int> m_frameRange;
-    int m_frame = 0;
-    int m_animationSpeed;
-    std::string m_currentAction;
+protected:
     bool m_flipped;
-
-	SDL_Rect m_src;
+    int m_frame;
+    SDL_Rect m_src;
 	SDL_Rect m_dest;
 
     // std::string m_filePath;
@@ -50,5 +38,6 @@ private:
     
     SDL_Texture * m_texture;
     SDL_Renderer * m_renderer;
+    
 };
 #endif
