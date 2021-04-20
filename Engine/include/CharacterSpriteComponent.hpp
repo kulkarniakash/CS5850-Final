@@ -23,9 +23,6 @@ public:
     */
     void performAnimation(const std::string & animationName, const bool& isFlipped);
     
-    //renders our sprite
-    void render();
-    
     //Updates our sprite
     void updateFrame();
 
@@ -39,7 +36,7 @@ private:
     std::map<std::string, std::pair<int, int>> m_animations;
     std::pair<int, int> m_frameRange;
     int m_actualFrame = 0;
-    int m_animationSpeed;
+    int m_animationSpeed = 1;
     bool m_loopAction = true;
     std::string m_currentAction;
 

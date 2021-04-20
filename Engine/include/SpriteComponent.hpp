@@ -32,9 +32,6 @@ protected:
     int m_frame;
     SDL_Rect m_src;
 	SDL_Rect m_dest;
-
-    // std::string m_filePath;
-    std::string m_animationName;
     
     SDL_Texture * m_texture;
     SDL_Renderer * m_renderer;

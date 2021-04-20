@@ -5,6 +5,7 @@
 #include "TransformComponent.hpp"
 #include "ControllerComponent.hpp"
 #include "SpriteComponent.hpp"
+#include "CharacterSpriteComponent.hpp"
 #include "Vec2.hpp"
 #include "SDL_Headers.hpp"
 #include "ResourceManager.hpp"
@@ -46,8 +47,10 @@ PYBIND11_MODULE(Engine, m) {
 		.def("add_transform_component", &GameObject::addTransformComponent)
 		.def("add_controller_component", &GameObject::addControllerComponent)
 		.def("add_sprite_component", &GameObject::addSpriteComponent)
+		.def("add_character_sprite_component", &GameObject::addCharacterSpriteComponent)
 		.def("get_controller_component", &GameObject::getControllerComponent, py::return_value_policy::reference)
 		.def("get_sprite_component", &GameObject::getSpriteComponent, py::return_value_policy::reference)
+		.def("get_character_sprite_component", &GameObject::getCharacterSpriteComponent, py::return_value_policy::reference)
 		.def("update", &GameObject::update)
 		.def("render", &GameObject::render);
 
@@ -64,6 +67,15 @@ PYBIND11_MODULE(Engine, m) {
 		.def("render", &SpriteComponent::render)
 		.def("update_frame", &SpriteComponent::updateFrame)
 		.def("update_postion", &SpriteComponent::updatePosition);
+
+	py::class_<CharacterSpriteComponent>(m, "CharacterSpriteComponent")
+		.def(py::init<std::string, SDL_Rect, SDL_Rect, int, int>(), py::return_value_policy::reference)
+		.def("render", &SpriteComponent::render)
+		.def("update_frame", &CharacterSpriteComponent::updateFrame)
+		.def("update_postion", &CharacterSpriteComponent::updatePosition)
+		.def("loop_action", &CharacterSpriteComponent::loopAction, py::return_value_policy::reference)
+		.def("add_animation", &CharacterSpriteComponent::addAnimation)
+		.def("perform_animation", &CharacterSpriteComponent::performAnimation);
 
 
 	py::class_<ControllerComponent>(m, "ControllerComponent")

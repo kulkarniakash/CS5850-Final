@@ -8,7 +8,6 @@ SpriteComponent::SpriteComponent(std::string filePath, SDL_Rect dest, SDL_Rect s
 	if (!m_renderer) {
 		std::cout<<"Error: failed to load renderer\n";
 	}
-	std::cout<<"entered\n";
 
 	if (ResourceManager::getInstance().hasResource(filePath, ResourceType::SDLTexture)) {
 		m_texture = ResourceManager::getInstance().getResourceSDLTexture(filePath);
