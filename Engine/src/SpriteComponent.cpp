@@ -33,6 +33,7 @@ float SpriteComponent::getHeight() {
 	return m_dest.h;
 }
 
+
 void SpriteComponent::render() {
 	// change later!!!
 	SDL_Rect* dest;

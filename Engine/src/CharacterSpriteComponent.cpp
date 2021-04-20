@@ -1,6 +1,17 @@
 #include <CharacterSpriteComponent.hpp>
 #include <iostream>
 
+CharacterSpriteComponent::CharacterSpriteComponent(std::string filePath, SDL_Rect dest, SDL_Rect src, int rows, int cols) : SpriteComponent(filePath, dest, src) {
+    m_rows = rows;
+    m_cols = cols;
+    std::cout << "Created character sprite component " << std::endl;
+}
+
+CharacterSpriteComponent::~CharacterSpriteComponent() {
+    m_texture = nullptr;
+    m_renderer = nullptr;
+    // // SDL_FreeSurface(m_spriteSheet);
+}
 
 CharacterSpriteComponent::CharacterSpriteComponent(std::string filePath, SDL_Rect dest, SDL_Rect src, int rows, int cols) : SpriteComponent(filePath, dest, src) {
     m_rows = rows;
@@ -20,7 +31,6 @@ void CharacterSpriteComponent::addAnimation(const std::string& animationName, co
     m_animations.insert(std::pair<std::string, std::pair<int, int>>(animationName, m_frameRange));
     std::cout << "Inserted Animation " << animationName << std::endl;
 }
-
 
 void CharacterSpriteComponent::performAnimation(const std::string& animationName, const bool& isFlipped, float animSpeed) {
 	m_animationSpeed = animSpeed;
@@ -70,7 +80,6 @@ void CharacterSpriteComponent::updateFrame() {
 void CharacterSpriteComponent::updatePosition(Vec2 pos) {
 	m_src.x = (m_actualFrame % m_cols) * m_src.w;
     m_src.y = (m_actualFrame / m_cols) * m_src.h;
-
 	m_dest.x = pos.x;
 	m_dest.y = pos.y;
 }

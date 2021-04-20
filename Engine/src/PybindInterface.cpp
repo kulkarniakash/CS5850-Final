@@ -54,6 +54,11 @@ PYBIND11_MODULE(Engine, m) {
 		.def("add_sprite_component", &GameObject::addSpriteComponent)
 		.def("add_character_sprite_component", &GameObject::addCharacterSpriteComponent)
 		.def("get_sprite_component", &GameObject::getSpriteComponent, py::return_value_policy::reference)
+		.def("add_character_sprite_component", &GameObject::addCharacterSpriteComponent)
+		.def("get_controller_component", &GameObject::getControllerComponent, py::return_value_policy::reference)
+		.def("get_sprite_component", &GameObject::getSpriteComponent, py::return_value_policy::reference)
+		.def("get_character_sprite_component", &GameObject::getCharacterSpriteComponent, py::return_value_policy::reference)
+		.def("update", &GameObject::update)
 		.def("render", &GameObject::render);
 
 	py::class_<AnimateObject, GameObject>(m, "AnimateObject")
