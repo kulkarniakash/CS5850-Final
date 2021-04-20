@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <string>
 #include <TransformComponent.hpp>
-//#include <SpriteComponent.hpp>
 #include <ControllerComponent.hpp>
 class SpriteComponent;
+class CharacterSpriteComponent;
 
 class GameObject {
 public:
@@ -23,6 +23,8 @@ public:
     void addControllerComponent(ControllerComponent* controllerComponent);
 
     void addSpriteComponent(SpriteComponent* spriteComponent);
+
+    void addCharacterSpriteComponent(CharacterSpriteComponent* characterSpriteComponent);
     
     //gets the TransformComponent
     TransformComponent* getTransformComponent();
@@ -33,6 +35,8 @@ public:
     //gets the SpriteComponent
     SpriteComponent* getSpriteComponent();
 
+    CharacterSpriteComponent* getCharacterSpriteComponent();
+
     void render();
 
     void update();
@@ -42,5 +46,6 @@ private:
     TransformComponent* m_transformComponent;
     ControllerComponent* m_controllerComponent;
     SpriteComponent* m_spriteComponent;
+    CharacterSpriteComponent* m_characterSpriteComponent;
 };
 #endif 

@@ -1,6 +1,6 @@
 #include <GameObject.hpp>
 #include <SpriteComponent.hpp>
-
+#include <CharacterSpriteComponent.hpp>
 GameObject::GameObject(std::string gameObjectName) {
     m_gameObjectName = gameObjectName;
 }
@@ -19,6 +19,11 @@ ControllerComponent* GameObject::getControllerComponent() {
     return m_controllerComponent;
 }
 
+CharacterSpriteComponent* GameObject::getCharacterSpriteComponent() {
+    return m_characterSpriteComponent;
+}
+
+
 void GameObject::addTransformComponent(TransformComponent* transformComponent) {
     m_transformComponent = transformComponent;
 }
@@ -29,6 +34,10 @@ void GameObject::addControllerComponent(ControllerComponent* controllerComponent
 
 void GameObject::addSpriteComponent(SpriteComponent* spriteComponent) {
     m_spriteComponent = spriteComponent;
+}
+
+void GameObject::addCharacterSpriteComponent(CharacterSpriteComponent* characterSpriteComponent) {
+    m_characterSpriteComponent = characterSpriteComponent;
 }
 
 void GameObject::render() {
