@@ -3,8 +3,10 @@
 #include <stdio.h>
 #include <string>
 #include <TransformComponent.hpp>
-//#include <SpriteComponent.hpp>
-#include <ControllerComponent.hpp>
+#include "SpriteComponent.hpp"
+#include "ControllerComponent.hpp"
+
+class ControllerComponent;
 class SpriteComponent;
 
 class GameObject {

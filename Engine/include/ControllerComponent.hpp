@@ -6,6 +6,9 @@
 #include "GlobalAttributes.hpp"
 #include <unordered_map>
 #include <string>
+#include "GameObject.hpp"
+
+class GameObject;
 
 namespace py = pybind11;
 
@@ -27,9 +30,10 @@ public:
 
 	void executeCallback(std::string key);
 
-	// void addInputBinding(std::string, py::object)
+	void addGameObject(GameObject* gameObj);
     
 private:
 	std::unordered_map<std::string, py::object> keyToFuncMap;
+	GameObject* m_gameobject;
 };
 #endif 
