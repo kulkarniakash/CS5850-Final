@@ -5,6 +5,7 @@
 #include "TransformComponent.hpp"
 #include "SpriteComponent.hpp"
 #include "CharacterSpriteComponent.hpp"
+#include "ControllerComponent.hpp"
 
 class ControllerComponent;
 class SpriteComponent;
@@ -39,10 +40,6 @@ public:
     
     //gets the SpriteComponent
     SpriteComponent* getSpriteComponent();
-
-	// void updatePosition(Vec2 pos);
-
-	// void updateVelocity(Vec2 vel);
 
     void render();
 

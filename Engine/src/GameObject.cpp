@@ -1,7 +1,9 @@
-#include <GameObject.hpp>
-#include <SpriteComponent.hpp>
-#include <CharacterSpriteComponent.hpp>
+#include "SpriteComponent.hpp"
+#include "CharacterSpriteComponent.hpp"
 #include <iostream>
+
+#include "GameObject.hpp"
+
 GameObject::GameObject(std::string gameObjectName) {
     m_gameObjectName = gameObjectName;
 }
