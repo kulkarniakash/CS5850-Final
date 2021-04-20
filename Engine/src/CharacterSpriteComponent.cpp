@@ -8,8 +8,8 @@ CharacterSpriteComponent::CharacterSpriteComponent(std::string filePath, SDL_Rec
 }
 
 CharacterSpriteComponent::~CharacterSpriteComponent() {
-    m_texture = nullptr;
-    m_renderer = nullptr;
+    // m_texture = nullptr;
+    // m_renderer = nullptr;
     // // SDL_FreeSurface(m_spriteSheet);
 }
 
