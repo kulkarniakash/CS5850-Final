@@ -60,6 +60,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def("update_velocity", &AnimateObject::updateVelocity);
 
 	py::class_<PlayerObject, AnimateObject>(m, "PlayerObject")
+		.def(py::init<std::string>())
 		.def("add_controller_component", &PlayerObject::addControllerComponent)
 		.def("get_controller_component", &PlayerObject::getControllerComponent, py::return_value_policy::reference);
 

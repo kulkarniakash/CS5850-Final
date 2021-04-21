@@ -7,6 +7,8 @@
 #include <string>
 #include "PlayerObject.hpp"
 
+class PlayerObject;
+
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 

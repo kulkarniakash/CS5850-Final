@@ -8,7 +8,7 @@ engine.initialize_graphics_subsystem()
 
 
 
-class Sky(Engine.GameObject):
+class Sky(Engine.PlayerObject):
     def __init__(self, name):
         super().__init__(name)
 
@@ -54,7 +54,7 @@ sky.add_controller_component(control)
 ##tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
 ##obj.add_transform_component(tran)
 
-engine.add_game_object(sky)
+engine.add_player_object(sky)
 engine.start()
 
 

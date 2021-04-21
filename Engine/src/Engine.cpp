@@ -4,6 +4,9 @@
 #include <iostream>
 #include "ResourceManager.hpp"
 #include "GlobalAttributes.hpp"
+#include "ControllerComponent.hpp"
+
+class ControllerComponent;
 
 const std::string fontPath = "assets/lazy.ttf";
 const std::string imagePath = "assets/BGSky.jpg";
