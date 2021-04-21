@@ -120,6 +120,11 @@ void Engine::addUFCallback(py::object func) {
 void Engine::update() {
 	for (auto obj : playerObjs) {
 		ControllerComponent* contcomp = obj->getControllerComponent();
+		/*std::string* keys = contcomp->getKeys();
+		int size = contcomp->getKeysNum();
+		for (int i = 0; i < size; i++) {
+			contcomp->executeCallback();
+			contcomp->executeUnCallback();*/
 		if (contcomp != nullptr) {
 			std::string* keys = contcomp->getKeys();
 			int size = contcomp->getKeysNum();
