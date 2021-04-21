@@ -124,6 +124,45 @@ def player_go_left(obj):
     obj.update_transform()
     obj.update_velocity(Engine.Vec2(0, 0))
 
+def update_animation_idle(self, flipped, speed):
+    self.character_sprite.perform_animation("idle", flipped, speed)
+
+def update_animation_run(self, flipped, speed):
+    self.character_sprite.perform_animation("run", flipped, speed)
+
+def update_animation_jump(self, flipped, speed):
+    self.character_sprite.perform_animation("jump", flipped, speed)
+
+def update_animation_attack(self, flipped, speed):
+    self.character_sprite.perform_animation("attack", flipped, speed)
+
+character = Character("character")
+character.character_sprite_init()
+#character.update_animation()
+
+def player_go_up(obj):
+    obj.update_velocity(Engine.Vec2(0, -1))
+    obj.update()
+
+def player_go_down(obj):
+    obj.update_velocity(Engine.Vec2(0, 1))
+    obj.update()
+
+def player_go_right(obj):
+    obj.update_animation_run(False, 3)
+    obj.update_velocity(Engine.Vec2(1, 0))
+    obj.update()
+
+def player_go_left(obj):
+    obj.update_animation_run(True, 3)
+    obj.update_velocity(Engine.Vec2(-1, 0))
+    obj.update()
+
+
+tran2 = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0, 0))
+character.add_transform_component(tran2)
+
+
 control2 = Engine.ControllerComponent()
 control2.add_input_binding("W", player_go_up)
 control2.add_input_binding("S", player_go_down)
@@ -132,6 +171,7 @@ control2.add_input_binding("D", player_go_right)
 character.add_controller_component(control2)
 character.update_animation_idle(True, 3)
 
+engine.add_game_object(sky)
 #engine.add_player_object(biden)
 engine.add_player_object(character)
 engine.start()
