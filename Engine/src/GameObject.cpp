@@ -31,6 +31,7 @@ void GameObject::addTransformComponent(TransformComponent* transformComponent) {
 
 void GameObject::addControllerComponent(ControllerComponent* controllerComponent) {
     m_controllerComponent = controllerComponent;
+	m_controllerComponent->addGameObject(this);
 }
 
 void GameObject::addSpriteComponent(SpriteComponent* spriteComponent) {
@@ -64,4 +65,12 @@ void GameObject::update() {
         m_spriteComponent->updatePosition(m_transformComponent->getPosition());
     }
     
+}
+
+void GameObject::updatePosition(Vec2 pos) {
+	m_transformComponent->setPosition(pos);
+}
+
+void GameObject::updateVelocity(Vec2 vel) {
+	m_transformComponent->setVelocity(vel);
 }

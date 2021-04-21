@@ -1,7 +1,16 @@
 #ifndef CONTROLLER_COMPONENT_HPP
 #define CONTROLLER_COMPONENT_HPP
+#include <pybind11/pybind11.h>
 #include <SDL_Headers.hpp>
 #include <string>
+#include "GlobalAttributes.hpp"
+#include <unordered_map>
+#include <string>
+#include "GameObject.hpp"
+
+class GameObject;
+
+namespace py = pybind11;
 
 class ControllerComponent {
 public:
@@ -11,10 +20,23 @@ public:
     ~ControllerComponent();
     
     //handles the input of the controller, returns the string of the event 
-    std::string handleInput(SDL_Event event);
+    void handleInput();
 
-	// void addInputBinding(std::string, py::object)
+	void addInputBinding(std::string key, py::object callback);
+
+	std::string* getKeys();
+
+	int getKeysNum();
+
+	void executeCallback();
+
+	void setKeyTo(int key, bool value);
+
+	void addGameObject(GameObject* gameObj);
     
 private:
+	std::unordered_map<std::string, py::object> keyToFuncMap;
+	std::unordered_map<std::string, bool> keypressed;
+	GameObject* m_gameobject;
 };
 #endif 

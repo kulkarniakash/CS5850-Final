@@ -3,7 +3,10 @@
 #include <stdio.h>
 #include <string>
 #include <TransformComponent.hpp>
-#include <ControllerComponent.hpp>
+#include "SpriteComponent.hpp"
+#include "ControllerComponent.hpp"
+
+class ControllerComponent;
 class SpriteComponent;
 class CharacterSpriteComponent;
 
@@ -36,6 +39,9 @@ public:
     SpriteComponent* getSpriteComponent();
 
     CharacterSpriteComponent* getCharacterSpriteComponent();
+	void updatePosition(Vec2 pos);
+
+	void updateVelocity(Vec2 vel);
 
     void render();
 

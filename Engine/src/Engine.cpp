@@ -22,9 +22,6 @@ const std::string musicPath = "assets/bgmusic.wav";
 
 	Mix_Music *bgMusic = NULL;*/
 
-extern int SCREEN_WIDTH;
-extern int SCREEN_HEIGHT;
-
 bool running = true; // used to determine if we're running the game
 
 SDL_Event event; // used to store any events from the OS
@@ -112,19 +109,73 @@ int Engine::InitializeGraphicsSubSystem()
     return 0;
 }
 
+void Engine::update() {
+	for (auto obj : gameObjs) {
+		ControllerComponent* contcomp = obj->getControllerComponent();
+		std::string* keys = contcomp->getKeys();
+		int size = contcomp->getKeysNum();
+		for (int i = 0; i < size; i++) {
+			contcomp->executeCallback();
+		}
+	}
+}
+
 void Engine::Input()
 {
-    while (SDL_PollEvent(&event))
+	SDL_Event e;
+    while (SDL_PollEvent(&e))
     {
         // determine if the user still wants to have the window open
         // (this basically checks if the user has pressed 'X')
         quit = event.type == SDL_QUIT;
-
-		const Uint8* keystate = SDL_GetKeyboardState(NULL);
-
-		if (keystate[SDL_SCANCODE_Q]) {
+		
+		if (e.type == SDL_QUIT) {
 			quit = true;
 		}
+		else if (e.type == SDL_KEYDOWN)
+				{
+					if (e.key.keysym.sym == SDLK_q) {
+						quit = true;
+					}
+					else {
+						for (auto obj : gameObjs) {
+							ControllerComponent* contcomp = obj->getControllerComponent();
+							std::string* keys = contcomp->getKeys();
+							int size = contcomp->getKeysNum();
+							for (int i = 0; i < size; i++) {
+								contcomp->setKeyTo(e.key.keysym.sym, true);
+							}
+						}
+					}
+				}
+		else if (e.type == SDL_KEYUP)
+				{
+					for (auto obj : gameObjs) {
+						ControllerComponent* contcomp = obj->getControllerComponent();
+						std::string* keys = contcomp->getKeys();
+						int size = contcomp->getKeysNum();
+						for (int i = 0; i < size; i++) {
+							contcomp->setKeyTo(e.key.keysym.sym, false);
+						}
+					}
+				}
+
+		// const Uint8* keystate = SDL_GetKeyboardState(NULL);
+
+		/*if (keystate[SDL_SCANCODE_Q]) {
+			quit = true;
+		}
+
+		for (auto obj : gameObjs) {
+			ControllerComponent* contcomp = obj->getControllerComponent();
+			std::string* keys = contcomp->getKeys();
+			int size = contcomp->getKeysNum();
+			for (int i = 0; i < size; i++) {
+				if (keystate[keymap.at(keys[i])]) {
+					contcomp->executeCallback(keys[i]);
+				}
+			}
+		}*/
     }
 }
 

@@ -32,7 +32,7 @@ public:
    * Per frame update
    * @param dt The delta time between 2 consecutive frames
    */
-  void Update(float dt);
+  void update();
   /**
    * Per frame render. Renders everything
    */
