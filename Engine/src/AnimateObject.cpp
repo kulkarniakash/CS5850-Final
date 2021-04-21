@@ -26,6 +26,10 @@ void AnimateObject::updateTransform() {
     }
 }
 
+void AnimateObject::updateTransform() {
+	m_transformComponent->update();
+}
+
 void AnimateObject::updatePosition(Vec2 pos) {
 	m_transformComponent->updatePosition(pos);
 }
