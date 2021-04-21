@@ -15,17 +15,9 @@ TransformComponent* GameObject::getTransformComponent() {
 SpriteComponent* GameObject::getSpriteComponent() {
     return m_spriteComponent;
 }
-ControllerComponent* GameObject::getControllerComponent() {
-    return m_controllerComponent;
-}
 
 void GameObject::addTransformComponent(TransformComponent* transformComponent) {
     m_transformComponent = transformComponent;
-}
-
-void GameObject::addControllerComponent(ControllerComponent* controllerComponent) {
-    m_controllerComponent = controllerComponent;
-	m_controllerComponent->addGameObject(this);
 }
 
 void GameObject::addSpriteComponent(SpriteComponent* spriteComponent) {
@@ -37,15 +29,3 @@ void GameObject::render() {
    m_spriteComponent->render();
 }
 
-void GameObject::update() {
-    m_transformComponent->update();
-    
-}
-
-void GameObject::updatePosition(Vec2 pos) {
-	m_transformComponent->setPosition(pos);
-}
-
-void GameObject::updateVelocity(Vec2 vel) {
-	m_transformComponent->setVelocity(vel);
-}

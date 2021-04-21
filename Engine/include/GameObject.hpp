@@ -2,7 +2,7 @@
 #define GAME_OBJECT_HPP
 #include <stdio.h>
 #include <string>
-#include <TransformComponent.hpp>
+#include "TransformComponent.hpp"
 #include "SpriteComponent.hpp"
 #include "ControllerComponent.hpp"
 
@@ -22,7 +22,7 @@ public:
 
     void addTransformComponent(TransformComponent* transformComponent);
 
-    void addControllerComponent(ControllerComponent* controllerComponent);
+    // void addControllerComponent(ControllerComponent* controllerComponent);
 
     void addSpriteComponent(SpriteComponent* spriteComponent);
     
@@ -30,23 +30,23 @@ public:
     TransformComponent* getTransformComponent();
     
     //gets the ControllerComponent
-    ControllerComponent* getControllerComponent();
+    // ControllerComponent* getControllerComponent();
     
     //gets the SpriteComponent
     SpriteComponent* getSpriteComponent();
 
-	void updatePosition(Vec2 pos);
+	// void updatePosition(Vec2 pos);
 
-	void updateVelocity(Vec2 vel);
+	// void updateVelocity(Vec2 vel);
 
     void render();
 
-    void update();
+    // void update();
     
-private:
+protected:
     std::string m_gameObjectName;
     TransformComponent* m_transformComponent;
-    ControllerComponent* m_controllerComponent;
+    // ControllerComponent* m_controllerComponent;
     SpriteComponent* m_spriteComponent;
 };
 #endif 

@@ -110,13 +110,17 @@ int Engine::InitializeGraphicsSubSystem()
 }
 
 void Engine::update() {
-	for (auto obj : gameObjs) {
+	for (auto obj : playerObjs) {
 		ControllerComponent* contcomp = obj->getControllerComponent();
 		std::string* keys = contcomp->getKeys();
 		int size = contcomp->getKeysNum();
 		for (int i = 0; i < size; i++) {
 			contcomp->executeCallback();
 		}
+	}
+
+	for (auto obj : animateObjs) {
+		obj->update();
 	}
 }
 
@@ -138,7 +142,7 @@ void Engine::Input()
 						quit = true;
 					}
 					else {
-						for (auto obj : gameObjs) {
+						for (auto obj : playerObjs) {
 							ControllerComponent* contcomp = obj->getControllerComponent();
 							std::string* keys = contcomp->getKeys();
 							int size = contcomp->getKeysNum();
@@ -150,7 +154,7 @@ void Engine::Input()
 				}
 		else if (e.type == SDL_KEYUP)
 				{
-					for (auto obj : gameObjs) {
+					for (auto obj : playerObjs) {
 						ControllerComponent* contcomp = obj->getControllerComponent();
 						std::string* keys = contcomp->getKeys();
 						int size = contcomp->getKeysNum();
@@ -211,9 +215,18 @@ void Engine::Render()
 	SDL_DestroyTexture(txt_texture);
 	SDL_FreeSurface(txt_surf);*/
 	clear();
-	for (auto itr : gameObjs) {
-		itr->render();
+	for (auto obj : animateObjs) {
+		obj->render();
 	}
+
+	for (auto obj : playerObjs) {
+		obj->render();
+	}
+
+	for (auto obj : gameObjs) {
+		obj->render();
+	}
+
 
 	/*renderer->SetRenderDrawColor(0x0, 0x0, 0x0, 0xFF);
 	renderer->RenderClear();
@@ -226,15 +239,17 @@ void Engine::delay(int seconds) {
 	SDL_Delay(seconds);
 }
 
+// Only meant for inanimate objects!!!
 void Engine::addGameObject(GameObject* obj) {
-	gameObjs.insert(obj);
-    // // glClear(GL_COLOR_BUFFER_BIT);
-    // SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
-    // SDL_RenderClear(renderer);
+	gameObjs.push_back(obj);
+}
 
-    // SDL_RenderCopy(renderer, img_texture, NULL, NULL);
-    // SDL_RenderCopy(renderer, txt_texture, NULL, NULL);
-    // SDL_RenderPresent(renderer);
+void Engine::addAnimateObject(AnimateObject* obj) {
+	animateObjs.push_back(obj);
+}
+
+void Engine::addPlayerObject(PlayerObject* obj) {
+	playerObjs.push_back(obj);
 }
 
 void Engine::MainGameLoop()
