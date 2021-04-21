@@ -9,6 +9,8 @@
 #include "Vec2.hpp"
 #include "SDL_Headers.hpp"
 #include "ResourceManager.hpp"
+#include "AnimateObject.hpp"
+#include "PlayerObject.hpp"
 
 namespace py = pybind11;
 
@@ -33,6 +35,8 @@ PYBIND11_MODULE(Engine, m) {
 		.def("clear", &Engine::clear)
 		.def("delay", &Engine::delay)
 		.def("add_game_object", &Engine::addGameObject)
+		.def("add_animate_object", &Engine::addAnimateObject)
+		.def("add_player_object", &Engine::addPlayerObject)
 		.def("update", &Engine::update);
 
 	py::class_<SDL_Rect>(m, "Rect")
@@ -46,16 +50,19 @@ PYBIND11_MODULE(Engine, m) {
 		.def(py::init<std::string>())   // our constructor
 		.def("get_transform_component", &GameObject::getTransformComponent, py::return_value_policy::reference) // Expose member methods
 		.def("add_transform_component", &GameObject::addTransformComponent)
-		.def("add_controller_component", &GameObject::addControllerComponent)
 		.def("add_sprite_component", &GameObject::addSpriteComponent)
-		.def("add_character_sprite_component", &GameObject::addCharacterSpriteComponent)
-		.def("get_controller_component", &GameObject::getControllerComponent, py::return_value_policy::reference)
 		.def("get_sprite_component", &GameObject::getSpriteComponent, py::return_value_policy::reference)
-		.def("get_character_sprite_component", &GameObject::getCharacterSpriteComponent, py::return_value_policy::reference)
-		.def("update", &GameObject::update)
-		.def("render", &GameObject::render)
-		.def("update_position", &GameObject::updatePosition)
-		.def("update_velocity", &GameObject::updateVelocity);
+		.def("render", &GameObject::render);
+
+	py::class_<AnimateObject, GameObject>(m, "AnimateObject")
+		.def(py::init<std::string>())
+		.def("update", &AnimateObject::update)
+		.def("update_position", &AnimateObject::updatePosition)
+		.def("update_velocity", &AnimateObject::updateVelocity);
+
+	py::class_<PlayerObject, AnimateObject>(m, "PlayerObject")
+		.def("add_controller_component", &PlayerObject::addControllerComponent)
+		.def("get_controller_component", &PlayerObject::getControllerComponent, py::return_value_policy::reference);
 
 	py::class_<TransformComponent>(m, "TransformComponent")
 		.def(py::init<const Vec2&, const Vec2&>())   // our constructor

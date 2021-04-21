@@ -9,6 +9,9 @@
 #include <GameObject.hpp>
 #include <string>
 #include <GraphicsEngineRenderer.hpp>
+#include "AnimateObject.hpp"
+#include <vector>
+#include "PlayerObject.hpp"
 
 
 //Engine class was taken from Sumanth's assignment-2 repo. Written by Shreyas Shivashankar.
@@ -65,10 +68,16 @@ public:
 
 	void addGameObject(GameObject* obj);
 
+	void addAnimateObject(AnimateObject* obj);
+
+	void addPlayerObject(PlayerObject* obj);
+
 private:
 
 	bool quit;
-	std::unordered_set<GameObject*> gameObjs;
+	std::vector<PlayerObject*> playerObjs;
+	std::vector<AnimateObject*> animateObjs;
+	std::vector<GameObject*> gameObjs;
 	// GraphicsEngineRenderer* renderer = nullptr;
 };
 #endif

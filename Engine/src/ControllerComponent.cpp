@@ -40,8 +40,8 @@ std::string* ControllerComponent::getKeys() {
 	return keys;
 }
 
-void ControllerComponent::addGameObject(GameObject* gameObj) {
-	m_gameobject = gameObj;
+void ControllerComponent::addPlayerObject(PlayerObject* obj) {
+	m_gameobject = obj;
 }
 
 void ControllerComponent::setKeyTo(int key, bool value) {

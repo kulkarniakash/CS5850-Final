@@ -1,15 +1,13 @@
 #ifndef CONTROLLER_COMPONENT_HPP
 #define CONTROLLER_COMPONENT_HPP
-#include <pybind11/pybind11.h>
 #include <SDL_Headers.hpp>
 #include <string>
 #include "GlobalAttributes.hpp"
 #include <unordered_map>
 #include <string>
-#include "GameObject.hpp"
+#include "PlayerObject.hpp"
 
-class GameObject;
-
+#include <pybind11/pybind11.h>
 namespace py = pybind11;
 
 class ControllerComponent {
@@ -32,11 +30,11 @@ public:
 
 	void setKeyTo(int key, bool value);
 
-	void addGameObject(GameObject* gameObj);
+	void addPlayerObject(PlayerObject* obj);
     
 private:
 	std::unordered_map<std::string, py::object> keyToFuncMap;
 	std::unordered_map<std::string, bool> keypressed;
-	GameObject* m_gameobject;
+	PlayerObject* m_gameobject;
 };
 #endif 

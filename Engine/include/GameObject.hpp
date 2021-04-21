@@ -1,14 +1,9 @@
-#ifndef GAME_OBJECT_HPP
-#define GAME_OBJECT_HPP
+#ifndef GAME_OBJ
+#define GAME_OBJ
 #include <stdio.h>
 #include <string>
-#include <TransformComponent.hpp>
+#include "TransformComponent.hpp"
 #include "SpriteComponent.hpp"
-#include "ControllerComponent.hpp"
-
-class ControllerComponent;
-class SpriteComponent;
-class CharacterSpriteComponent;
 
 class GameObject {
 public:
@@ -23,7 +18,7 @@ public:
 
     void addTransformComponent(TransformComponent* transformComponent);
 
-    void addControllerComponent(ControllerComponent* controllerComponent);
+    // void addControllerComponent(ControllerComponent* controllerComponent);
 
     void addSpriteComponent(SpriteComponent* spriteComponent);
 
@@ -33,24 +28,23 @@ public:
     TransformComponent* getTransformComponent();
     
     //gets the ControllerComponent
-    ControllerComponent* getControllerComponent();
+    // ControllerComponent* getControllerComponent();
     
     //gets the SpriteComponent
     SpriteComponent* getSpriteComponent();
 
-    CharacterSpriteComponent* getCharacterSpriteComponent();
-	void updatePosition(Vec2 pos);
+	// void updatePosition(Vec2 pos);
 
-	void updateVelocity(Vec2 vel);
+	// void updateVelocity(Vec2 vel);
 
     void render();
 
-    void update();
+    // void update();
     
-private:
+protected:
     std::string m_gameObjectName;
     TransformComponent* m_transformComponent;
-    ControllerComponent* m_controllerComponent;
+    // ControllerComponent* m_controllerComponent;
     SpriteComponent* m_spriteComponent;
     CharacterSpriteComponent* m_characterSpriteComponent;
 };

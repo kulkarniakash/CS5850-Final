@@ -5,8 +5,6 @@
 #include <map>
 #include <SDL_Headers.hpp>
 #include <Vec2.hpp>
-#include <TransformComponent.hpp>
-#include <GameObject.hpp>
 #include "ResourceManager.hpp"
 
 
