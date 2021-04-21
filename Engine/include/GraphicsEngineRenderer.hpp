@@ -1,3 +1,5 @@
+#ifndef GER
+#define GER
 #include <SDL_Headers.hpp>
 
 //GraphicsEngineRenderer taken from Sumanth's assignment-2. Written by Shreyas Shivashankar.
@@ -48,3 +50,4 @@ class GraphicsEngineRenderer {
     // SDL Renderer
     SDL_Renderer* m_renderer = nullptr;
 };
+#endif

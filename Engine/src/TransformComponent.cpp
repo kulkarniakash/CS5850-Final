@@ -29,3 +29,11 @@ Vec2 TransformComponent::getPosition() {
 Vec2 TransformComponent::getVelocity() {
 	return m_velocity;
 }
+
+void TransformComponent::updatePosition(const Vec2& position) {
+	m_position += position;
+}
+
+void TransformComponent::updateVelocity(const Vec2& velocity) {
+	m_velocity += velocity;
+}

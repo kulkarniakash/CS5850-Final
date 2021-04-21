@@ -5,9 +5,12 @@
 #include "TransformComponent.hpp"
 #include "ControllerComponent.hpp"
 #include "SpriteComponent.hpp"
+#include "CharacterSpriteComponent.hpp"
 #include "Vec2.hpp"
 #include "SDL_Headers.hpp"
 #include "ResourceManager.hpp"
+#include "AnimateObject.hpp"
+#include "PlayerObject.hpp"
 
 namespace py = pybind11;
 
@@ -31,7 +34,10 @@ PYBIND11_MODULE(Engine, m) {
 		.def("program_ended", &Engine::programEnded)
 		.def("clear", &Engine::clear)
 		.def("delay", &Engine::delay)
-		.def("add_game_object", &Engine::addGameObject);
+		.def("add_game_object", &Engine::addGameObject)
+		.def("add_animate_object", &Engine::addAnimateObject)
+		.def("add_player_object", &Engine::addPlayerObject)
+		.def("update", &Engine::update);
 
 	py::class_<SDL_Rect>(m, "Rect")
 		.def(py::init<>())
@@ -44,12 +50,22 @@ PYBIND11_MODULE(Engine, m) {
 		.def(py::init<std::string>())   // our constructor
 		.def("get_transform_component", &GameObject::getTransformComponent, py::return_value_policy::reference) // Expose member methods
 		.def("add_transform_component", &GameObject::addTransformComponent)
-		.def("add_controller_component", &GameObject::addControllerComponent)
 		.def("add_sprite_component", &GameObject::addSpriteComponent)
-		.def("get_controller_component", &GameObject::getControllerComponent, py::return_value_policy::reference)
+		.def("add_character_sprite_component", &GameObject::addCharacterSpriteComponent)
 		.def("get_sprite_component", &GameObject::getSpriteComponent, py::return_value_policy::reference)
-		.def("update", &GameObject::update)
 		.def("render", &GameObject::render);
+
+	py::class_<AnimateObject, GameObject>(m, "AnimateObject")
+		.def(py::init<std::string>())
+		.def("update_sprite", &AnimateObject::updateSprite)
+		.def("update_transform", &AnimateObject::updateTransform)
+		.def("update_position", &AnimateObject::updatePosition)
+		.def("update_velocity", &AnimateObject::updateVelocity);
+
+	py::class_<PlayerObject, AnimateObject>(m, "PlayerObject")
+		.def(py::init<std::string>())
+		.def("add_controller_component", &PlayerObject::addControllerComponent)
+		.def("get_controller_component", &PlayerObject::getControllerComponent, py::return_value_policy::reference);
 
 	py::class_<TransformComponent>(m, "TransformComponent")
 		.def(py::init<const Vec2&, const Vec2&>())   // our constructor
@@ -62,14 +78,22 @@ PYBIND11_MODULE(Engine, m) {
 	py::class_<SpriteComponent>(m, "SpriteComponent")
 		.def(py::init<std::string, SDL_Rect, SDL_Rect>(), py::return_value_policy::reference)
 		.def("render", &SpriteComponent::render)
-		.def("update_frame", &SpriteComponent::updateFrame)
 		.def("update_postion", &SpriteComponent::updatePosition);
+
+	py::class_<CharacterSpriteComponent>(m, "CharacterSpriteComponent")
+		.def(py::init<std::string, SDL_Rect, SDL_Rect, int, int>(), py::return_value_policy::reference)
+		.def("render", &SpriteComponent::render)
+		.def("update_frame", &CharacterSpriteComponent::updateFrame)
+		.def("update_postion", &CharacterSpriteComponent::updatePosition)
+		.def("loop_action", &CharacterSpriteComponent::loopAction, py::return_value_policy::reference)
+		.def("add_animation", &CharacterSpriteComponent::addAnimation)
+		.def("perform_animation", &CharacterSpriteComponent::performAnimation);
 
 
 	py::class_<ControllerComponent>(m, "ControllerComponent")
-		.def(py::init<>());   // our constructor
+		.def(py::init<>())   // our constructor
+		.def("add_input_binding", &ControllerComponent::addInputBinding);
 		
-
 	py::class_<Vec2>(m, "Vec2")
 		.def(py::init<float, float>())
 		.def_readwrite("x", &Vec2::x)

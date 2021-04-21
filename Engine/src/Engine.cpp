@@ -4,6 +4,10 @@
 #include <iostream>
 #include "ResourceManager.hpp"
 #include "GlobalAttributes.hpp"
+#include "ControllerComponent.hpp"
+
+class ControllerComponent;
+class ResourceManager;
 
 const std::string fontPath = "assets/lazy.ttf";
 const std::string imagePath = "assets/BGSky.jpg";
@@ -21,9 +25,6 @@ const std::string musicPath = "assets/bgmusic.wav";
 	SDL_Texture *img_texture = NULL;
 
 	Mix_Music *bgMusic = NULL;*/
-
-extern int SCREEN_WIDTH;
-extern int SCREEN_HEIGHT;
 
 bool running = true; // used to determine if we're running the game
 
@@ -112,19 +113,88 @@ int Engine::InitializeGraphicsSubSystem()
     return 0;
 }
 
+void Engine::update() {
+	for (auto obj : playerObjs) {
+		ControllerComponent* contcomp = obj->getControllerComponent();
+		if (contcomp != nullptr) {
+			std::string* keys = contcomp->getKeys();
+			int size = contcomp->getKeysNum();
+			for (int i = 0; i < size; i++) {
+				contcomp->executeCallback();
+			}
+		}
+		obj->updateSprite();
+	}
+
+	for (auto obj : animateObjs) {
+		obj->updateSprite();
+	}
+
+	for (auto obj : animateObjs) {
+		obj->handleCollision(gameObjs);
+	}
+
+	for (auto obj : playerObjs) {
+		obj->handleCollision(gameObjs);
+	}
+}
+
 void Engine::Input()
 {
-    while (SDL_PollEvent(&event))
+	SDL_Event e;
+    while (SDL_PollEvent(&e))
     {
         // determine if the user still wants to have the window open
         // (this basically checks if the user has pressed 'X')
         quit = event.type == SDL_QUIT;
-
-		const Uint8* keystate = SDL_GetKeyboardState(NULL);
-
-		if (keystate[SDL_SCANCODE_Q]) {
+		
+		if (e.type == SDL_QUIT) {
 			quit = true;
 		}
+		else if (e.type == SDL_KEYDOWN)
+				{
+					if (e.key.keysym.sym == SDLK_q) {
+						quit = true;
+					}
+					else {
+						for (auto obj : playerObjs) {
+							ControllerComponent* contcomp = obj->getControllerComponent();
+							std::string* keys = contcomp->getKeys();
+							int size = contcomp->getKeysNum();
+							for (int i = 0; i < size; i++) {
+								contcomp->setKeyTo(e.key.keysym.sym, true);
+							}
+						}
+					}
+				}
+		else if (e.type == SDL_KEYUP)
+				{
+					for (auto obj : playerObjs) {
+						ControllerComponent* contcomp = obj->getControllerComponent();
+						std::string* keys = contcomp->getKeys();
+						int size = contcomp->getKeysNum();
+						for (int i = 0; i < size; i++) {
+							contcomp->setKeyTo(e.key.keysym.sym, false);
+						}
+					}
+				}
+
+		// const Uint8* keystate = SDL_GetKeyboardState(NULL);
+
+		/*if (keystate[SDL_SCANCODE_Q]) {
+			quit = true;
+		}
+
+		for (auto obj : gameObjs) {
+			ControllerComponent* contcomp = obj->getControllerComponent();
+			std::string* keys = contcomp->getKeys();
+			int size = contcomp->getKeysNum();
+			for (int i = 0; i < size; i++) {
+				if (keystate[keymap.at(keys[i])]) {
+					contcomp->executeCallback(keys[i]);
+				}
+			}
+		}*/
     }
 }
 
@@ -160,30 +230,43 @@ void Engine::Render()
 	SDL_DestroyTexture(txt_texture);
 	SDL_FreeSurface(txt_surf);*/
 	clear();
-	for (auto itr : gameObjs) {
-		itr->render();
+	for (auto obj : animateObjs) {
+		obj->render();
 	}
+
+	for (auto obj : playerObjs) {
+		obj->render();
+	}
+
+	for (auto obj : gameObjs) {
+		obj->render();
+	}
+
 
 	/*renderer->SetRenderDrawColor(0x0, 0x0, 0x0, 0xFF);
 	renderer->RenderClear();
 	SDL_RenderCopy(renderer->GetRenderer(), img_texture, NULL, NULL);
 	SDL_RenderCopy(renderer->GetRenderer(), txt_texture, NULL, NULL);
 	renderer->RenderPresent();*/
+	
+	SDL_RenderPresent(ResourceManager::getInstance().getResourceSDLRenderer("gRenderer"));
 }
 
 void Engine::delay(int seconds) {
 	SDL_Delay(seconds);
 }
 
+// Only meant for inanimate objects!!!
 void Engine::addGameObject(GameObject* obj) {
-	gameObjs.insert(obj);
-    // // glClear(GL_COLOR_BUFFER_BIT);
-    // SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
-    // SDL_RenderClear(renderer);
+	gameObjs.push_back(obj);
+}
 
-    // SDL_RenderCopy(renderer, img_texture, NULL, NULL);
-    // SDL_RenderCopy(renderer, txt_texture, NULL, NULL);
-    // SDL_RenderPresent(renderer);
+void Engine::addAnimateObject(AnimateObject* obj) {
+	animateObjs.push_back(obj);
+}
+
+void Engine::addPlayerObject(PlayerObject* obj) {
+	playerObjs.push_back(obj);
 }
 
 void Engine::MainGameLoop()
