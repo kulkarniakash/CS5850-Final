@@ -27,19 +27,19 @@ biden.sprite_init()
 
 def go_up(obj):
     obj.update_velocity(Engine.Vec2(0, -1))
-    obj.update()
+    obj.update_transform()
 
 def go_down(obj):
     obj.update_velocity(Engine.Vec2(0, 1))
-    obj.update()
+    obj.update_transform()
 
 def go_right(obj):
     obj.update_velocity(Engine.Vec2(1, 0))
-    obj.update()
+    obj.update_transform()
 
 def go_left(obj):
     obj.update_velocity(Engine.Vec2(-1, 0))
-    obj.update()
+    obj.update_transform()
 
 control = Engine.ControllerComponent()
 control.add_input_binding("W", go_up)
@@ -91,24 +91,24 @@ character.character_sprite_init()
 
 def player_go_up(obj):
     obj.update_velocity(Engine.Vec2(0, -1))
-    obj.update()
+    obj.update_transform()
     obj.update_velocity(Engine.Vec2(0, 0))
 
 def player_go_down(obj):
     obj.update_velocity(Engine.Vec2(0, 1))
-    obj.update()
+    obj.update_transform()
     obj.update_velocity(Engine.Vec2(0, 0))
 
 def player_go_right(obj):
     obj.update_animation_run(False, 3)
     obj.update_velocity(Engine.Vec2(1, 0))
-    obj.update()
+    obj.update_transform()
     obj.update_velocity(Engine.Vec2(0, 0))
 
 def player_go_left(obj):
     obj.update_animation_run(True, 3)
     obj.update_velocity(Engine.Vec2(-1, 0))
-    obj.update()
+    obj.update_transform()
     obj.update_velocity(Engine.Vec2(0, 0))
 
 control2 = Engine.ControllerComponent()

@@ -57,7 +57,8 @@ PYBIND11_MODULE(Engine, m) {
 
 	py::class_<AnimateObject, GameObject>(m, "AnimateObject")
 		.def(py::init<std::string>())
-		.def("update", &AnimateObject::update)
+		.def("update_sprite", &AnimateObject::updateSprite)
+		.def("update_transform", &AnimateObject::updateTransform)
 		.def("update_position", &AnimateObject::updatePosition)
 		.def("update_velocity", &AnimateObject::updateVelocity);
 

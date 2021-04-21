@@ -16,7 +16,9 @@ public:
 
 	void handleCollision(std::vector<GameObject*> objs);
 
-	void update();
+	void updateSprite();
+
+	void updateTransform();
 
 private:
 	CollisionComponent* m_collisioncomp;

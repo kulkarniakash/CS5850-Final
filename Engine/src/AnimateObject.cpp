@@ -5,8 +5,7 @@ AnimateObject::AnimateObject(std::string name) : GameObject(name) {
 	m_collisioncomp = new CollisionComponent(this);
 }
 
-void AnimateObject::update() {
-	m_transformComponent->update();
+void AnimateObject::updateSprite() {
     if (m_characterSpriteComponent != nullptr) {
         m_characterSpriteComponent->updateFrame();
         m_characterSpriteComponent->updatePosition(m_transformComponent->getPosition());
@@ -14,6 +13,10 @@ void AnimateObject::update() {
     } else if (m_spriteComponent != nullptr) {
         m_spriteComponent->updatePosition(m_transformComponent->getPosition());
     }
+}
+
+void AnimateObject::updateTransform() {
+	m_transformComponent->update();
 }
 
 void AnimateObject::updatePosition(Vec2 pos) {
