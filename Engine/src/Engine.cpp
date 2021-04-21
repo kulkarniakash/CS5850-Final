@@ -7,6 +7,7 @@
 #include "ControllerComponent.hpp"
 
 class ControllerComponent;
+class ResourceManager;
 
 const std::string fontPath = "assets/lazy.ttf";
 const std::string imagePath = "assets/BGSky.jpg";
@@ -125,6 +126,14 @@ void Engine::update() {
 	for (auto obj : animateObjs) {
 		obj->update();
 	}
+
+	for (auto obj : animateObjs) {
+		obj->handleCollision(gameObjs);
+	}
+
+	for (auto obj : playerObjs) {
+		obj->handleCollision(gameObjs);
+	}
 }
 
 void Engine::Input()
@@ -236,6 +245,8 @@ void Engine::Render()
 	SDL_RenderCopy(renderer->GetRenderer(), img_texture, NULL, NULL);
 	SDL_RenderCopy(renderer->GetRenderer(), txt_texture, NULL, NULL);
 	renderer->RenderPresent();*/
+	
+	SDL_RenderPresent(ResourceManager::getInstance().getResourceSDLRenderer("gRenderer"));
 }
 
 void Engine::delay(int seconds) {

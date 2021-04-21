@@ -26,6 +26,10 @@ public:
     void updateFrame(int frame);
 
 	void updatePosition(Vec2 pos);
+
+	float getWidth();
+
+	float getHeight();
     
 
 private:

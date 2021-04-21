@@ -8,7 +8,7 @@ engine.initialize_graphics_subsystem()
 
 
 
-class Sky(Engine.PlayerObject):
+class Biden(Engine.PlayerObject):
     def __init__(self, name):
         super().__init__(name)
 
@@ -17,10 +17,30 @@ class Sky(Engine.PlayerObject):
         src = Engine.Rect()
         dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 150
         src.x, src.y, src.w, src.h = 0, 0, -1, -1
+        self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
+        super().add_transform_component(self.tran)
         self.sprite = Engine.SpriteComponent("./assets/biden.jpg", dest, src)
         super().add_sprite_component(self.sprite)
         
+
+class Sky(Engine.GameObject):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def sprite_init(self):
+        dest = Engine.Rect()
+        src = Engine.Rect()
+        dest.x , dest.y, dest.w, dest.h = 200, 300, 100, 150
+        src.x, src.y, src.w, src.h = 0, 0, -1, -1
+        self.tran = Engine.TransformComponent(Engine.Vec2(200,300), Engine.Vec2(0,0))
+        super().add_transform_component(self.tran)
+        self.sprite = Engine.SpriteComponent("./assets/BGSky.jpg", dest, src)
+        super().add_sprite_component(self.sprite)
+        
+        
+biden = Biden("biden")
 sky = Sky("sky")
+biden.sprite_init()
 sky.sprite_init()
 
 def go_up(obj):
@@ -39,22 +59,22 @@ def go_left(obj):
     obj.update_velocity(Engine.Vec2(-1, 0))
     obj.update()
 
-tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
-sky.add_transform_component(tran)
+
 control = Engine.ControllerComponent()
 control.add_input_binding("W", go_up)
 control.add_input_binding("S", go_down)
 control.add_input_binding("A", go_left)
 control.add_input_binding("D", go_right)
 
-sky.add_controller_component(control)
+biden.add_controller_component(control)
 
 ##obj = Engine.GameObject("sky")
 ##obj.add_sprite_component(sprite)
 ##tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
 ##obj.add_transform_component(tran)
 
-engine.add_player_object(sky)
+engine.add_player_object(biden)
+engine.add_game_object(sky)
 engine.start()
 
 

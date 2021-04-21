@@ -2,7 +2,9 @@
 #define INANOBJ
 #include "GameObject.hpp"
 #include "Vec2.hpp"
+#include "CollisionComponent.hpp"
 #include <string>
+class CollisionComponent;
 
 class AnimateObject : public GameObject {
 public:
@@ -12,6 +14,11 @@ public:
 
 	void updateVelocity(Vec2 vel);
 
+	void handleCollision(std::vector<GameObject*> objs);
+
 	void update();
+
+private:
+	CollisionComponent* m_collisioncomp;
 };
 #endif

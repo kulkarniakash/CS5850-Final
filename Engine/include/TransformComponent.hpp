@@ -21,6 +21,10 @@ public:
     //sets the velocity of the object
     void setVelocity(const Vec2 & velocity);
 
+	void updatePosition(const Vec2& position);
+
+	void updateVelocity(const Vec2& velocity);
+
 	Vec2 getVelocity();
     
 private:

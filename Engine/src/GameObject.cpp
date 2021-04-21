@@ -1,5 +1,4 @@
-#include <GameObject.hpp>
-#include <SpriteComponent.hpp>
+#include "GameObject.hpp"
 
 GameObject::GameObject(std::string gameObjectName) {
     m_gameObjectName = gameObjectName;
@@ -22,6 +21,7 @@ void GameObject::addTransformComponent(TransformComponent* transformComponent) {
 
 void GameObject::addSpriteComponent(SpriteComponent* spriteComponent) {
     m_spriteComponent = spriteComponent;
+	m_spriteComponent->updatePosition(m_transformComponent->getPosition());
 }
 
 void GameObject::render() {

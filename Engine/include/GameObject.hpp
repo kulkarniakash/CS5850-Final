@@ -4,6 +4,7 @@
 #include <string>
 #include "TransformComponent.hpp"
 #include "SpriteComponent.hpp"
+class SpriteComponent;
 
 class GameObject {
 public:
