@@ -12,6 +12,11 @@
 #include "AnimateObject.hpp"
 #include <vector>
 #include "PlayerObject.hpp"
+#include "UniversalForce.hpp"
+
+#include <pybind11/pybind11.h>
+
+namespace py = pybind11;
 
 
 //Engine class was taken from Sumanth's assignment-2 repo. Written by Shreyas Shivashankar.
@@ -72,12 +77,15 @@ public:
 
 	void addPlayerObject(PlayerObject* obj);
 
+	void addUFCallback(py::object);
+
 private:
 
 	bool quit;
 	std::vector<PlayerObject*> playerObjs;
 	std::vector<AnimateObject*> animateObjs;
 	std::vector<GameObject*> gameObjs;
+	UniversalForce uforce;
 	// GraphicsEngineRenderer* renderer = nullptr;
 };
 #endif

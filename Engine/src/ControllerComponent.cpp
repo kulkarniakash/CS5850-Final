@@ -67,3 +67,27 @@ void ControllerComponent::executeCallback() {
 int ControllerComponent::getKeysNum() {
 	return keyToFuncMap.size();
 }
+
+void ControllerComponent::addInputReleaseBinding(std::string key, py::object callback) {
+	if (keymap.find(key) != keymap.end()) {
+		unkeyToFuncMap.insert(std::make_pair(key, callback));
+		if (keypressed.find(key) == keypressed.end()) {
+			keypressed.insert(std::make_pair(key, false));
+		}
+	}
+	else {
+		std::cout << "Error: key does not exist\n";
+	}
+}
+
+int ControllerComponent::getUnKeysNum() {
+	return unkeyToFuncMap.size();
+}
+
+void ControllerComponent::executeUnCallback() {
+	for (auto itr : unkeyToFuncMap) {
+		if (!keypressed.at(itr.first)) {
+			itr.second(m_gameobject);
+		}
+	}
+}

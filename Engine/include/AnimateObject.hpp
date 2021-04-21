@@ -14,6 +14,10 @@ public:
 
 	void updateVelocity(Vec2 vel);
 
+	void setPosition(Vec2 pos);
+
+	void setVelocity(Vec2 vel);
+
 	void handleCollision(std::vector<GameObject*> objs);
 
 	void updateSprite();

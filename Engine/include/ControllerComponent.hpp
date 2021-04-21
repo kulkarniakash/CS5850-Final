@@ -24,18 +24,25 @@ public:
 
 	void addInputBinding(std::string key, py::object callback);
 
+	void addInputReleaseBinding(std::string key, py::object callback);
+
 	std::string* getKeys();
 
 	int getKeysNum();
 
 	void executeCallback();
 
+	void executeUnCallback();
+
 	void setKeyTo(int key, bool value);
 
 	void addPlayerObject(PlayerObject* obj);
+
+	int getUnKeysNum();
     
 private:
 	std::unordered_map<std::string, py::object> keyToFuncMap;
+	std::unordered_map<std::string, py::object> unkeyToFuncMap;
 	std::unordered_map<std::string, bool> keypressed;
 	PlayerObject* m_gameobject;
 };

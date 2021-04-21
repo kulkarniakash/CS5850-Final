@@ -37,7 +37,8 @@ PYBIND11_MODULE(Engine, m) {
 		.def("add_game_object", &Engine::addGameObject)
 		.def("add_animate_object", &Engine::addAnimateObject)
 		.def("add_player_object", &Engine::addPlayerObject)
-		.def("update", &Engine::update);
+		.def("update", &Engine::update)
+		.def("add_UF_callback", &Engine::addUFCallback);
 
 	py::class_<SDL_Rect>(m, "Rect")
 		.def(py::init<>())
@@ -60,7 +61,9 @@ PYBIND11_MODULE(Engine, m) {
 		.def("update_sprite", &AnimateObject::updateSprite)
 		.def("update_transform", &AnimateObject::updateTransform)
 		.def("update_position", &AnimateObject::updatePosition)
-		.def("update_velocity", &AnimateObject::updateVelocity);
+		.def("update_velocity", &AnimateObject::updateVelocity)
+		.def("set_position", &AnimateObject::setPosition)
+		.def("set_velocity", &AnimateObject::setVelocity);
 
 	py::class_<PlayerObject, AnimateObject>(m, "PlayerObject")
 		.def(py::init<std::string>())
@@ -78,7 +81,10 @@ PYBIND11_MODULE(Engine, m) {
 	py::class_<SpriteComponent>(m, "SpriteComponent")
 		.def(py::init<std::string, SDL_Rect, SDL_Rect>(), py::return_value_policy::reference)
 		.def("render", &SpriteComponent::render)
-		.def("update_postion", &SpriteComponent::updatePosition);
+		.def("update_frame", &SpriteComponent::updateFrame)
+		.def("update_postion", &SpriteComponent::updatePosition)
+		.def("get_width", &SpriteComponent::getWidth)
+		.def("get_height", &SpriteComponent::getHeight);
 
 	py::class_<CharacterSpriteComponent>(m, "CharacterSpriteComponent")
 		.def(py::init<std::string, SDL_Rect, SDL_Rect, int, int>(), py::return_value_policy::reference)
@@ -92,7 +98,8 @@ PYBIND11_MODULE(Engine, m) {
 
 	py::class_<ControllerComponent>(m, "ControllerComponent")
 		.def(py::init<>())   // our constructor
-		.def("add_input_binding", &ControllerComponent::addInputBinding);
+		.def("add_input_binding", &ControllerComponent::addInputBinding)
+		.def("add_input_release_binding", &ControllerComponent::addInputReleaseBinding);
 		
 	py::class_<Vec2>(m, "Vec2")
 		.def(py::init<float, float>())

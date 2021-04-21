@@ -113,6 +113,10 @@ int Engine::InitializeGraphicsSubSystem()
     return 0;
 }
 
+void Engine::addUFCallback(py::object func) {
+	uforce.addCallback(func);
+}
+
 void Engine::update() {
 	for (auto obj : playerObjs) {
 		ControllerComponent* contcomp = obj->getControllerComponent();
@@ -124,11 +128,15 @@ void Engine::update() {
 			}
 		}
 		obj->updateSprite();
+		obj->updateTransform();
 	}
 
 	for (auto obj : animateObjs) {
 		obj->updateSprite();
 	}
+
+	uforce.applyForces(&animateObjs);
+	uforce.applyForces(&playerObjs);
 
 	for (auto obj : animateObjs) {
 		obj->handleCollision(gameObjs);

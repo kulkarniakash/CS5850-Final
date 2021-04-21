@@ -20,15 +20,25 @@ void AnimateObject::updateTransform() {
 }
 
 void AnimateObject::updatePosition(Vec2 pos) {
-	m_transformComponent->setPosition(pos);
+	m_transformComponent->updatePosition(pos);
 }
 
 void AnimateObject::updateVelocity(Vec2 vel) {
-	m_transformComponent->setVelocity(vel);
+	m_transformComponent->updateVelocity(vel);
 }
 
 void AnimateObject::handleCollision(std::vector<GameObject*> objs) {
 	m_collisioncomp->handleCollisions(objs);
 }
+
+void AnimateObject::setPosition(Vec2 pos) {
+	m_transformComponent->setPosition(pos);
+}
+
+void AnimateObject::setVelocity(Vec2 vel) {
+	m_transformComponent->setVelocity(vel);
+}
+
+
 
 

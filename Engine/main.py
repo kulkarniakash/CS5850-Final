@@ -11,13 +11,15 @@ engine.initialize_graphics_subsystem()
 class Biden(Engine.PlayerObject):
     def __init__(self, name):
         super().__init__(name)
+        self.keypressed = {"W": False, "A": False, "S": False, "D": False}
+        self.speed = 3
 
     def sprite_init(self):
         dest = Engine.Rect()
         src = Engine.Rect()
-        dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 150
+        dest.x , dest.y, dest.w, dest.h = 0, 0, 25, 35
         src.x, src.y, src.w, src.h = 0, 0, -1, -1
-        self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
+        self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0,0))
         super().add_transform_component(self.tran)
         self.sprite = Engine.SpriteComponent("./assets/biden.jpg", dest, src)
         super().add_sprite_component(self.sprite)
@@ -26,26 +28,37 @@ biden = Biden("biden")
 biden.sprite_init()
 
 def go_up(obj):
-    obj.update_velocity(Engine.Vec2(0, -1))
-    obj.update_transform()
+    obj.update_position(Engine.Vec2(0, -obj.speed))
+##    obj.update()
 
 def go_down(obj):
-    obj.update_velocity(Engine.Vec2(0, 1))
-    obj.update_transform()
+    obj.update_position(Engine.Vec2(0, obj.speed))
+##    obj.update()
 
 def go_right(obj):
-    obj.update_velocity(Engine.Vec2(1, 0))
-    obj.update_transform()
+    obj.update_position(Engine.Vec2(obj.speed, 0))
+##    obj.update()
 
 def go_left(obj):
-    obj.update_velocity(Engine.Vec2(-1, 0))
-    obj.update_transform()
+    obj.update_position(Engine.Vec2(-obj.speed, 0))
+##    obj.update()
+
+def gravity(obj):
+    w = obj.get_sprite_component().get_width()
+    h = obj.get_sprite_component().get_height()
+    pos = obj.get_transform_component().get_position()
+    obj.update_velocity( Engine.Vec2(0.005 *(250 - pos.x - w / 2), 0.005 *(375 - pos.y - h / 2)))
 
 control = Engine.ControllerComponent()
 control.add_input_binding("W", go_up)
 control.add_input_binding("S", go_down)
 control.add_input_binding("A", go_left)
 control.add_input_binding("D", go_right)
+##control.add_input_release_binding("W", key_release_w)
+##control.add_input_release_binding("S", key_release_s)
+##control.add_input_release_binding("A", key_release_a)
+##control.add_input_release_binding("D", key_release_d)
+
 
 biden.add_controller_component(control)
 
