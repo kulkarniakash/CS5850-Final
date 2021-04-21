@@ -1,5 +1,5 @@
-#ifndef GAME_OBJECT_HPP
-#define GAME_OBJECT_HPP
+#ifndef GAME_OBJ
+#define GAME_OBJ
 #include <stdio.h>
 #include <string>
 #include "TransformComponent.hpp"

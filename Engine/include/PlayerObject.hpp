@@ -3,9 +3,6 @@
 #include "AnimateObject.hpp"
 #include "ControllerComponent.hpp"
 
-class AnimateObject;
-class ControllerComponent;
-
 class PlayerObject : public AnimateObject {
 public:
 	PlayerObject(std::string name);

@@ -9,9 +9,6 @@
 #include "GameObject.hpp"
 #include "PlayerObject.hpp"
 
-class GameObject;
-class PlayerObject;
-
 namespace py = pybind11;
 
 class ControllerComponent {

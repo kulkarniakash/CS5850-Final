@@ -4,8 +4,6 @@
 #include "Vec2.hpp"
 #include <string>
 
-class GameObject;
-
 class AnimateObject : public GameObject {
 public:
 	AnimateObject(std::string name);
