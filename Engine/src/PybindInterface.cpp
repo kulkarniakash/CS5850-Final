@@ -51,6 +51,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def("get_transform_component", &GameObject::getTransformComponent, py::return_value_policy::reference) // Expose member methods
 		.def("add_transform_component", &GameObject::addTransformComponent)
 		.def("add_sprite_component", &GameObject::addSpriteComponent)
+		.def("add_character_sprite_component", &GameObject::addCharacterSpriteComponent)
 		.def("get_sprite_component", &GameObject::getSpriteComponent, py::return_value_policy::reference)
 		.def("render", &GameObject::render);
 
@@ -61,6 +62,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def("update_velocity", &AnimateObject::updateVelocity);
 
 	py::class_<PlayerObject, AnimateObject>(m, "PlayerObject")
+		.def(py::init<std::string>())
 		.def("add_controller_component", &PlayerObject::addControllerComponent)
 		.def("get_controller_component", &PlayerObject::getControllerComponent, py::return_value_policy::reference);
 

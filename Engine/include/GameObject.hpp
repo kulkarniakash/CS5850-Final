@@ -4,6 +4,11 @@
 #include <string>
 #include "TransformComponent.hpp"
 #include "SpriteComponent.hpp"
+#include "CharacterSpriteComponent.hpp"
+
+class ControllerComponent;
+class SpriteComponent;
+class CharacterSpriteComponent;
 
 class GameObject {
 public:
@@ -29,6 +34,8 @@ public:
     
     //gets the ControllerComponent
     // ControllerComponent* getControllerComponent();
+
+    CharacterSpriteComponent* getCharacterSpriteComponent();
     
     //gets the SpriteComponent
     SpriteComponent* getSpriteComponent();

@@ -112,10 +112,12 @@ int Engine::InitializeGraphicsSubSystem()
 void Engine::update() {
 	for (auto obj : playerObjs) {
 		ControllerComponent* contcomp = obj->getControllerComponent();
-		std::string* keys = contcomp->getKeys();
-		int size = contcomp->getKeysNum();
-		for (int i = 0; i < size; i++) {
-			contcomp->executeCallback();
+		if (contcomp != nullptr) {
+			std::string* keys = contcomp->getKeys();
+			int size = contcomp->getKeysNum();
+			for (int i = 0; i < size; i++) {
+				contcomp->executeCallback();
+			}
 		}
 	}
 
