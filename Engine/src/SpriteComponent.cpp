@@ -24,6 +24,14 @@ SpriteComponent::~SpriteComponent() {
     // SDL_FreeSurface(m_spriteSheet);
 }
 
+float SpriteComponent::getWidth() {
+	return m_dest.w;
+}
+
+float SpriteComponent::getHeight() {
+	return m_dest.h;
+}
+
 void SpriteComponent::render() {
 	// change later!!!
 	SDL_Rect* dest;
@@ -44,7 +52,7 @@ void SpriteComponent::render() {
 	}
     SDL_RenderCopyEx(m_renderer, m_texture, src, dest, 0.0f, nullptr, (m_flipped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE));
 	// REMOVE AFTER TESTING CLASS
-	SDL_RenderPresent(m_renderer);
+	// SDL_RenderPresent(m_renderer);
 }
 
 void SpriteComponent::updateFrame(int frame) {

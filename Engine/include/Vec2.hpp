@@ -67,5 +67,13 @@ inline Vec2 operator-(Vec2 const& a, Vec2 const& b) {
 	return Vec2(a.x - b.x, a.y - b.y);
 }
 
+inline bool operator==(Vec2 const& a, Vec2 const& b) {
+	return a.x == b.x && a.y == b.y;
+}
+
+inline bool operator!=(Vec2 const& a, Vec2 const& b) {
+	return !(a.x == b.x && a.y == b.y);
+}
+
 #endif 
 

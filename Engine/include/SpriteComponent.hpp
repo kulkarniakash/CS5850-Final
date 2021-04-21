@@ -25,6 +25,11 @@ public:
 
 	void updatePosition(Vec2 pos);
 
+	float getWidth();
+
+	float getHeight();
+    
+
 protected:
     bool m_flipped;
     int m_frame;
