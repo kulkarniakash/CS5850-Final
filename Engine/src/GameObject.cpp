@@ -42,6 +42,7 @@ void GameObject::addCharacterSpriteComponent(CharacterSpriteComponent* character
 }
 
 void GameObject::render() {
+    // have one m_spriteComponent and just call it (since characterspritecomponent is inherited from spritecomponent)
     if (m_characterSpriteComponent != nullptr) {
         m_characterSpriteComponent->render();
     } else if (m_spriteComponent != nullptr) {
