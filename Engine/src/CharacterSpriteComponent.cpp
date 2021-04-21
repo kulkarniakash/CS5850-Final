@@ -33,6 +33,7 @@ void CharacterSpriteComponent::performAnimation(const std::string & animationNam
             m_flipped = isFlipped;
             // set current action string
             m_currentAction = animationName;
+            std::cout << "Playing animation: " << animationName << std::endl;
         }
     } else{
 		std::cout << "Animation not found; could not play: " << animationName << std::endl;

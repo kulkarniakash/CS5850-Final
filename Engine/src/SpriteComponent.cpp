@@ -55,11 +55,6 @@ void SpriteComponent::render() {
 	// SDL_RenderPresent(m_renderer);
 }
 
-void SpriteComponent::updateFrame(int frame) {
-
-
-}
-
 void SpriteComponent::updatePosition(Vec2 pos) {
 	m_dest.x = pos.x;
 	m_dest.y = pos.y;

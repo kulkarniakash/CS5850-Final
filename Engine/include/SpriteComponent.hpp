@@ -19,9 +19,6 @@ public:
 
     //renders our sprite
     void render();
-    
-    //Updates our sprite
-    void updateFrame(int frame);
 
 	void updatePosition(Vec2 pos);
 

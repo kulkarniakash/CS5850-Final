@@ -123,6 +123,7 @@ void Engine::update() {
 				contcomp->executeCallback();
 			}
 		}
+		obj->update();
 	}
 
 	for (auto obj : animateObjs) {

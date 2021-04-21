@@ -77,7 +77,6 @@ PYBIND11_MODULE(Engine, m) {
 	py::class_<SpriteComponent>(m, "SpriteComponent")
 		.def(py::init<std::string, SDL_Rect, SDL_Rect>(), py::return_value_policy::reference)
 		.def("render", &SpriteComponent::render)
-		.def("update_frame", &SpriteComponent::updateFrame)
 		.def("update_postion", &SpriteComponent::updatePosition);
 
 	py::class_<CharacterSpriteComponent>(m, "CharacterSpriteComponent")
