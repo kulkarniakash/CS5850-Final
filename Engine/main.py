@@ -74,6 +74,7 @@ class Character(Engine.GameObject):
 character = Character("character")
 character.character_sprite_init()
 character.update_animation()
+character.add_controller_component(control)
 
 tran2 = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0, 0))
 character.add_transform_component(tran2)
@@ -84,8 +85,8 @@ engine.start()
 
 while not engine.program_ended():
     engine.input()
-    sky.update()
-    character.update()
+    #sky.update()
+    #character.update()
     engine.update()
     engine.clear()
     engine.render()
