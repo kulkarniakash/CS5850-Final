@@ -92,20 +92,24 @@ character.character_sprite_init()
 def player_go_up(obj):
     obj.update_velocity(Engine.Vec2(0, -1))
     obj.update()
+    obj.update_velocity(Engine.Vec2(0, 0))
 
 def player_go_down(obj):
     obj.update_velocity(Engine.Vec2(0, 1))
     obj.update()
+    obj.update_velocity(Engine.Vec2(0, 0))
 
 def player_go_right(obj):
     obj.update_animation_run(False, 3)
     obj.update_velocity(Engine.Vec2(1, 0))
     obj.update()
+    obj.update_velocity(Engine.Vec2(0, 0))
 
 def player_go_left(obj):
     obj.update_animation_run(True, 3)
     obj.update_velocity(Engine.Vec2(-1, 0))
     obj.update()
+    obj.update_velocity(Engine.Vec2(0, 0))
 
 control2 = Engine.ControllerComponent()
 control2.add_input_binding("W", player_go_up)
