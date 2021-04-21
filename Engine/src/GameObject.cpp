@@ -37,6 +37,8 @@ void GameObject::addCharacterSpriteComponent(CharacterSpriteComponent* character
 }
 
 void GameObject::render() {
+    // m_spriteComponent->updatePosition(m_transformComponent->getPosition());
+    // m_spriteComponent->render();
     // have one m_spriteComponent and just call it (since characterspritecomponent is inherited from spritecomponent)
     if (m_characterSpriteComponent != nullptr) {
         m_characterSpriteComponent->render();
