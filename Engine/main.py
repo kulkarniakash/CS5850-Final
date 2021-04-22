@@ -71,26 +71,6 @@ control.add_input_binding("D", go_right)
 
 biden.add_controller_component(control)
 
-##obj = Engine.GameObject("sky")
-##obj.add_sprite_component(sprite)
-##tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
-##obj.add_transform_component(tran)
-
-# def player_go_up(obj):
-#     obj.update_position(Engine.Vec2(0, -1))
-
-# def player_go_down(obj):
-#     obj.update_position(Engine.Vec2(0, 1))
-
-# def player_go_right(obj):
-#     obj.update_animation_run(False, 3)
-#     obj.update_position(Engine.Vec2(1, 0))
-
-# def player_go_left(obj):
-#     obj.update_animation_run(True, 3)
-#     obj.update_position(Engine.Vec2(-1, 0))
-
-
 class Character(Engine.PlayerObject):
     def __init__(self, name):
         super().__init__(name, 100, 200)
@@ -163,29 +143,13 @@ character = Character("character")
 character.character_sprite_init()
 character.character_controls_init()
 
-# control2 = Engine.ControllerComponent()
-# control2.add_input_binding("W", player_go_up)
-# control2.add_input_binding("S", player_go_down)
-# control2.add_input_binding("A", player_go_left)
-# control2.add_input_binding("D", player_go_right)
-# control2.add_input_release_binding("W", player_go_up)
-# control2.add_input_release_binding("S", player_go_down)
-# control2.add_input_release_binding("A", player_go_left)
-# control2.add_input_release_binding("D", player_go_right)
-# character.add_controller_component(control2)
-character.update_animation_idle(True, 3)
-
-#engine.add_player_object(biden)
 engine.add_player_object(biden)
 engine.add_game_object(sky)
 engine.add_player_object(character)
-#engine.add_UF_callback(gravity)
 engine.start()
 
 while not engine.program_ended():
     engine.input()
-    #sky.update()
-    #character.update()
     engine.update()
     engine.clear()
     engine.render()
