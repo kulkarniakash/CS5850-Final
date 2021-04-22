@@ -12,7 +12,7 @@
 class SpriteComponent { 
 public:
     //constructor for SpriteComponent
-    SpriteComponent(std::string filePath, SDL_Rect dest, SDL_Rect src);
+    SpriteComponent(std::string filePath, SDL_Rect src);
     
     //destructor fpr SpriteComponent
     ~SpriteComponent();
@@ -25,6 +25,8 @@ public:
 	float getWidth();
 
 	float getHeight();
+
+	void setDim(float width, float height);
 
 protected:
     bool m_flipped;

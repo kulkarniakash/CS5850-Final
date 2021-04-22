@@ -48,7 +48,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def_readwrite("h", &SDL_Rect::h);
 
 	py::class_<GameObject>(m, "GameObject")
-		.def(py::init<std::string>())   // our constructor
+		.def(py::init<std::string, float, float>())   // our constructor
 		.def("get_transform_component", &GameObject::getTransformComponent, py::return_value_policy::reference) // Expose member methods
 		.def("add_transform_component", &GameObject::addTransformComponent)
 		.def("add_sprite_component", &GameObject::addSpriteComponent)
@@ -57,10 +57,12 @@ PYBIND11_MODULE(Engine, m) {
 		.def("add_character_sprite_component", &GameObject::addCharacterSpriteComponent)
 		.def("get_sprite_component", &GameObject::getSpriteComponent, py::return_value_policy::reference)
 		.def("get_character_sprite_component", &GameObject::getCharacterSpriteComponent, py::return_value_policy::reference)
+		.def("get_width", &GameObject::getWidth)
+		.def("get_height", &GameObject::getHeight)
 		.def("render", &GameObject::render);
 
 	py::class_<AnimateObject, GameObject>(m, "AnimateObject")
-		.def(py::init<std::string>())
+		.def(py::init<std::string, float, float>())
 		.def("update_sprite", &AnimateObject::updateSprite)
 		.def("update_transform", &AnimateObject::updateTransform)
 		.def("update_position", &AnimateObject::updatePosition)
@@ -69,7 +71,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def("set_velocity", &AnimateObject::setVelocity);
 
 	py::class_<PlayerObject, AnimateObject>(m, "PlayerObject")
-		.def(py::init<std::string>())
+		.def(py::init<std::string, float, float>())
 		.def("add_controller_component", &PlayerObject::addControllerComponent)
 		.def("get_controller_component", &PlayerObject::getControllerComponent, py::return_value_policy::reference);
 
@@ -82,18 +84,14 @@ PYBIND11_MODULE(Engine, m) {
 		.def("update", &TransformComponent::update);
 
 	py::class_<SpriteComponent>(m, "SpriteComponent")
-		.def(py::init<std::string, SDL_Rect, SDL_Rect>(), py::return_value_policy::reference)
+		.def(py::init<std::string, SDL_Rect>(), py::return_value_policy::reference)
 		.def("render", &SpriteComponent::render)
-<<<<<<< b0c382c49c61eebf1aeb80819b3a96c3902861be
-		.def("update_frame", &SpriteComponent::updateFrame)
-=======
->>>>>>> still seg faults
 		.def("update_postion", &SpriteComponent::updatePosition)
 		.def("get_width", &SpriteComponent::getWidth)
 		.def("get_height", &SpriteComponent::getHeight);
 
 	py::class_<CharacterSpriteComponent, SpriteComponent>(m, "CharacterSpriteComponent")
-		.def(py::init<std::string, SDL_Rect, SDL_Rect, int, int>(), py::return_value_policy::reference)
+		.def(py::init<std::string, SDL_Rect, int, int>(), py::return_value_policy::reference)
 		.def("loop_action", &CharacterSpriteComponent::loopAction, py::return_value_policy::reference)
 		.def("add_animation", &CharacterSpriteComponent::addAnimation)
 		.def("perform_animation", &CharacterSpriteComponent::performAnimation)

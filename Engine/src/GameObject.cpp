@@ -3,8 +3,10 @@
 #include <iostream>
 #include "GameObject.hpp"
 
-GameObject::GameObject(std::string gameObjectName) {
+GameObject::GameObject(std::string gameObjectName, float w, float h) {
     m_gameObjectName = gameObjectName;
+	width = w;
+	height = h;
 	m_characterSpriteComponent = nullptr;
 	m_spriteComponent = nullptr;
 }
@@ -32,10 +34,13 @@ void GameObject::addTransformComponent(TransformComponent* transformComponent) {
 void GameObject::addSpriteComponent(SpriteComponent* spriteComponent) {
     m_spriteComponent = spriteComponent;
 	m_spriteComponent->updatePosition(m_transformComponent->getPosition());
+	m_spriteComponent->setDim(width, height);
 }
 
 void GameObject::addCharacterSpriteComponent(CharacterSpriteComponent* characterSpriteComponent) {
     m_characterSpriteComponent = characterSpriteComponent;
+	m_characterSpriteComponent->updatePosition(m_transformComponent->getPosition());
+	m_characterSpriteComponent->setDim(width, height);
 }
 
 void GameObject::render() {
@@ -49,3 +54,11 @@ void GameObject::render() {
     }
 }
 
+float GameObject::getHeight()
+{
+	return height;
+}
+
+float GameObject::getWidth() {
+	return width;
+}

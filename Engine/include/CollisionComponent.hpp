@@ -1,7 +1,7 @@
 #ifndef COLLISION
 #define COLLISION
 #include "AnimateObject.hpp"
-
+#include "GameObject.hpp"
 #include <vector>
 class AnimateObject;
 

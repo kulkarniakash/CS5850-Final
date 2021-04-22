@@ -1,28 +1,16 @@
 #include <CharacterSpriteComponent.hpp>
 #include <iostream>
 
-CharacterSpriteComponent::CharacterSpriteComponent(std::string filePath, SDL_Rect dest, SDL_Rect src, int rows, int cols) : SpriteComponent(filePath, dest, src) {
-    m_rows = rows;
-    m_cols = cols;
-    std::cout << "Created character sprite component " << std::endl;
+CharacterSpriteComponent::CharacterSpriteComponent(std::string filePath, SDL_Rect src, int rows, int cols) : SpriteComponent(filePath, src) {
+	m_rows = rows;
+	m_cols = cols;
+	std::cout << "Created character sprite component " << std::endl;
 }
 
 CharacterSpriteComponent::~CharacterSpriteComponent() {
-    m_texture = nullptr;
-    m_renderer = nullptr;
-    // // SDL_FreeSurface(m_spriteSheet);
-}
-
-CharacterSpriteComponent::CharacterSpriteComponent(std::string filePath, SDL_Rect dest, SDL_Rect src, int rows, int cols) : SpriteComponent(filePath, dest, src) {
-    m_rows = rows;
-    m_cols = cols;
-    std::cout << "Created character sprite component " << std::endl;
-}
-
-CharacterSpriteComponent::~CharacterSpriteComponent() {
-    // m_texture = nullptr;
-    // m_renderer = nullptr;
-    // // SDL_FreeSurface(m_spriteSheet);
+	// m_texture = nullptr;
+	// m_renderer = nullptr;
+	// // SDL_FreeSurface(m_spriteSheet);
 }
 
 

@@ -1,8 +1,7 @@
 #include <SpriteComponent.hpp>
 #include <iostream>
 
-SpriteComponent::SpriteComponent(std::string filePath, SDL_Rect dest, SDL_Rect src) {
-	m_dest = dest;
+SpriteComponent::SpriteComponent(std::string filePath, SDL_Rect src) {
 	m_src = src;
 	m_renderer = ResourceManager::getInstance().getResourceSDLRenderer("gRenderer");
 	if (!m_renderer) {
@@ -60,4 +59,9 @@ void SpriteComponent::render() {
 void SpriteComponent::updatePosition(Vec2 pos) {
 	m_dest.x = pos.x;
 	m_dest.y = pos.y;
+}
+
+void SpriteComponent::setDim(float width, float height) {
+	m_dest.w = width;
+	m_dest.h = height;
 }

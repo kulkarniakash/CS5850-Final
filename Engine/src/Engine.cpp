@@ -122,13 +122,9 @@ void Engine::update() {
 	std::cout << "Entered C++ update\n";
 	for (auto obj : playerObjs) {
 		ControllerComponent* contcomp = obj->getControllerComponent();
-<<<<<<< b0c382c49c61eebf1aeb80819b3a96c3902861be
+
 		/*std::string* keys = contcomp->getKeys();
-=======
 		std::cout << "Entered player obj loop\n";
-/*<<<<<<< 13535cc7d51833cf52344911b1444d22bb0d4a23
-		std::string* keys = contcomp->getKeys();
->>>>>>> still seg faults
 		int size = contcomp->getKeysNum();
 		for (int i = 0; i < size; i++) {
 			contcomp->executeCallback();
@@ -141,10 +137,6 @@ void Engine::update() {
 				contcomp->executeCallback();
 			}
 		}
-<<<<<<< b0c382c49c61eebf1aeb80819b3a96c3902861be
-=======
-		obj->updateTransform();
->>>>>>> still seg faults
 		obj->updateSprite();
 		obj->updateTransform();
 	}
@@ -160,9 +152,9 @@ void Engine::update() {
 		obj->handleCollision(gameObjs);
 	}
 	
-	/*for (auto obj : playerObjs) {
+	for (auto obj : playerObjs) {
 		obj->handleCollision(gameObjs);
-	}*/
+	}
 }
 
 void Engine::Input()

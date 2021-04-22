@@ -4,10 +4,11 @@
 #include "ControllerComponent.hpp"
 
 class ControllerComponent;
+class AnimateObject;
 
 class PlayerObject : public AnimateObject {
 public:
-	PlayerObject(std::string name);
+	PlayerObject(std::string name, float w, float h);
 
 	void addControllerComponent(ControllerComponent* controllerComponent);
 

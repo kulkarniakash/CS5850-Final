@@ -5,10 +5,11 @@
 #include "CollisionComponent.hpp"
 #include <string>
 class CollisionComponent;
+class GameObject;
 
 class AnimateObject : public GameObject {
 public:
-	AnimateObject(std::string name);
+	AnimateObject(std::string name, float w, float h);
 
 	void updatePosition(Vec2 pos);
 

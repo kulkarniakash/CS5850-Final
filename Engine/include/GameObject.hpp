@@ -5,9 +5,7 @@
 #include "TransformComponent.hpp"
 #include "SpriteComponent.hpp"
 #include "CharacterSpriteComponent.hpp"
-#include "ControllerComponent.hpp"
 
-class ControllerComponent;
 class SpriteComponent;
 class CharacterSpriteComponent;
 
@@ -15,8 +13,8 @@ class GameObject {
 public:
     
     //constructs a gameObject with no components
-    GameObject(std::string gameObjectName);
-    
+    GameObject(std::string gameObjectName, float width, float height);
+
     //constructs a GameObject with components
     //GameObject(TransformComponent transformComponent, ControllerComponent controllerComponent, SpriteComponent spriteComponent);
     
@@ -43,9 +41,14 @@ public:
 
     void render();
 
+	float getWidth();
+
+	float getHeight();
+
     // void update();
     
 protected:
+	float width, height;
     std::string m_gameObjectName;
     TransformComponent* m_transformComponent;
     // ControllerComponent* m_controllerComponent;

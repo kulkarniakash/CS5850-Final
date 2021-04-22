@@ -12,29 +12,27 @@ void CollisionComponent::handleCollisions(std::vector<GameObject*> objs) {
 		if (corr != Vec2(0, 0)) {
 			collided = true;
 		}
-		m_animateobject->getTransformComponent()->updatePosition(corr);
+		m_animateobject->updatePosition(corr);
 	}
 
 	if (collided) {
-		m_animateobject->getTransformComponent()->setVelocity(Vec2(0, 0));
+		m_animateobject->setVelocity(Vec2(0, 0));
 	}
 }
 
 Vec2 CollisionComponent::getCorrection(GameObject* obj) {
 	TransformComponent* trans = m_animateobject->getTransformComponent();
 	TransformComponent* transOther = obj->getTransformComponent();
-	SpriteComponent* sprite = m_animateobject->getSpriteComponent();
-	SpriteComponent* spriteOther = obj->getSpriteComponent();
 
 	float left = trans->getPosition().x;
-	float right = trans->getPosition().x + sprite->getWidth();
+	float right = trans->getPosition().x + m_animateobject->getWidth();
 	float top = trans->getPosition().y;
-	float bottom = trans->getPosition().y + sprite->getHeight();
+	float bottom = trans->getPosition().y + m_animateobject->getHeight();
 
 	float leftOther = transOther->getPosition().x;
-	float rightOther = transOther->getPosition().x + spriteOther->getWidth();
+	float rightOther = transOther->getPosition().x + obj->getWidth();
 	float topOther = transOther->getPosition().y;
-	float bottomOther = transOther->getPosition().y + spriteOther->getHeight();
+	float bottomOther = transOther->getPosition().y + obj->getHeight();
 
 	if (right <= leftOther) {
 		return Vec2(0, 0);
@@ -55,9 +53,9 @@ Vec2 CollisionComponent::getCorrection(GameObject* obj) {
 	Vec2 prevPos = trans->getPosition() - trans->getVelocity();
 
 	float prevLeft = prevPos.x;
-	float prevRight = prevPos.x + sprite->getWidth();
+	float prevRight = prevPos.x + m_animateobject->getWidth();
 	float prevTop = prevPos.y;
-	float prevBottom = prevPos.y + sprite->getHeight();
+	float prevBottom = prevPos.y + m_animateobject->getHeight();
 
 	if (prevRight <= leftOther) {
 		return Vec2(-(right - leftOther), 0);

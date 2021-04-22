@@ -1,6 +1,6 @@
 #include "PlayerObject.hpp"
 
-PlayerObject::PlayerObject(std::string name) : AnimateObject(name) {
+PlayerObject::PlayerObject(std::string name, float w, float h) : AnimateObject(name, w, h) {
 
 }
 
