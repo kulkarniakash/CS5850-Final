@@ -11,6 +11,7 @@
 #include "ResourceManager.hpp"
 #include "AnimateObject.hpp"
 #include "PlayerObject.hpp"
+#include "Camera.hpp"
 
 namespace py = pybind11;
 
@@ -48,7 +49,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def_readwrite("h", &SDL_Rect::h);
 
 	py::class_<GameObject>(m, "GameObject")
-		.def(py::init<std::string, float, float>())   // our constructor
+		.def(py::init<std::string, float, float>(), py::return_value_policy::reference)   // our constructor
 		.def("get_transform_component", &GameObject::getTransformComponent, py::return_value_policy::reference) // Expose member methods
 		.def("add_transform_component", &GameObject::addTransformComponent)
 		.def("add_sprite_component", &GameObject::addSpriteComponent)
@@ -62,7 +63,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def("render", &GameObject::render);
 
 	py::class_<AnimateObject, GameObject>(m, "AnimateObject")
-		.def(py::init<std::string, float, float>())
+		.def(py::init<std::string, float, float>(), py::return_value_policy::reference)
 		.def("update_sprite", &AnimateObject::updateSprite)
 		.def("update_transform", &AnimateObject::updateTransform)
 		.def("update_position", &AnimateObject::updatePosition)
@@ -71,7 +72,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def("set_velocity", &AnimateObject::setVelocity);
 
 	py::class_<PlayerObject, AnimateObject>(m, "PlayerObject")
-		.def(py::init<std::string, float, float>())
+		.def(py::init<std::string, float, float>(), py::return_value_policy::reference)
 		.def("add_controller_component", &PlayerObject::addControllerComponent)
 		.def("get_controller_component", &PlayerObject::getControllerComponent, py::return_value_policy::reference);
 
@@ -111,6 +112,10 @@ PYBIND11_MODULE(Engine, m) {
 			[](const Vec2& vec) {
 				return "{x = " + std::to_string(vec.x) + ", y = " + std::to_string(vec.y) + "}";
 			});
+
+	py::class_<Camera>(m, "Camera")
+		.def("bind_to_object", &Camera::bindToObject)
+		.def("get_instance", &Camera::getInstance, py::return_value_policy::reference);
 
 	// We do not need to expose everything to our users!
 	//            .def("getSDLWindow", &SDLGraphicsProgram::getSDLWindow, py::return_value_policy::reference) 

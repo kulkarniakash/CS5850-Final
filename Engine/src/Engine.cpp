@@ -5,6 +5,7 @@
 #include "ResourceManager.hpp"
 #include "GlobalAttributes.hpp"
 #include "ControllerComponent.hpp"
+#include "Camera.hpp"
 
 class ControllerComponent;
 class ResourceManager;
@@ -59,7 +60,7 @@ int Engine::InitializeGraphicsSubSystem()
     SDL_Init(SDL_INIT_VIDEO);
 	SDL_Renderer* gRenderer = NULL;
 
-	if (ResourceManager::getInstance().addWindow("window", "The Team", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL)) {
+	if (ResourceManager::getInstance().addWindow("window", "The Team", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL)) {
 		printf("Error: Could not load window\n");
 		quit = true;
 		return -1;
@@ -154,6 +155,20 @@ void Engine::update() {
 	
 	for (auto obj : playerObjs) {
 		obj->handleCollision(gameObjs);
+	}
+
+	Camera::getInstance().update();
+
+	for (auto obj : playerObjs) {
+		Camera::getInstance().correctObj(obj);
+	}
+
+	for (auto obj : animateObjs) {
+		Camera::getInstance().correctObj(obj);
+	}
+
+	for (auto obj : gameObjs) {
+		Camera::getInstance().correctObj(obj);
 	}
 }
 

@@ -6,6 +6,8 @@ import Engine
 engine = Engine.Engine()
 engine.initialize_graphics_subsystem()
 
+camera = Engine.Camera.get_instance()
+
 class Sky(Engine.GameObject):
     def __init__(self, name):
         super().__init__(name, 100, 150)
@@ -30,7 +32,7 @@ class Biden(Engine.PlayerObject):
         src = Engine.Rect()
         dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 150
         src.x, src.y, src.w, src.h = 0, 0, -1, -1
-        self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
+        self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0,0))
         super().add_transform_component(self.tran)
         self.sprite = Engine.SpriteComponent("./assets/biden.jpg", src)
         super().add_sprite_component(self.sprite)
@@ -39,6 +41,8 @@ biden = Biden("biden")
 sky = Sky("sky")
 sky.sprite_init()
 biden.sprite_init()
+
+camera.bind_to_object(biden)
 
 def go_up(obj):
     obj.update_position(Engine.Vec2(0, -obj.speed))
@@ -56,7 +60,8 @@ def gravity(obj):
     w = obj.get_width()
     h = obj.get_height()
     pos = obj.get_transform_component().get_position()
-    obj.update_velocity( Engine.Vec2(0.005 *(250 - pos.x - w / 2), 0.005 *(375 - pos.y - h / 2)))
+    pos_sky = sky.get_transform_component().get_position()
+    obj.update_velocity( Engine.Vec2(0.005 *(pos_sky.x + sky.get_width() - pos.x - w / 2), 0.005 *(pos_sky.y + sky.get_height() - pos.y - h / 2)))
 
 control = Engine.ControllerComponent()
 control.add_input_binding("W", go_up)
@@ -104,7 +109,6 @@ class Character(Engine.PlayerObject):
 
 character = Character("character")
 character.character_sprite_init()
-#character.update_animation()
 
 def player_go_up(obj):
     obj.update_position(Engine.Vec2(0, -1))

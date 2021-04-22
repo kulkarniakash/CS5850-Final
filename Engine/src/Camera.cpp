@@ -2,15 +2,25 @@
 
 #include <Camera.hpp>
 
+Camera* Camera::instance = nullptr;
+
 // Three arguments constructor of camera object.
-Camera::Camera(Vec2 pos, float xSpeed, float ySpeed) {
-	this->pos = pos;
-	speed = Vec2(xSpeed, ySpeed);
+Camera::Camera() {
+}
+
+Camera& Camera::getInstance() {
+	if (!instance) {
+		instance = new Camera();
+	}
+
+	return (*instance);
 }
 
 // Get the correct position of the object given its initial position.
-Vec2 Camera::getObjectPos(Vec2 initialPos) {
-	return initialPos - pos;
+void Camera::correctObj(GameObject* obj) {
+	if (m_gameObject != nullptr) {
+		obj->getTransformComponent()->setPosition(obj->getTransformComponent()->getPosition() - pos);
+	}
 }
 
 // Get the camera's top-left corner position.
@@ -19,7 +29,7 @@ Vec2 Camera::getCameraPos() {
 }
 
 // Update the camera's position according to the given direction.
-void Camera::update(Direction dir) {
+/*void Camera::update(Direction dir) {
 	switch (dir) {
 	case Direction::Up:
 		pos -= Vec2(0, speed.y);
@@ -36,9 +46,19 @@ void Camera::update(Direction dir) {
 	default:
 		break;
 	}
+}*/
+
+void Camera::update() {
+	if (m_gameObject != nullptr) {
+		pos = m_gameObject->getTransformComponent()->getPosition() + Vec2(m_gameObject->getWidth() / 2, m_gameObject->getHeight() / 2) - Vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	}
 }
 
 // Update the camera's top-left corner position according to the input new position.
-void Camera::updatePosition(Vec2 newPos) {
+/*void Camera::updatePosition(Vec2 newPos) {
 	pos = newPos;
+}*/
+
+void Camera::bindToObject(GameObject* obj) {
+	m_gameObject = obj;
 }
