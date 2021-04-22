@@ -41,6 +41,7 @@ Engine::~Engine()
 
 int Engine::InitializeGraphicsSubSystem()
 {
+	std::cout << "C++ code cout works\n";
 	TTF_Font *font = NULL;
 	SDL_Color tcolor;
 
@@ -118,20 +119,32 @@ void Engine::addUFCallback(py::object func) {
 }
 
 void Engine::update() {
+	std::cout << "Entered C++ update\n";
 	for (auto obj : playerObjs) {
 		ControllerComponent* contcomp = obj->getControllerComponent();
+<<<<<<< b0c382c49c61eebf1aeb80819b3a96c3902861be
 		/*std::string* keys = contcomp->getKeys();
+=======
+		std::cout << "Entered player obj loop\n";
+/*<<<<<<< 13535cc7d51833cf52344911b1444d22bb0d4a23
+		std::string* keys = contcomp->getKeys();
+>>>>>>> still seg faults
 		int size = contcomp->getKeysNum();
 		for (int i = 0; i < size; i++) {
 			contcomp->executeCallback();
 			contcomp->executeUnCallback();*/
 		if (contcomp != nullptr) {
+			std::cout << "contcomp is not nullptr\n";
 			std::string* keys = contcomp->getKeys();
 			int size = contcomp->getKeysNum();
 			for (int i = 0; i < size; i++) {
 				contcomp->executeCallback();
 			}
 		}
+<<<<<<< b0c382c49c61eebf1aeb80819b3a96c3902861be
+=======
+		obj->updateTransform();
+>>>>>>> still seg faults
 		obj->updateSprite();
 		obj->updateTransform();
 	}
@@ -139,17 +152,17 @@ void Engine::update() {
 	for (auto obj : animateObjs) {
 		obj->updateSprite();
 	}
-
+	
 	uforce.applyForces(&animateObjs);
 	uforce.applyForces(&playerObjs);
-
+	
 	for (auto obj : animateObjs) {
 		obj->handleCollision(gameObjs);
 	}
-
-	for (auto obj : playerObjs) {
+	
+	/*for (auto obj : playerObjs) {
 		obj->handleCollision(gameObjs);
-	}
+	}*/
 }
 
 void Engine::Input()

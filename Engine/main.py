@@ -67,6 +67,7 @@ biden.add_controller_component(control)
 ##tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
 ##obj.add_transform_component(tran)
 
+
 class Character(Engine.PlayerObject):
     def __init__(self, name):
         super().__init__(name)
@@ -86,6 +87,7 @@ class Character(Engine.PlayerObject):
         self.character_sprite.add_animation("attack", 40, 50)
         super().add_character_sprite_component(self.character_sprite)
         
+
     def update_animation_idle(self, flipped, speed):
         self.character_sprite.perform_animation("idle", flipped, speed)
 
@@ -98,31 +100,24 @@ class Character(Engine.PlayerObject):
     def update_animation_attack(self, flipped, speed):
         self.character_sprite.perform_animation("attack", flipped, speed)
 
+
 character = Character("character")
 character.character_sprite_init()
 #character.update_animation()
 
 def player_go_up(obj):
-    obj.update_velocity(Engine.Vec2(0, -1))
-    obj.update_transform()
-    obj.update_velocity(Engine.Vec2(0, 0))
-
+    obj.update_position(Engine.Vec2(0, -1))
+    
 def player_go_down(obj):
-    obj.update_velocity(Engine.Vec2(0, 1))
-    obj.update_transform()
-    obj.update_velocity(Engine.Vec2(0, 0))
+    obj.update_position(Engine.Vec2(0, 1))
 
 def player_go_right(obj):
-    obj.update_animation_run(False, 3)
-    obj.update_velocity(Engine.Vec2(1, 0))
-    obj.update_transform()
-    obj.update_velocity(Engine.Vec2(0, 0))
+    # obj.update_animation_run(False, 3)
+    obj.update_position(Engine.Vec2(1, 0))
 
 def player_go_left(obj):
-    obj.update_animation_run(True, 3)
-    obj.update_velocity(Engine.Vec2(-1, 0))
-    obj.update_transform()
-    obj.update_velocity(Engine.Vec2(0, 0))
+    # obj.update_animation_run(True, 3)
+    obj.update_position(Engine.Vec2(-1, 0))
 
 def update_animation_idle(self, flipped, speed):
     self.character_sprite.perform_animation("idle", flipped, speed)
@@ -162,7 +157,6 @@ def player_go_left(obj):
     obj.update_transform()
     obj.update_velocity(Engine.Vec2(0, 0))
 
-
 tran2 = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0, 0))
 character.add_transform_component(tran2)
 
@@ -176,13 +170,15 @@ character.add_controller_component(control2)
 character.update_animation_idle(True, 3)
 
 engine.add_game_object(sky)
-#engine.add_player_object(biden)
 engine.add_player_object(character)
 engine.start()
 
 while not engine.program_ended():
+    print("entered loop")
     engine.input()
+    print("exited input")
     engine.update()
+    print("exited update")
 ##    sky.update()
 ##    character.update()
     engine.clear()

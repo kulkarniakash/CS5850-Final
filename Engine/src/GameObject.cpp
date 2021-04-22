@@ -5,6 +5,8 @@
 
 GameObject::GameObject(std::string gameObjectName) {
     m_gameObjectName = gameObjectName;
+	m_characterSpriteComponent = nullptr;
+	m_spriteComponent = nullptr;
 }
 
 GameObject::~GameObject() {
