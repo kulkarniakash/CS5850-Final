@@ -8,3 +8,5 @@ project-solution/**
 *.la
 Engine/include/SDL2/**
 .vscode
+*.pyd
+*.so

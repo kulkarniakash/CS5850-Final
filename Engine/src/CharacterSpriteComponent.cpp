@@ -4,7 +4,6 @@
 CharacterSpriteComponent::CharacterSpriteComponent(std::string filePath, SDL_Rect src, int rows, int cols) : SpriteComponent(filePath, src) {
 	m_rows = rows;
 	m_cols = cols;
-	std::cout << "Created character sprite component " << std::endl;
 }
 
 CharacterSpriteComponent::~CharacterSpriteComponent() {
@@ -17,7 +16,6 @@ CharacterSpriteComponent::~CharacterSpriteComponent() {
 void CharacterSpriteComponent::addAnimation(const std::string& animationName, const int& startFrame, const int& endFrame) {
 	const auto& m_frameRange = std::make_pair(startFrame, endFrame);
     m_animations.insert(std::pair<std::string, std::pair<int, int>>(animationName, m_frameRange));
-    std::cout << "Inserted Animation " << animationName << std::endl;
 }
 
 void CharacterSpriteComponent::performAnimation(const std::string& animationName, const bool& isFlipped, float animSpeed) {
@@ -34,7 +32,6 @@ void CharacterSpriteComponent::performAnimation(const std::string& animationName
 			m_flipped = isFlipped;
 			// set current action string
 			m_currentAction = animationName;
-			std::cout << "Playing animation: " << animationName << std::endl;
 		}
 	}
 	else {

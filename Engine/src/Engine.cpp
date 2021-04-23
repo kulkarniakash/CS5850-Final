@@ -42,7 +42,6 @@ Engine::~Engine()
 
 int Engine::InitializeGraphicsSubSystem()
 {
-	std::cout << "C++ code cout works\n";
 	TTF_Font *font = NULL;
 	SDL_Color tcolor;
 
@@ -120,18 +119,10 @@ void Engine::addUFCallback(py::object func) {
 }
 
 void Engine::update() {
-	std::cout << "Entered C++ update\n";
 	for (auto obj : playerObjs) {
 		ControllerComponent* contcomp = obj->getControllerComponent();
 
-		/*std::string* keys = contcomp->getKeys();
-		std::cout << "Entered player obj loop\n";
-		int size = contcomp->getKeysNum();
-		for (int i = 0; i < size; i++) {
-			contcomp->executeCallback();
-			contcomp->executeUnCallback();*/
 		if (contcomp != nullptr) {
-			std::cout << "contcomp is not nullptr\n";
 			std::string* keys = contcomp->getKeys();
 			int size = contcomp->getKeysNum();
 			for (int i = 0; i < size; i++) {
