@@ -11,6 +11,7 @@ void CollisionComponent::handleCollisions(std::vector<GameObject*> objs) {
 		Vec2 corr = getCorrection(obj);
 		if (corr != Vec2(0, 0)) {
 			collided = true;
+			m_collided_objs.push(obj);
 		}
 		m_animateobject->updatePosition(corr);
 	}
@@ -94,4 +95,11 @@ Vec2 CollisionComponent::getCorrection(GameObject* obj) {
 	}
 
 	return Vec2(-(right - leftOther), 0);
+}
+
+void CollisionComponent::add_collision_callback(py::object func) {
+	while(!m_collided_objs.empty()) {
+		func(m_collided_objs.front());
+		m_collided_objs.pop();
+	}
 }
