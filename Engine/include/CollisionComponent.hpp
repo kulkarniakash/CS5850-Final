@@ -8,6 +8,8 @@
 
 class AnimateObject;
 
+namespace py = pybind11;
+
 class CollisionComponent {
 public:
 	CollisionComponent(AnimateObject* obj);
