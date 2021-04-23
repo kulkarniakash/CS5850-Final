@@ -42,7 +42,7 @@ sky = Sky("sky")
 sky.sprite_init()
 biden.sprite_init()
 
-camera.bind_to_object(biden)
+#camera.bind_to_object(biden)
 
 def go_up(obj):
     obj.update_position(Engine.Vec2(0, -obj.speed))
@@ -71,14 +71,10 @@ control.add_input_binding("D", go_right)
 
 biden.add_controller_component(control)
 
-##obj = Engine.GameObject("sky")
-##obj.add_sprite_component(sprite)
-##tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
-##obj.add_transform_component(tran)
-
 class Character(Engine.PlayerObject):
     def __init__(self, name):
         super().__init__(name, 100, 200)
+        self.flipped = False
 
     def character_sprite_init(self):
         dest = Engine.Rect()
@@ -94,6 +90,37 @@ class Character(Engine.PlayerObject):
         self.character_sprite.add_animation("jump", 15, 22)
         self.character_sprite.add_animation("attack", 40, 50)
         super().add_character_sprite_component(self.character_sprite)
+    
+    def player_go_up(self, obj):
+        obj.update_position(Engine.Vec2(0, -1))
+
+    def player_go_down(self, obj):
+        obj.update_position(Engine.Vec2(0, 1))
+
+    def player_go_right(self, obj):
+        self.flipped = False
+        obj.update_animation_run(self.flipped, 3)
+        obj.update_position(Engine.Vec2(1, 0))
+
+    def player_go_left(self, obj):
+        self.flipped = True
+        obj.update_animation_run(self.flipped, 3)
+        obj.update_position(Engine.Vec2(-1, 0))
+
+    def player_release_key(self, obj):
+        self.check_if_no_input()
+
+    def character_controls_init(self):
+        self.control2 = Engine.ControllerComponent()
+        self.control2.add_input_binding("W", self.player_go_up)
+        self.control2.add_input_binding("S", self.player_go_down)
+        self.control2.add_input_binding("A", self.player_go_left)
+        self.control2.add_input_binding("D", self.player_go_right)
+        self.control2.add_input_release_binding("W", self.player_release_key)
+        self.control2.add_input_release_binding("S", self.player_release_key)
+        self.control2.add_input_release_binding("A", self.player_release_key)
+        self.control2.add_input_release_binding("D", self.player_release_key)
+        super().add_controller_component(self.control2)
         
     def update_animation_idle(self, flipped, speed):
         self.character_sprite.perform_animation("idle", flipped, speed)
@@ -106,42 +133,23 @@ class Character(Engine.PlayerObject):
 
     def update_animation_attack(self, flipped, speed):
         self.character_sprite.perform_animation("attack", flipped, speed)
+    
+    def check_if_no_input(self):
+        if (self.control2.no_key_pressed()):
+            character.update_animation_idle(self.flipped, 3)
+
 
 character = Character("character")
 character.character_sprite_init()
+character.character_controls_init()
 
-def player_go_up(obj):
-    obj.update_position(Engine.Vec2(0, -1))
-
-def player_go_down(obj):
-    obj.update_position(Engine.Vec2(0, 1))
-
-def player_go_right(obj):
-    obj.update_animation_run(False, 3)
-    obj.update_position(Engine.Vec2(1, 0))
-
-def player_go_left(obj):
-    obj.update_animation_run(True, 3)
-    obj.update_position(Engine.Vec2(-1, 0))
-
-control2 = Engine.ControllerComponent()
-control2.add_input_binding("W", player_go_up)
-control2.add_input_binding("S", player_go_down)
-control2.add_input_binding("A", player_go_left)
-control2.add_input_binding("D", player_go_right)
-character.add_controller_component(control2)
-character.update_animation_idle(True, 3)
-
-#engine.add_player_object(biden)
 engine.add_player_object(biden)
 engine.add_game_object(sky)
-engine.add_UF_callback(gravity)
+engine.add_player_object(character)
 engine.start()
 
 while not engine.program_ended():
     engine.input()
-    #sky.update()
-    #character.update()
     engine.update()
     engine.clear()
     engine.render()

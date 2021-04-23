@@ -102,7 +102,8 @@ PYBIND11_MODULE(Engine, m) {
 	py::class_<ControllerComponent>(m, "ControllerComponent")
 		.def(py::init<>(), py::return_value_policy::reference)   // our constructor
 		.def("add_input_binding", &ControllerComponent::addInputBinding)
-		.def("add_input_release_binding", &ControllerComponent::addInputReleaseBinding);
+		.def("add_input_release_binding", &ControllerComponent::addInputReleaseBinding)
+		.def("no_key_pressed", &ControllerComponent::noKeyPressed);
 		
 	py::class_<Vec2>(m, "Vec2")
 		.def(py::init<float, float>())

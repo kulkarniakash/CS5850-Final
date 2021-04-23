@@ -10,6 +10,7 @@ ControllerComponent::ControllerComponent() {
 ControllerComponent::~ControllerComponent() {
 	delete m_gameobject;
 	m_gameobject = NULL;
+	no_key_pressed = true;
 }
 
 void ControllerComponent::handleInput() {
@@ -90,4 +91,15 @@ void ControllerComponent::executeUnCallback() {
 			itr.second(m_gameobject);
 		}
 	}
+}
+
+bool ControllerComponent::noKeyPressed() {
+	auto it = keypressed.begin();
+	while (it != keypressed.end()) {
+		if (it->second == true) {
+			return false;
+		}
+		it++;
+	}
+	return true;
 }

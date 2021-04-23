@@ -39,11 +39,14 @@ public:
 	void addPlayerObject(PlayerObject* obj);
 
 	int getUnKeysNum();
+
+	bool noKeyPressed();
     
 private:
 	std::unordered_map<std::string, py::object> keyToFuncMap;
 	std::unordered_map<std::string, py::object> unkeyToFuncMap;
 	std::unordered_map<std::string, bool> keypressed;
 	PlayerObject* m_gameobject;
+	bool no_key_pressed = true;
 };
 #endif 

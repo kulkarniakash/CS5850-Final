@@ -136,6 +136,7 @@ void Engine::update() {
 			int size = contcomp->getKeysNum();
 			for (int i = 0; i < size; i++) {
 				contcomp->executeCallback();
+				contcomp->executeUnCallback();
 			}
 		}
 		obj->updateSprite();
