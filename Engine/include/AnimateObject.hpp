@@ -19,7 +19,7 @@ public:
 
 	void setVelocity(Vec2 vel);
 
-	void handleCollision(std::vector<GameObject*> objs);
+	void handleCollision(std::vector<GameObject*> objs, std::vector<AnimateObject*> animObjs);
 
 	void updateSprite();
 
