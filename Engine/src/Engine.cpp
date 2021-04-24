@@ -118,6 +118,20 @@ void Engine::addUFCallback(py::object func) {
 	uforce.addCallback(func);
 }
 
+void Engine::addTileManager(TileManager* tm) {
+	GameObject** tiles = tm->convertToGameObjects();
+	int tilesCount = tm->getTileCount();
+
+	if (tiles == nullptr) {
+		std::cout << "Error: could not convert tiles to game objects\n";
+		return;
+	}
+
+	for (int i = 0; i < tilesCount; i++) {
+		gameObjs.push_back(tiles[i]);
+	}
+}
+
 void Engine::update() {
 	for (auto obj : playerObjs) {
 		ControllerComponent* contcomp = obj->getControllerComponent();

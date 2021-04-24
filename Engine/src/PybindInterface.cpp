@@ -39,7 +39,14 @@ PYBIND11_MODULE(Engine, m) {
 		.def("add_animate_object", &Engine::addAnimateObject)
 		.def("add_player_object", &Engine::addPlayerObject)
 		.def("update", &Engine::update)
-		.def("add_UF_callback", &Engine::addUFCallback);
+		.def("add_UF_callback", &Engine::addUFCallback)
+		.def("add_tilemanager", &Engine::addTileManager);
+
+	py::class_<TileManager>(m, "TileManager")
+		.def(py::init<int, int, Vec2>(), py::return_value_policy::reference)
+		.def("load_tile_types", &TileManager::loadTileTypes)
+		.def("load_level_map", &TileManager::loadLevelMap)
+		.def("get_tile_count", &TileManager::getTileCount);
 
 	py::class_<SDL_Rect>(m, "Rect")
 		.def(py::init<>())

@@ -6,6 +6,11 @@ import Engine
 engine = Engine.Engine()
 engine.initialize_graphics_subsystem()
 
+tm = Engine.TileManager(100, 100, Engine.Vec2(0,0))
+Engine.TileManager.load_tile_types("./assets/Tiles")
+tm.load_level_map("./assets/new_level.txt")
+print("Tile count ", tm.get_tile_count())
+
 camera = Engine.Camera.get_instance()
 
 class Sky(Engine.GameObject):
@@ -42,7 +47,7 @@ sky = Sky("sky")
 sky.sprite_init()
 biden.sprite_init()
 
-#camera.bind_to_object(biden)
+camera.bind_to_object(biden)
 
 def go_up(obj):
     obj.update_position(Engine.Vec2(0, -obj.speed))
@@ -144,8 +149,9 @@ character.character_sprite_init()
 character.character_controls_init()
 
 engine.add_player_object(biden)
-engine.add_game_object(sky)
-engine.add_player_object(character)
+##engine.add_game_object(sky)
+##engine.add_player_object(character)
+engine.add_tilemanager(tm)
 engine.start()
 
 while not engine.program_ended():

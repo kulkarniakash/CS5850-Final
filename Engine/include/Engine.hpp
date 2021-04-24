@@ -13,6 +13,7 @@
 #include <vector>
 #include "PlayerObject.hpp"
 #include "UniversalForce.hpp"
+#include "TileManager.hpp"
 
 #include <pybind11/pybind11.h>
 
@@ -78,6 +79,8 @@ public:
 	void addPlayerObject(PlayerObject* obj);
 
 	void addUFCallback(py::object);
+
+	void addTileManager(TileManager* tm);
 
 private:
 

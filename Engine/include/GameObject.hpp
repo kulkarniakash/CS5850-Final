@@ -12,6 +12,8 @@ class CharacterSpriteComponent;
 class GameObject {
 public:
     
+	GameObject();
+
     //constructs a gameObject with no components
     GameObject(std::string gameObjectName, float width, float height);
 
