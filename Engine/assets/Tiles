@@ -1,8 +1,7 @@
-1 ./Assets/BGSky.jpg
-2 ./Assets/CoalTile.jpg
-3 ./Assets/DryTile.jpg
-4 ./Assets/GrassTile.jpg
-5 ./Assets/IceTile.jpg
-6 ./Assets/LavaTile.jpg
-7 ./Assets/MetalTile.jpg
-8 ./Assets/WoodTile.jpg
+1 ./assets/CoalTile.jpg
+2 ./assets/DryTile.jpg
+3 ./assets/GrassTile.jpg
+4 ./assets/IceTile.jpg
+5 ./assets/LavaTile.jpg
+6 ./assets/MetalTile.jpg
+7 ./assets/WoodTile.jpg
