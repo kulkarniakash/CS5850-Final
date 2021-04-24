@@ -82,11 +82,6 @@ public:
 			}
 			i++;
 		}
-
-		std::cout << "Tile names:\n";
-		for (auto itr : tiletypes) {
-			std::cout << itr.first << " " << itr.second<<std::endl;
-		}
 	}
 
 	// Get a specific tile type's relative path by the input tile type.

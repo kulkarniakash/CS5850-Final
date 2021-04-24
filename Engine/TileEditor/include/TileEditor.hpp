@@ -5,11 +5,16 @@
 #include<Camera.h>
 #include<TileManager.hpp>
 #include<TileMenu.hpp>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
 #if defined(LINUX) || defined(MINGW)
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #else // This works for Mac
 #include <SDL.h>
+#include<SDL_image.h>
 #endif
 
 enum class Click {
@@ -37,7 +42,7 @@ public:
 	// tileTextures = hashmap of TileType: SDL_Texture*, tileTypeGrid= the grid dhowing the position of tiles (by default is NULL)
 	TileEditor(Vec2 pos, int width, int height, int tileWidth, int tileHeight);
 
-	static unordered_map<TileType, std::string> tilePaths;
+	static unordered_map<int, std::string> tilePaths;
 
 	// to be called before constructing object!!
 	static void loadTileTypes(std::string path, SDL_Renderer* ren) {
@@ -57,16 +62,16 @@ public:
 
 		int i = 0;
 		std::string cur = "";
-		TileType type = TileType::Empty;
+		int type = 0;
 		while (gData[i] != 0) {
 			if (gData[i] == ' ') {
-				type = static_cast<TileType>(std::stoi(cur));
+				type = (std::stoi(cur));
 				cur = "";
 			}
 			else if (gData[i] == '\r') {
 				tilePaths[type] = cur;
 				cur = "";
-				type = TileType::Empty;
+				type = 0;
 				i++;
 			}
 			else {
@@ -76,12 +81,23 @@ public:
 		}
 
 		SDL_Texture* empty = NULL;
-		tileTextures.insert(make_pair(TileType::Empty, empty));
+		tileTextures.insert(make_pair(0, empty));
 		for (auto tilet : tilePaths) {
-			SDL_Surface* newType = SDL_LoadBMP(tilet.second.c_str());
-			SDL_Texture* newText = SDL_CreateTextureFromSurface(ren, newType);
+			// SDL_Surface* newType = SDL_LoadBMP(tilet.second.c_str());
+			// SDL_Texture* newText = SDL_CreateTextureFromSurface(ren, newType);
+			SDL_Surface* image;
+			SDL_RWops* rwop;
+			rwop = SDL_RWFromFile(tilet.second.c_str(), "rb");
+			image = IMG_LoadJPG_RW(rwop);
+			if (!image) {
+				printf("IMG_LoadJPG_RW: %s\n", IMG_GetError());
+			}
+
+			SDL_Texture* newText = SDL_CreateTextureFromSurface(ren, image);
 			TileManager::tileTextures.insert(make_pair(tilet.first, newText));
 		}
+
+		std::cout << "loaded tile types\n";
 	}
 
 	// takes in as input the coordinates of the click and the camera and decides what to do based on whether the tile menu region was

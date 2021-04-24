@@ -4,7 +4,7 @@ Tile::Tile () {
 
 }
 
-Tile::Tile(Vec2 pos, int width, int height, SDL_Texture* texture, TileType type, SDL_Rect src): pos ( pos ), width(width), height(height), texture(texture), src(src), type(type) {
+Tile::Tile(Vec2 pos, int width, int height, SDL_Texture* texture, int type, SDL_Rect src): pos ( pos ), width(width), height(height), texture(texture), src(src), type(type) {
 
 }
 
@@ -20,7 +20,7 @@ int Tile::getHeight() {
 	return height;
 }
 
-TileType Tile::getTileType() {
+int Tile::getTileType() {
 	return type;
 }
 

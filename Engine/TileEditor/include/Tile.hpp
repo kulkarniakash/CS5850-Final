@@ -13,7 +13,7 @@
 *Enum for specifying what tile type we wish to
 *use. If you want to add a new tile type, add it here first
 */
-enum TileType {
+/*enum TileType {
 	Empty = 0,
 	Dry,
 	Coal,
@@ -23,7 +23,7 @@ enum TileType {
 	Wood,
 	Metal,
 	TileNum
-};
+};*/
 
 /**
 *Represents one tile in the tile grid. Note that the position of the tile is the initial
@@ -37,14 +37,14 @@ public:
 	// Takes in position of the top-left corner of the tile, the tile width and height in pixels
 	// the texture to be shown when the tile renders, and the source of the part of the texture to 
 	// be rendered (by default, the entire texture will be rendered (hence setting the sdl rect to 0)
-	Tile(Vec2 pos, int width, int height, SDL_Texture* texture, TileType type, SDL_Rect src = SDL_Rect{ 0, 0, 0, 0 });
+	Tile(Vec2 pos, int width, int height, SDL_Texture* texture, int type, SDL_Rect src = SDL_Rect{ 0, 0, 0, 0 });
 
 	// Position of Top-left corner of tile
 	Vec2 getPos();
 
 	int getWidth();
 	int getHeight();
-	TileType getTileType();
+	int getTileType();
 	SDL_Texture* getTexture();
 
 	// Takes in the renderer and a camera object in order to render the tile in the appropriate position.
@@ -60,6 +60,6 @@ private:
 	// part of the texture to be rendered.
 	SDL_Rect src;
 
-	TileType type;
+	int type;
 };
 #endif

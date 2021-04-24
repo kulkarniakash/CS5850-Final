@@ -147,7 +147,7 @@ GameObject** TileManager::convertToGameObjects() {
 			if (type != 0) {
 				Vec2 position = pos + Vec2(tileWidth * j, tileHeight * i);
 				SpriteComponent* sprite = new SpriteComponent(tiletypes[type], SDL_Rect{ -1, -1, -1, -1 });
-				TransformComponent* tran = new TransformComponent(pos, Vec2(0, 0));
+				TransformComponent* tran = new TransformComponent(position, Vec2(0, 0));
 				tiles[count] = new GameObject(tiletypes[type], tileWidth, tileHeight);
 				tiles[count]->addTransformComponent(tran);
 				tiles[count]->addSpriteComponent(sprite);

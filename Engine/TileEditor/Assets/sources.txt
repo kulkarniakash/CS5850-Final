@@ -1,8 +1,0 @@
-DryTile: Photo by Francesco Ungaro from Pexels
-CoalTile: Photo by Dexter Fernandes from Pexels
-LavaTile: https://www.pexels.com/photo/red-and-orange-solar-flare-73873/
-IceTile: Photo by Aleksandr Slobodianyk from Pexels
-MetalTile: Photo by Engin Akyurt from Pexels
-GrassTile: Photo by Kromatos from Pexels
-WoodTile: Photo by FWStudio from Pexels
-BGSky: Photo by Elia Clerici from Pexels

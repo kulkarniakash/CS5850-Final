@@ -11,11 +11,11 @@ extern const int SCREEN_HEIGHT;
 class TileMenu : public TileManager {
 public:
 	TileMenu();
-	TileMenu(Vec2 pos, int width, int height, int tileWidth, int tileHeight, unordered_map<TileType, SDL_Texture*> tileTextures);
+	TileMenu(Vec2 pos, int width, int height, int tileWidth, int tileHeight, unordered_map<int, SDL_Texture*> tileTextures);
 	bool handleClick(Vec2 clickPos);
 
 	// after a selection is made, the selected tile type is returned
-	TileType getSelectedTileType();
+	int getSelectedTileType();
 	void render(SDL_Renderer* ren, Camera* camera);
 
 private:

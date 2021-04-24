@@ -1,7 +1,7 @@
 #include<TileEditor.hpp>
 #include<fstream>
 
-std::unordered_map<TileType, std::string> TileEditor::tilePaths = std::unordered_map<TileType, std::string>{};
+std::unordered_map<int, std::string> TileEditor::tilePaths = std::unordered_map<int, std::string>{};
 
 TileEditor::TileEditor(Vec2 pos, int width, int height, int tileWidth, int tileHeight) : TileManager(pos, 
 	width, height, tileWidth, tileHeight) {
@@ -25,11 +25,11 @@ void TileEditor::handleClick(Vec2 clickPos, Camera* camera, Click click) {
 			
 			
 
-			TileType newTileType = tileMenu.getSelectedTileType();
+			int newTileType = tileMenu.getSelectedTileType();
 			
 
 			if (click == Click::Right) {
-				newTileType = TileType::Empty;
+				newTileType = 0;
 			}
 
 			SDL_Texture* newTexture = TileManager::tileTextures.at(newTileType);
@@ -101,7 +101,7 @@ void TileEditor::loadLevelMap(std::string path) {
 	while (gData[i] != 0) {
 		if (gData[i] == ' ' || gData[i] == '\r') {
 			count++;
-			TileType type = static_cast<TileType>(stoi(cur));
+			int type = (stoi(cur));
 			cur = "";
 			Vec2 pos(c * tileWidth, r * tileHeight);
 			tileGrid[r][c] = Tile(pos, tileWidth, tileHeight, TileManager::tileTextures.at(type), type);

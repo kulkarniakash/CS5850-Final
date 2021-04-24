@@ -25,7 +25,7 @@ class TileManager {
 public:
 	TileManager();
 
-	static unordered_map<TileType, SDL_Texture*> tileTextures;
+	static unordered_map<int, SDL_Texture*> tileTextures;
 
 	// Takes in the position of the otp-left corner of the entire grid, width and height of the entire tile grid( width= no. of horizontal tiles in a row, height= no. of vertical tiles in a column), 
 	// tileTextures = hashmap of TileType: SDL_Texture*, tileTypeGrid= the grid dhowing the position of tiles (by default is NULL)
@@ -46,7 +46,7 @@ protected:
 	// array of tile objects
 	Tile** tileGrid;
 	// tileTypeGrid= the grid dhowing the position of tiles (by default is NULL)
-	TileType** tileTypeGrid;
+	int** tileTypeGrid;
 
 	int width, height;
 	int tileWidth, tileHeight;

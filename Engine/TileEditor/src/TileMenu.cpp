@@ -5,7 +5,7 @@ TileMenu::TileMenu() {
 
 }
 
-TileMenu::TileMenu(Vec2 pos, int width, int height, int tileWidth, int tileHeight, unordered_map<TileType, SDL_Texture*> tileTextures) :
+TileMenu::TileMenu(Vec2 pos, int width, int height, int tileWidth, int tileHeight, unordered_map<int, SDL_Texture*> tileTextures) :
 	TileManager(pos, width, height, tileWidth, tileHeight) {
 
 	// tile selection represents the menu of tiles that can be placed on the grid.
@@ -28,7 +28,7 @@ TileMenu::TileMenu(Vec2 pos, int width, int height, int tileWidth, int tileHeigh
 
 	while (i < height) {
 		while (j < width) {
-			tileSelection[i][j] = Tile(pos + Vec2(j * tileWidth, i * tileHeight), tileWidth, tileHeight, NULL, TileType::Empty);
+			tileSelection[i][j] = Tile(pos + Vec2(j * tileWidth, i * tileHeight), tileWidth, tileHeight, NULL, 0);
 			++j;
 		}
 		j = 0;
@@ -51,7 +51,7 @@ bool TileMenu::handleClick(Vec2 clickPos) {
 }
 
 // get the current selection of tile
-TileType TileMenu::getSelectedTileType() {
+int TileMenu::getSelectedTileType() {
 	return tileSelection[selectedTileTypeIndex[0]][selectedTileTypeIndex[1]].getTileType();
 }
 

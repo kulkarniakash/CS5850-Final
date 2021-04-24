@@ -8,6 +8,7 @@
 #include<Direction.h>
 #include<Timer.h>
 #include<stdio.h>
+#include<iostream>
 
 // Create a Tile Editor
 TileEditor* myTileEditor;
@@ -239,14 +240,11 @@ void Engine::Start(){
 			grid[i][j] = TileType::Empty;
 		}
 	}*/
-	TileEditor::loadTileTypes("./Assets/Tiles", m_renderer->GetRenderer());
+	TileEditor::loadTileTypes("./assets/Tiles", m_renderer->GetRenderer());
 	myTileEditor = new TileEditor(Vec2(0, 0), 0, 0, 100, 100);
+	std::cout << "entering loadlevelmap\n";
 	myTileEditor->loadLevelMap(LEVEL_INPUT_FILE);
-    // Generate a a simple tilemap
-    // myTileEditor->GenerateSimpleMap();
-    // Print out the map to the console
-    // so we can see what was created.
-    // myTileMap->PrintMap();
+	std::cout << "exited loadlelvelmap\n";
 
 }
 

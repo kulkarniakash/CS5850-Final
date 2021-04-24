@@ -1,6 +1,6 @@
 #include<TileManager.hpp>
 
-unordered_map<TileType, SDL_Texture*> TileManager::tileTextures;
+unordered_map<int, SDL_Texture*> TileManager::tileTextures;
 
 TileManager::TileManager() {
 
@@ -13,11 +13,11 @@ height(height), tileWidth(tileWidth), tileHeight(tileHeight){
 	tileGrid = new Tile * [height];
 
 	// if tileTypeGrid is null, everything is the empty tile
-		this->tileTypeGrid = new TileType * [height];
+		this->tileTypeGrid = new int * [height];
 		for (int i = 0; i < height; i++) {
-			this->tileTypeGrid[i] = new TileType[width];
+			this->tileTypeGrid[i] = new int[width];
 			for (int j = 0; j < width; j++) {
-				this->tileTypeGrid[i][j] = TileType::Empty;
+				this->tileTypeGrid[i][j] = 0;
 			}
 		}
 

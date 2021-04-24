@@ -8,14 +8,31 @@ engine.initialize_graphics_subsystem()
 
 tm = Engine.TileManager(100, 100, Engine.Vec2(0,0))
 Engine.TileManager.load_tile_types("./assets/Tiles")
-tm.load_level_map("./assets/new_level.txt")
-print("Tile count ", tm.get_tile_count())
+tm.load_level_map("./assets/level1")
 
 camera = Engine.Camera.get_instance()
 
+
+class Biden(Engine.PlayerObject):
+    def __init__(self, name):
+        super().__init__(name, 25, 25)
+        self.keypressed = {"W": False, "A": False, "S": False, "D": False}
+        self.speed = 3
+
+    def sprite_init(self):
+        dest = Engine.Rect()
+        src = Engine.Rect()
+        dest.x , dest.y, dest.w, dest.h = 0, 0, 25, 35
+        src.x, src.y, src.w, src.h = 0, 0, -1, -1
+        self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0,0))
+        super().add_transform_component(self.tran)
+        self.sprite = Engine.SpriteComponent("./assets/biden.jpg", src)
+        super().add_sprite_component(self.sprite)
+        
+
 class Sky(Engine.GameObject):
     def __init__(self, name):
-        super().__init__(name, 100, 150)
+        super().__init__(name, 100, 100)
 
     def sprite_init(self):
         dest = Engine.Rect()
@@ -26,60 +43,54 @@ class Sky(Engine.GameObject):
         super().add_transform_component(self.tran)
         self.sprite = Engine.SpriteComponent("./assets/BGSky.jpg", src)
         super().add_sprite_component(self.sprite)
-
-class Biden(Engine.PlayerObject):
-    def __init__(self, name):
-        super().__init__(name, 20, 30)
-        self.speed = 3
-
-    def sprite_init(self):
-        dest = Engine.Rect()
-        src = Engine.Rect()
-        dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 150
-        src.x, src.y, src.w, src.h = 0, 0, -1, -1
-        self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0,0))
-        super().add_transform_component(self.tran)
-        self.sprite = Engine.SpriteComponent("./assets/biden.jpg", src)
-        super().add_sprite_component(self.sprite)
+        
         
 biden = Biden("biden")
 sky = Sky("sky")
-sky.sprite_init()
 biden.sprite_init()
-
-camera.bind_to_object(biden)
+sky.sprite_init()
 
 def go_up(obj):
     obj.update_position(Engine.Vec2(0, -obj.speed))
+##    obj.update()
 
 def go_down(obj):
     obj.update_position(Engine.Vec2(0, obj.speed))
+##    obj.update()
 
 def go_right(obj):
     obj.update_position(Engine.Vec2(obj.speed, 0))
+##    obj.update()
 
 def go_left(obj):
     obj.update_position(Engine.Vec2(-obj.speed, 0))
+##    obj.update()
+
+def radial_gravity(obj):
+    w = obj.get_sprite_component().get_width()
+    h = obj.get_sprite_component().get_height()
+    pos = obj.get_transform_component().get_position()
+    obj.update_velocity( Engine.Vec2(0.005 *(250 - pos.x - w / 2), 0.005 *(375 - pos.y - h / 2)))
 
 def gravity(obj):
-    w = obj.get_width()
-    h = obj.get_height()
-    pos = obj.get_transform_component().get_position()
-    pos_sky = sky.get_transform_component().get_position()
-    obj.update_velocity( Engine.Vec2(0.005 *(pos_sky.x + sky.get_width() - pos.x - w / 2), 0.005 *(pos_sky.y + sky.get_height() - pos.y - h / 2)))
+    obj.update_velocity(Engine.Vec2(0, 1))
 
 control = Engine.ControllerComponent()
 control.add_input_binding("W", go_up)
 control.add_input_binding("S", go_down)
 control.add_input_binding("A", go_left)
 control.add_input_binding("D", go_right)
+##control.add_input_release_binding("W", key_release_w)
+##control.add_input_release_binding("S", key_release_s)
+##control.add_input_release_binding("A", key_release_a)
+##control.add_input_release_binding("D", key_release_d)
 
-biden.add_controller_component(control)
 
 class Character(Engine.PlayerObject):
     def __init__(self, name):
-        super().__init__(name, 100, 200)
+        super().__init__(name, 80, 80)
         self.flipped = False
+        self.speed = 4
 
     def character_sprite_init(self):
         dest = Engine.Rect()
@@ -97,20 +108,20 @@ class Character(Engine.PlayerObject):
         super().add_character_sprite_component(self.character_sprite)
     
     def player_go_up(self, obj):
-        obj.update_position(Engine.Vec2(0, -1))
+        obj.update_position(Engine.Vec2(0, -self.speed))
 
     def player_go_down(self, obj):
-        obj.update_position(Engine.Vec2(0, 1))
+        obj.update_position(Engine.Vec2(0, self.speed))
 
     def player_go_right(self, obj):
         self.flipped = False
         obj.update_animation_run(self.flipped, 3)
-        obj.update_position(Engine.Vec2(1, 0))
+        obj.update_position(Engine.Vec2(self.speed, 0))
 
     def player_go_left(self, obj):
         self.flipped = True
         obj.update_animation_run(self.flipped, 3)
-        obj.update_position(Engine.Vec2(-1, 0))
+        obj.update_position(Engine.Vec2(-self.speed, 0))
 
     def player_release_key(self, obj):
         self.check_if_no_input()
@@ -148,11 +159,19 @@ character = Character("character")
 character.character_sprite_init()
 character.character_controls_init()
 
-engine.add_player_object(biden)
-##engine.add_game_object(sky)
-##engine.add_player_object(character)
+camera.bind_to_object(character)
+biden.add_controller_component(control)
+
+##obj = Engine.GameObject("sky")
+##obj.add_sprite_component(sprite)
+##tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
+##obj.add_transform_component(tran)
+
+engine.add_player_object(character)
+engine.add_UF_callback(gravity)
 engine.add_tilemanager(tm)
 engine.start()
+
 
 while not engine.program_ended():
     engine.input()
@@ -161,3 +180,4 @@ while not engine.program_ended():
     engine.render()
     engine.delay(20)
 engine.shutdown()
+

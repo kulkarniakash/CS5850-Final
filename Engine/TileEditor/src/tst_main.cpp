@@ -7,8 +7,8 @@
 #include "tst_GraphicsEngineRenderer.hpp" // The renderering engine
 #include <string>
 
-std::string LEVEL_INPUT_FILE = "./Assets/level1";
-std::string LEVEL_OUTPUT_FILE = "./Assets/level1";
+std::string LEVEL_INPUT_FILE = "./assets/level1";
+std::string LEVEL_OUTPUT_FILE = "./assets/level1";
 
 /*@mainpage Tile Editor
 *<table>

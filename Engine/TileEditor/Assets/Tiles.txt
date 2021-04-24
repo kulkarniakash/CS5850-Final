@@ -1,8 +1,0 @@
-1 ./Assets/BGSky.bmp
-2 ./Assets/CoalTile.bmp
-3 ./Assets/DryTile.bmp
-4 ./Assets/GrassTile.bmp
-5 ./Assets/IceTile.bmp
-6 ./Assets/LavaTile.bmp
-7 ./Assets/MetalTile.bmp
-8 ./Assets/WoodTile.bmp
