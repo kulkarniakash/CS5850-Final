@@ -51,19 +51,19 @@ biden.sprite_init()
 sky.sprite_init()
 
 def go_up(obj):
-    obj.update_position(Engine.Vec2(0, -obj.speed))
+    obj.update_velocity(Engine.Vec2(0, -obj.speed))
 ##    obj.update()
 
 def go_down(obj):
-    obj.update_position(Engine.Vec2(0, obj.speed))
+    obj.update_velocity(Engine.Vec2(0, obj.speed))
 ##    obj.update()
 
 def go_right(obj):
-    obj.update_position(Engine.Vec2(obj.speed, 0))
+    obj.update_velocity(Engine.Vec2(obj.speed, 0))
 ##    obj.update()
 
 def go_left(obj):
-    obj.update_position(Engine.Vec2(-obj.speed, 0))
+    obj.update_velocity(Engine.Vec2(-obj.speed, 0))
 ##    obj.update()
 
 def radial_gravity(obj):
@@ -76,10 +76,10 @@ def gravity(obj):
     obj.update_velocity(Engine.Vec2(0, 1))
 
 control = Engine.ControllerComponent()
-control.add_input_binding("W", go_up)
-control.add_input_binding("S", go_down)
-control.add_input_binding("A", go_left)
-control.add_input_binding("D", go_right)
+control.add_input_binding("W", go_up, False)
+control.add_input_binding("S", go_down, False)
+control.add_input_binding("A", go_left, False)
+control.add_input_binding("D", go_right, False)
 ##control.add_input_release_binding("W", key_release_w)
 ##control.add_input_release_binding("S", key_release_s)
 ##control.add_input_release_binding("A", key_release_a)
@@ -108,34 +108,45 @@ class Character(Engine.PlayerObject):
         super().add_character_sprite_component(self.character_sprite)
     
     def player_go_up(self, obj):
-        obj.update_position(Engine.Vec2(0, -self.speed))
+        obj.update_velocity(Engine.Vec2(0, -5*self.speed))
+
 
     def player_go_down(self, obj):
-        obj.update_position(Engine.Vec2(0, self.speed))
+        obj.update_velocity(Engine.Vec2(0, self.speed))
 
     def player_go_right(self, obj):
         self.flipped = False
         obj.update_animation_run(self.flipped, 3)
-        obj.update_position(Engine.Vec2(self.speed, 0))
+        obj.update_velocity(Engine.Vec2(self.speed, 0))
 
     def player_go_left(self, obj):
         self.flipped = True
         obj.update_animation_run(self.flipped, 3)
-        obj.update_position(Engine.Vec2(-self.speed, 0))
+        obj.update_velocity(Engine.Vec2(-self.speed, 0))
 
-    def player_release_key(self, obj):
+    def player_release_key_up(self, obj):
         self.check_if_no_input()
+
+    def player_release_key_right(self, obj):
+        tran = self.get_transform_component()
+        obj.update_velocity(Engine.Vec2(-tran.get_velocity().x, 0))
+        
+
+    def player_release_key_left(self, obj):
+        tran = self.get_transform_component()
+        obj.update_velocity(Engine.Vec2(-tran.get_velocity().x, 0))
 
     def character_controls_init(self):
         self.control2 = Engine.ControllerComponent()
-        self.control2.add_input_binding("W", self.player_go_up)
-        self.control2.add_input_binding("S", self.player_go_down)
-        self.control2.add_input_binding("A", self.player_go_left)
-        self.control2.add_input_binding("D", self.player_go_right)
-        self.control2.add_input_release_binding("W", self.player_release_key)
-        self.control2.add_input_release_binding("S", self.player_release_key)
-        self.control2.add_input_release_binding("A", self.player_release_key)
-        self.control2.add_input_release_binding("D", self.player_release_key)
+        self.control2.add_input_binding("W", self.player_go_up, False)
+        self.control2.add_input_binding("S", self.player_go_down, False)
+        self.control2.add_input_binding("D", self.player_go_right, False)
+        self.control2.add_input_binding("A", self.player_go_left, False)
+        self.control2.add_input_release_binding("W", self.player_release_key_up, True)
+        self.control2.add_input_release_binding("S", self.player_release_key_up, True)
+        self.control2.add_input_release_binding("D", self.player_release_key_right, False)
+        self.control2.add_input_release_binding("A", self.player_release_key_left, False)
+
         super().add_controller_component(self.control2)
         
     def update_animation_idle(self, flipped, speed):

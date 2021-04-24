@@ -137,12 +137,12 @@ void Engine::update() {
 		ControllerComponent* contcomp = obj->getControllerComponent();
 
 		if (contcomp != nullptr) {
-			std::string* keys = contcomp->getKeys();
-			int size = contcomp->getKeysNum();
-			for (int i = 0; i < size; i++) {
+			// std::string* keys = contcomp->getKeys();
+			// int size = contcomp->getKeysNum();
+			// for (int i = 0; i < size; i++) {
 				contcomp->executeCallback();
 				contcomp->executeUnCallback();
-			}
+			// }
 		}
 		obj->updateSprite();
 		obj->updateTransform();

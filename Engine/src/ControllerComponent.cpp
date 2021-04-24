@@ -17,10 +17,12 @@ void ControllerComponent::handleInput() {
     
 }
 
-void ControllerComponent::addInputBinding(std::string key, py::object callback) {
+void ControllerComponent::addInputBinding(std::string key, py::object callback, bool isPersistent) {
 	if (keymap.find(key) != keymap.end()) {
 		keyToFuncMap.insert(std::make_pair(key, callback));
+		keyToPersist.insert(std::make_pair(key, isPersistent));
 		keypressed.insert(std::make_pair(key, false));
+		prevKeyPressed.insert(std::make_pair(key, false));
 	}
 	else {
 		std::cout << "Error: key does not exist\n";
@@ -46,10 +48,36 @@ void ControllerComponent::addPlayerObject(PlayerObject* obj) {
 }
 
 void ControllerComponent::setKeyTo(int key, bool value) {
+
 	if (keymapinv.find(key) != keymapinv.end()) {
 		auto it = keypressed.find(keymapinv.at(key));
 		if (it != keypressed.end()) {
+			if (it->second != value) {
+				if (value) {
+					executeNonPersistCallback(key);
+				}
+				else {
+					executeNonPersistUnCallback(key);
+				}
+			}
+
 			it->second = value;
+		}
+	}
+}
+
+void ControllerComponent::executeNonPersistCallback(int key) {
+	for (auto itr : keyToFuncMap) {
+		if (!keyToPersist.at(itr.first) && keymapinv.at(key) == itr.first) {
+			itr.second(m_gameobject);
+		}
+	}
+}
+
+void ControllerComponent::executeNonPersistUnCallback(int key) {
+	for (auto itr : unkeyToFuncMap) {
+		if (!unkeyToPersist.at(itr.first) && keymapinv.at(key) == itr.first) {
+			itr.second(m_gameobject);
 		}
 	}
 }
@@ -59,7 +87,7 @@ void ControllerComponent::executeCallback() {
 		keyToFuncMap.at(key)(m_gameobject);
 	}*/
 	for (auto itr : keyToFuncMap) {
-		if (keypressed.at(itr.first)) {
+		if (keypressed.at(itr.first) && keyToPersist.at(itr.first)) {
 			itr.second(m_gameobject);
 		}
 	}
@@ -69,11 +97,13 @@ int ControllerComponent::getKeysNum() {
 	return keyToFuncMap.size();
 }
 
-void ControllerComponent::addInputReleaseBinding(std::string key, py::object callback) {
+void ControllerComponent::addInputReleaseBinding(std::string key, py::object callback, bool isPersistent) {
 	if (keymap.find(key) != keymap.end()) {
 		unkeyToFuncMap.insert(std::make_pair(key, callback));
+		unkeyToPersist.insert(std::make_pair(key, isPersistent));
 		if (keypressed.find(key) == keypressed.end()) {
 			keypressed.insert(std::make_pair(key, false));
+			prevKeyPressed.insert(std::make_pair(key, false));
 		}
 	}
 	else {
@@ -87,7 +117,7 @@ int ControllerComponent::getUnKeysNum() {
 
 void ControllerComponent::executeUnCallback() {
 	for (auto itr : unkeyToFuncMap) {
-		if (!keypressed.at(itr.first)) {
+		if (!keypressed.at(itr.first) && unkeyToPersist.at(itr.first)) {
 			itr.second(m_gameobject);
 		}
 	}

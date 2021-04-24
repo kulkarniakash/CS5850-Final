@@ -7,16 +7,22 @@ CollisionComponent::CollisionComponent(AnimateObject* obj) {
 
 void CollisionComponent::handleCollisions(std::vector<GameObject*> objs) {
 	bool collided = false;
+	Vec2 corr;
 	for (auto obj : objs) {
-		Vec2 corr = getCorrection(obj);
+		corr = getCorrection(obj);
 		if (corr != Vec2(0, 0)) {
-			collided = true;
+			Vec2 curr_vel = m_animateobject->getTransformComponent()->getVelocity();
+			if (corr.x == 0) {
+				m_animateobject->setVelocity(Vec2(curr_vel.x, 0));
+			}
+			else if (corr.y == 0) {
+				m_animateobject->setVelocity(Vec2(0, curr_vel.y));
+			}
+			else {
+				m_animateobject->setVelocity(Vec2(0, 0));
+			}
 		}
 		m_animateobject->updatePosition(corr);
-	}
-
-	if (collided) {
-		m_animateobject->setVelocity(Vec2(0, 0));
 	}
 }
 
@@ -57,7 +63,7 @@ Vec2 CollisionComponent::getCorrection(GameObject* obj) {
 	float prevTop = prevPos.y;
 	float prevBottom = prevPos.y + m_animateobject->getHeight();
 
-	if (prevRight <= leftOther) {
+	/*if (prevRight <= leftOther) {
 		return Vec2(-(right - leftOther), 0);
 	}
 
@@ -71,7 +77,7 @@ Vec2 CollisionComponent::getCorrection(GameObject* obj) {
 
 	if (prevBottom <= topOther) {
 		return Vec2(0, -(bottom - topOther));
-	}
+	}*/
 
 	float leftCorr = right - leftOther;
 	float rightCorr = rightOther - left;

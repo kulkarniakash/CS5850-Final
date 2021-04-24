@@ -22,9 +22,9 @@ public:
     //handles the input of the controller, returns the string of the event 
     void handleInput();
 
-	void addInputBinding(std::string key, py::object callback);
+	void addInputBinding(std::string key, py::object callback, bool isPersistent);
 
-	void addInputReleaseBinding(std::string key, py::object callback);
+	void addInputReleaseBinding(std::string key, py::object callback, bool isPersistent);
 
 	std::string* getKeys();
 
@@ -43,9 +43,16 @@ public:
 	bool noKeyPressed();
     
 private:
+	void executeNonPersistCallback(int key);
+
+	void executeNonPersistUnCallback(int key);
+
 	std::unordered_map<std::string, py::object> keyToFuncMap;
+	std::unordered_map<std::string, bool> keyToPersist;
 	std::unordered_map<std::string, py::object> unkeyToFuncMap;
+	std::unordered_map<std::string, bool> unkeyToPersist;
 	std::unordered_map<std::string, bool> keypressed;
+	std::unordered_map<std::string, bool> prevKeyPressed;
 	PlayerObject* m_gameobject;
 	bool no_key_pressed = true;
 };
