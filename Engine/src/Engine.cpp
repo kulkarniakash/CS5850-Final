@@ -14,6 +14,7 @@ const std::string fontPath = "assets/lazy.ttf";
 const std::string imagePath = "assets/BGSky.jpg";
 const std::string musicPath = "assets/bgmusic.wav";
 
+
 	/*TTF_Font *font = NULL;
 	SDL_Color tcolor;
 
@@ -165,18 +166,6 @@ void Engine::update() {
 	}
 
 	Camera::getInstance().update();
-
-	for (auto obj : playerObjs) {
-		Camera::getInstance().correctObj(obj);
-	}
-
-	for (auto obj : animateObjs) {
-		Camera::getInstance().correctObj(obj);
-	}
-
-	for (auto obj : gameObjs) {
-		Camera::getInstance().correctObj(obj);
-	}
 }
 
 void Engine::Input()

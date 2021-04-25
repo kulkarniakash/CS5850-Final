@@ -81,7 +81,10 @@ PYBIND11_MODULE(Engine, m) {
 	py::class_<PlayerObject, AnimateObject>(m, "PlayerObject")
 		.def(py::init<std::string, float, float>(), py::return_value_policy::reference)
 		.def("add_controller_component", &PlayerObject::addControllerComponent)
-		.def("get_controller_component", &PlayerObject::getControllerComponent, py::return_value_policy::reference);
+		.def("get_controller_component", &PlayerObject::getControllerComponent, py::return_value_policy::reference)
+		.def("update_controller_velocity", &PlayerObject::updateControllerVelocity)
+		.def("set_controller_velocity", &PlayerObject::setControllerVelocity)
+		.def("get_controller_velocity", &PlayerObject::getControllerVelocity);
 
 	py::class_<TransformComponent>(m, "TransformComponent")
 		.def(py::init<const Vec2&, const Vec2&>())   // our constructor

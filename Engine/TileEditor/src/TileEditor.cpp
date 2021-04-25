@@ -105,9 +105,6 @@ void TileEditor::loadLevelMap(std::string path) {
 			cur = "";
 			Vec2 pos(c * tileWidth, r * tileHeight);
 			tileGrid[r][c] = Tile(pos, tileWidth, tileHeight, TileManager::tileTextures.at(type), type);
-			if (r == 10) {
-				printf("bad type: %d", tileGrid[r][c].getTileType());
-			}
 			if (gData[i] == '\r') {
 				c = 0;
 				r++;

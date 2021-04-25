@@ -27,7 +27,7 @@ elif platform.system()=="Windows":
     ARGUMENTS="-g -D MINGW -std=c++17 -static-libgcc -static-libstdc++" 
     INCLUDE_DIR="-I./TileEditor/include/ -I./../common/thirdparty/old/glm/"
     EXECUTABLE="./bin/tile_editor"
-    LIBRARIES="-L./lib/ -lmingw32 -lSDL2_image -lSDL2main -lSDL2 -mwindows"
+    LIBRARIES="-L./lib/ -lmingw32 -lSDL2_image -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_mixer -mwindows"
 # (2)=================== Platform specific configuration ===================== #
 
 # (3)====================== Building the Executable ========================== #

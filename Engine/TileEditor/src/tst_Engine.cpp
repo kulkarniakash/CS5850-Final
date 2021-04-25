@@ -28,8 +28,13 @@ const string WOOD_TILE_SRC = "./Assets/WoodTiel.bmp";
 const string METAL_TILE_SRC = "./Assets/MetalTile.bmp";
 const string BG_SKY_SRC = "./Assets/BGSky.bmp";
 
+const std::string fontfile = "assets/lazy.ttf";
+
+
 extern string LEVEL_INPUT_FILE;
 extern string LEVEL_OUTPUT_FILE;
+extern int TILE_WIDTH;
+extern int TILE_HEIGHT;
 
 SDL_Surface* bgSkySrf = SDL_LoadBMP(BG_SKY_SRC.c_str());
 SDL_Texture* bgSkyTxt = NULL;
@@ -39,6 +44,7 @@ SDL_Texture* bgSkyTxt = NULL;
 // Takes in dimensions of window.
 Engine::Engine(){
 	camera = new Camera(Vec2(0,0), 10, 10);
+	text = NULL;
 }
 
 
@@ -78,6 +84,7 @@ void Engine::Input(bool *quit, SDL_Keycode& code){
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 			if (e.button.button == SDL_BUTTON_LEFT) {
 				click = Click::Left;
+
 			}
 			else if (e.button.button == SDL_BUTTON_RIGHT) {
 				click = Click::Right;
@@ -91,6 +98,38 @@ void Engine::Input(bool *quit, SDL_Keycode& code){
 
 	  if (click != Click::None) {
 		  SDL_GetMouseState(&mouseX, &mouseY);
+
+		  Vec2 tmPos = camera->getObjectPos(myTileEditor->getPos());
+		  int width = myTileEditor->getWidth() * TILE_WIDTH;
+		  int height = myTileEditor->getHeight() * TILE_HEIGHT;
+
+		  int row = -1;
+		  int col = -1;
+		  if (!(mouseX < tmPos.x || mouseX > tmPos.x + width || mouseY < tmPos.y || mouseY > tmPos.y + height)) {
+			  if (text != NULL) {
+				  SDL_DestroyTexture(text);
+			  }
+
+			  row = int(mouseY - tmPos.y) / TILE_HEIGHT;
+			  col = int(mouseX - tmPos.x) / TILE_WIDTH;
+
+			  TTF_Font* font = ResourceManager::getInstance().getResourceFont(fontfile);
+			  if (!font) {
+				  std::cout << "Error: Could not load font\n";
+			  }
+			  SDL_Color tcolor = SDL_Color();
+			  tcolor.r = 0;
+			  tcolor.g = 20;
+			  tcolor.b = 0;
+			  std::string position = "(" + std::to_string(row) + "," + std::to_string(col) + ")";
+			  SDL_Surface* txt_surf = TTF_RenderText_Solid(font, position.c_str(), tcolor);
+			  SDL_Texture* txt_texture = SDL_CreateTextureFromSurface(m_renderer->GetRenderer(), txt_surf);
+
+			  std::cout << "row: " << row << " col: " << col << std::endl;
+
+			  text = txt_texture;
+			  SDL_FreeSurface(txt_surf);
+		  }
 
 		  // sends coordinates of the click to be handled by the tile editor
 		  myTileEditor->handleClick(Vec2(mouseX, mouseY), camera, click);
@@ -143,6 +182,16 @@ void Engine::Render(){
 
     // Render the tile map
     myTileEditor->render(m_renderer->GetRenderer(), camera);
+
+	SDL_Rect dest = SDL_Rect{};
+	dest.x = SCREEN_WIDTH - 400;
+	dest.y = 0;
+	dest.w = 300;
+	dest.h = 30;
+
+	if (text != NULL) {
+		SDL_RenderCopy(m_renderer->GetRenderer(), text, NULL, &dest);
+	}
 
 	// Render each of the character(s)
 	/*for (int i = 0; i < CHARACTERS; i++) {
@@ -240,8 +289,14 @@ void Engine::Start(){
 			grid[i][j] = TileType::Empty;
 		}
 	}*/
+	
+	if (ResourceManager::getInstance().addResource(fontfile, ResourceType::Font, 20) > 1) {
+		std::cout << "Error: could not add font in resource manager\n";
+	}
+
+
 	TileEditor::loadTileTypes("./assets/Tiles", m_renderer->GetRenderer());
-	myTileEditor = new TileEditor(Vec2(0, 0), 0, 0, 100, 100);
+	myTileEditor = new TileEditor(Vec2(0, 0), 0, 0, TILE_WIDTH, TILE_HEIGHT);
 	std::cout << "entering loadlevelmap\n";
 	myTileEditor->loadLevelMap(LEVEL_INPUT_FILE);
 	std::cout << "exited loadlelvelmap\n";

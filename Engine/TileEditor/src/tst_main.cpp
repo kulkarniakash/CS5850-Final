@@ -44,7 +44,13 @@ std::string LEVEL_OUTPUT_FILE = "./assets/level1";
 **********************************************************************************
 */
 
+int TILE_WIDTH = -1;
+int TILE_HEIGHT = -1;
+
 int main(int argc, char** argv) {
+
+	TILE_WIDTH = std::atoi(argv[1]);
+	TILE_HEIGHT = std::atoi(argv[2]);
 
 	// Create an instance of an object for our engine
 	Engine engine;

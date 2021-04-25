@@ -14,7 +14,16 @@ public:
 
 	ControllerComponent* getControllerComponent();
 
+	void updateControllerVelocity(Vec2 vel);
+
+	void setControllerVelocity(Vec2 vel);
+
+	Vec2 getControllerVelocity();
+
+	void updateTransform();
+
 private:
 	ControllerComponent* m_controllerComponent;
+	Vec2 controlVelocity;
 };
 #endif

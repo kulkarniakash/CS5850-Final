@@ -5,9 +5,11 @@
 #include "TransformComponent.hpp"
 #include "SpriteComponent.hpp"
 #include "CharacterSpriteComponent.hpp"
+#include "Camera.hpp"
 
 class SpriteComponent;
 class CharacterSpriteComponent;
+class Camera;
 
 class GameObject {
 public:

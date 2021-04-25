@@ -9,6 +9,7 @@
 #include <time.h>
 #include<Camera.h>
 #include "tst_GraphicsEngineRenderer.hpp"
+#include "ResourceManager.hpp"
 
 /**
  * This class sets up the main game engine
@@ -63,6 +64,7 @@ private:
     // Setup the Graphics Rendering Engine
     GraphicsEngineRenderer* m_renderer = nullptr;
 	Camera* camera;
+	SDL_Texture* text;
 };
 
 #endif

@@ -10,6 +10,7 @@
 
 // Store screen's width and height into two extern const integers.
 
+class GameObject;
 
 /**
  * @brief A enum class for direction.
@@ -56,7 +57,7 @@ public:
 	 * @param initialPos A Vec2 object indicates the position of the input object.
 	 * @return A Vec2 object indicates the input object's correct position.
 	*/
-	void correctObj(GameObject* obj);
+	Vec2 correctPosition(GameObject* obj);
 
 	/**
 	 * @brief Get the camera's top-left corner position.
