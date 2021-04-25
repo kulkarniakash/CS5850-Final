@@ -150,6 +150,7 @@ void Engine::update() {
 
 	for (auto obj : animateObjs) {
 		obj->updateSprite();
+		obj->updateTransform();
 	}
 	
 	uforce.applyForces(&animateObjs);

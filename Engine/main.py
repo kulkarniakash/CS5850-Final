@@ -13,7 +13,7 @@ tm.load_level_map("./assets/level1")
 camera = Engine.Camera.get_instance()
 
 
-class Biden(Engine.PlayerObject):
+class Biden(Engine.AnimateObject):
     def __init__(self, name):
         super().__init__(name, 25, 25)
         self.keypressed = {"W": False, "A": False, "S": False, "D": False}
@@ -24,10 +24,14 @@ class Biden(Engine.PlayerObject):
         src = Engine.Rect()
         dest.x , dest.y, dest.w, dest.h = 0, 0, 25, 35
         src.x, src.y, src.w, src.h = 0, 0, -1, -1
-        self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0,0))
+        self.tran = Engine.TransformComponent(Engine.Vec2(100,100), Engine.Vec2(10,0))
         super().add_transform_component(self.tran)
         self.sprite = Engine.SpriteComponent("./assets/biden.jpg", src)
         super().add_sprite_component(self.sprite)
+
+    def check_bounds(self):
+        if self.tran.get_position().x >= 300:
+            super().set_velocity(Engine.Vec2(-self.tran.get_velocity().x, 0))
         
 
 class Sky(Engine.GameObject):
@@ -75,11 +79,11 @@ def radial_gravity(obj):
 def gravity(obj):
     obj.update_velocity(Engine.Vec2(0, 1))
 
-control = Engine.ControllerComponent()
-control.add_input_binding("W", go_up, False)
-control.add_input_binding("S", go_down, False)
-control.add_input_binding("A", go_left, False)
-control.add_input_binding("D", go_right, False)
+##control = Engine.ControllerComponent()
+##control.add_input_binding("W", go_up, False)
+##control.add_input_binding("S", go_down, False)
+##control.add_input_binding("A", go_left, False)
+##control.add_input_binding("D", go_right, False)
 ##control.add_input_release_binding("W", key_release_w)
 ##control.add_input_release_binding("S", key_release_s)
 ##control.add_input_release_binding("A", key_release_a)
@@ -171,7 +175,7 @@ character.character_sprite_init()
 character.character_controls_init()
 
 camera.bind_to_object(character)
-biden.add_controller_component(control)
+##biden.add_controller_component(control)
 
 ##obj = Engine.GameObject("sky")
 ##obj.add_sprite_component(sprite)
@@ -179,7 +183,8 @@ biden.add_controller_component(control)
 ##obj.add_transform_component(tran)
 
 engine.add_player_object(character)
-engine.add_UF_callback(gravity)
+engine.add_animate_object(biden)
+##engine.add_UF_callback(gravity)
 engine.add_tilemanager(tm)
 engine.start()
 
@@ -187,6 +192,7 @@ engine.start()
 while not engine.program_ended():
     engine.input()
     engine.update()
+    biden.check_bounds()
     engine.clear()
     engine.render()
     engine.delay(20)
