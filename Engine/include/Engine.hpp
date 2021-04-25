@@ -79,12 +79,16 @@ public:
 
 	void addUFCallback(py::object);
 
+  void addCollisionCallback(py::object);
+
 private:
 
 	bool quit;
 	std::vector<PlayerObject*> playerObjs;
 	std::vector<AnimateObject*> animateObjs;
 	std::vector<GameObject*> gameObjs;
+  std::vector<GameObject*> animAsGameObjs;
+  std::vector<GameObject*> playerAsGameObjs;
 	UniversalForce uforce;
 	// GraphicsEngineRenderer* renderer = nullptr;
 };

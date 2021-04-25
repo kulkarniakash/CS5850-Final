@@ -19,11 +19,13 @@ public:
 
 	void setVelocity(Vec2 vel);
 
-	void handleCollision(std::vector<GameObject*> objs, std::vector<AnimateObject*> animObjs);
+	void handleCollision(std::vector<GameObject*> objs);
 
 	void updateSprite();
 
 	void updateTransform();
+
+	void process_collision_callback(py::object func);
 
 private:
 	CollisionComponent* m_collisioncomp;

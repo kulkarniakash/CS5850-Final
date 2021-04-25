@@ -62,6 +62,7 @@ def gravity(obj):
     pos = obj.get_transform_component().get_position()
     pos_sky = sky.get_transform_component().get_position()
     obj.update_velocity( Engine.Vec2(0.005 *(pos_sky.x + sky.get_width() - pos.x - w / 2), 0.005 *(pos_sky.y + sky.get_height() - pos.y - h / 2)))
+#TODO: collision_callback(obj)
 
 control = Engine.ControllerComponent()
 control.add_input_binding("W", go_up)

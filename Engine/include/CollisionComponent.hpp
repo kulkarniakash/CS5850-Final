@@ -25,7 +25,7 @@ private:
 
 	AnimateObject* m_animateobject;
 
-	std::queue<GameObject*> m_collided_objs;
+	std::vector<py::object> callbacks;
 };
 
 #endif

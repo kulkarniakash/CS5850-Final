@@ -150,11 +150,15 @@ void Engine::update() {
 	uforce.applyForces(&playerObjs);
 	
 	for (auto obj : animateObjs) {
-		obj->handleCollision(gameObjs, animateObjs);
+		obj->handleCollision(gameObjs);
+		// obj->handleCollision(animAsGameObjs);
+		// obj->handleCollision(playerAsGameObjs);
 	}
 	
 	for (auto obj : playerObjs) {
-		obj->handleCollision(gameObjs, animateObjs);
+		obj->handleCollision(gameObjs);
+		// obj->handleCollision(animAsGameObjs);
+		// obj->handleCollision(playerAsGameObjs);
 	}
 
 	Camera::getInstance().update();
