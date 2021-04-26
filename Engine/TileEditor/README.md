@@ -1,38 +1,10 @@
-## Add any additional notes here
+## Instructions
+1) Navigate to the ./Engine folder.
+2) run the command: python3 build_tile_editor.py
+3) From the same folder, run the command: ./bin/tile_editor.exe <tilewidth> <tileheight>, where tilewidth and tileheight are integers representing the dimensions of a single tile
+4) Left click on a tile in the menu to select the tile. 
+5) You can insert multiple tiles quickly by dragging the cursor across the screen whil holding the left mouse button down.
+6) You can also erase tiles by clicking the grid with the right mouse button
+7) Use the arrow keys to move the camera
+8) After you exit the tiel editor, your tilemap is automatically saved and will automatically load when the next game begins.
 
-*your additional notes, or things TA's and instructors should know*
-
-## Game Publicity
-
-**Project Website**: *please edit the project website with a link here* (See part 3)
-
-## Compilation Instructions
-
-*Please edit if there are any special build instructions beyond running `python3 build.py`*
-
-## Project Hieararchy
-
-In the future, other engineers may take on our project, so we have to keep it organized given the following requirements below. Forming some good organization habits now will help us later on when our project grows as well. These are the required files you should have 
-
-### ./Game Directory Organization
-
-- Docs 
-    - Source Code Documentation
-- Assets
-    - Art assets (With the Sub directories music, sound, images, and anything else)
-- src
-    - source code(.cpp files) The make file or any build scripts that automate the building of your project should reside here.
-- include
-    - header files(.h and .hpp files)
-- lib
-    - libraries (.so, .dll, .a, .dylib files). Note this is a good place to put SDL
-- bin
-    - This is the directory where your built executable(.exe for windows, .app for Mac, or a.out for Linux) and any additional generated files are put after each build.
-- GameBuild (Optional)
-    - You may optionally put a .zip to you final deliverable. One should be able to copy and paste this directory, and only this directory onto another machine and be able to run the game. This is optional because for this course we will be building your projects from source. However, in the game industry it is useful to always have a build of a game ready for testers, thus a game project hieararchy would likely have this directory in a repo or other storage medium.
-- ThirdParty
-    - Code that you have not written if any.
-
-**Additional Notes:** 
-
-1. src and include should only contain ".cpp" or ".hpp" files. Why? It makes it very fast to do a backup of your game project as one example. Secondly, binary files that are generated often clutter up directories. I should not see any binaries in your repository, you may use a '.gitignore' file to help prevent this automatically. 
