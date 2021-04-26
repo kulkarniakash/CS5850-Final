@@ -71,7 +71,6 @@ public:
 
 	void Destroy();
 
-private:
     void addCollisionCallback(py::object);
 
 protected:
