@@ -3,9 +3,13 @@ import Engine
 # Bug in pybind: don't do this: obj.add_transform_component(Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10)))
 # do this: obj.add_transform_component(tran)
 # where the argument value is stored in another variable
+engine = None
+def init_engine():
+    engine = Engine.Engine()
+    engine.initialize_graphics_subsystem()
 engine = Engine.Engine()
 engine.initialize_graphics_subsystem()
-
+#init_engine()
 tile_width = 20
 tile_height = 20
 
@@ -16,46 +20,46 @@ tm.load_level_map("./assets/level1")
 camera = Engine.Camera.get_instance()
 
 
-class Biden(Engine.AnimateObject):
-    def __init__(self, name):
-        super().__init__(name, 25, 25)
-        self.keypressed = {"W": False, "A": False, "S": False, "D": False}
-        self.speed = 3
+# class Biden(Engine.AnimateObject):
+#     def __init__(self, name):
+#         super().__init__(name, 25, 25)
+#         self.keypressed = {"W": False, "A": False, "S": False, "D": False}
+#         self.speed = 3
 
-    def sprite_init(self):
-        dest = Engine.Rect()
-        src = Engine.Rect()
-        dest.x , dest.y, dest.w, dest.h = 0, 0, 25, 35
-        src.x, src.y, src.w, src.h = 0, 0, -1, -1
-        self.tran = Engine.TransformComponent(Engine.Vec2(100,100), Engine.Vec2(10,0))
-        super().add_transform_component(self.tran)
-        self.sprite = Engine.SpriteComponent("./assets/biden.jpg", src)
-        super().add_sprite_component(self.sprite)
+#     def sprite_init(self):
+#         dest = Engine.Rect()
+#         src = Engine.Rect()
+#         dest.x , dest.y, dest.w, dest.h = 0, 0, 25, 35
+#         src.x, src.y, src.w, src.h = 0, 0, -1, -1
+#         self.tran = Engine.TransformComponent(Engine.Vec2(100,100), Engine.Vec2(10,0))
+#         super().add_transform_component(self.tran)
+#         self.sprite = Engine.SpriteComponent("./assets/biden.jpg", src)
+#         super().add_sprite_component(self.sprite)
 
-    def check_bounds(self):
-        if self.tran.get_position().x >= 300:
-            super().set_velocity(Engine.Vec2(-self.tran.get_velocity().x, 0))
+#     def check_bounds(self):
+#         if self.tran.get_position().x >= 300:
+#             super().set_velocity(Engine.Vec2(-self.tran.get_velocity().x, 0))
         
 
-class Sky(Engine.GameObject):
-    def __init__(self, name):
-        super().__init__(name, 100, 100)
+# class Sky(Engine.GameObject):
+#     def __init__(self, name):
+#         super().__init__(name, 100, 100)
 
-    def sprite_init(self):
-        dest = Engine.Rect()
-        src = Engine.Rect()
-        dest.x , dest.y, dest.w, dest.h = 200, 300, 100, 150
-        src.x, src.y, src.w, src.h = 0, 0, -1, -1
-        self.tran = Engine.TransformComponent(Engine.Vec2(200,300), Engine.Vec2(0,0))
-        super().add_transform_component(self.tran)
-        self.sprite = Engine.SpriteComponent("./assets/BGSky.jpg", src)
-        super().add_sprite_component(self.sprite)
+#     def sprite_init(self):
+#         dest = Engine.Rect()
+#         src = Engine.Rect()
+#         dest.x , dest.y, dest.w, dest.h = 200, 300, 100, 150
+#         src.x, src.y, src.w, src.h = 0, 0, -1, -1
+#         self.tran = Engine.TransformComponent(Engine.Vec2(200,300), Engine.Vec2(0,0))
+#         super().add_transform_component(self.tran)
+#         self.sprite = Engine.SpriteComponent("./assets/BGSky.jpg", src)
+#         super().add_sprite_component(self.sprite)
         
         
-biden = Biden("biden")
-sky = Sky("sky")
-biden.sprite_init()
-sky.sprite_init()
+# biden = Biden("biden")
+# sky = Sky("sky")
+# biden.sprite_init()
+# sky.sprite_init()
 
 def go_up(obj):
     obj.update_velocity(Engine.Vec2(0, -obj.speed))
@@ -78,7 +82,7 @@ def radial_gravity(obj):
     col = 12
     w = obj.get_width()
     h = obj.get_height()
-    scale_rad = 0.05
+    scale_rad = 0.09
 ##    cpos = camera.get_position()
     pos = obj.get_transform_component().get_position()
     planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
@@ -222,55 +226,85 @@ class Explosion(Engine.AnimateObject):
     def explode_anim(self, speed):
         self.character_sprite.perform_animation("explode", True, speed)
 
-class TestUI(Engine.UIComponent):
+class UI(Engine.UIComponent):
     def __init__(self, text, fontSize):
         self.dest = Engine.Rect()
-        fontPath = "assets/lazy.ttf"
-        self.dest.x, self.dest.y, self.dest.w, self.dest.h = 50, 50, 100, 100
+        fontPath = "assets/gomarice_no_continue.ttf"
+        self.dest.x, self.dest.y, self.dest.w, self.dest.h = 50, 100, 200, 100
         super().__init__(fontPath, self.dest, text, fontSize)
 
-    def mRender(self):
-        self.render()
+class TimerUI(Engine.UIComponent):
+    def __init__(self, text, fontSize):
+        self.dest = Engine.Rect()
+        fontPath = "assets/gomarice_no_continue.ttf"
+        self.dest.x, self.dest.y, self.dest.w, self.dest.h = 50, 0, 200, 100
+        super().__init__(fontPath, self.dest, text, fontSize)
 
-testUI = TestUI("testing", 50)
+game_won = False
+
+testUI = UI("testing", 50)
+
+youLoseUI = UI("You lose!", 50)
+
+youWinUI = UI("You win!", 50)
+
+timerUI = TimerUI("Timer: ", 50)
 
 character_destroyed = True
 def callback_sample(obj):
     global character_destroyed
-    if character_destroyed:
+    if character_destroyed and game_won is False:
         x, y = character.get_position()
         explosion.explosion_sprite_init(x, y)
         explosion.explode_anim(3)
         engine.add_animate_object(explosion)
         character_destroyed = False
         camera.bind_to_object(explosion)
+        engine.stop_timer()
         engine.destroy_object("character")
+        engine.add_ui_component(youLoseUI)
+        #engine.reset()
+        #initialize_game(True)
 
-character = Character("character")
-character.character_sprite_init()
-character.character_controls_init()
-character.add_collision_callback(callback_sample)
+def initialize_game(reset):
+    global character, character_destroyed, camera, explosion, engine
+    character_destroyed = True
+    # if (reset is False):
+    #     engine = Engine.Engine()
+    #     engine.initialize_graphics_subsystem()
+    character = Character("character")
+    character.character_sprite_init()
+    character.character_controls_init()
+    character.add_collision_callback(callback_sample)
 
-camera.bind_to_object(character)
+    camera.bind_to_object(character)
 
-explosion = Explosion("explosion")
+    explosion = Explosion("explosion")
 
-engine.add_animate_object(biden)
-engine.add_game_object(sky)
-engine.add_player_object(character)
-engine.add_UF_callback(radial_gravity)
-engine.add_tilemanager(tm)
-engine.add_ui_component(testUI)
-engine.start()
+    # engine.add_animate_object(biden)
+    #engine.add_game_object(sky)
+    engine.add_player_object(character)
+    engine.add_UF_callback(radial_gravity)
+    engine.add_tilemanager(tm)
+    engine.add_ui_component(timerUI)
+  #  engine.add_ui_component(testUI)
+    engine.set_timer(5000)
+    engine.start()
+    # if (reset is False):
+    #     engine.start()
+
+initialize_game(False)
 
 count = 0
 while not engine.program_ended():
     engine.input()
     engine.update()
-    biden.check_bounds()
     engine.clear()
     engine.render()
-   # testUI.mRender()
+    timerUI.update("Timer: " + str(round(engine.get_time(), 2)))
+    if (round(engine.get_time(), 2) <= 0):
+        game_won = True
+        engine.add_ui_component(youWinUI)
 ##    if count >= 100:
 ##        print(f'velocity = {character.get_transform_component().get_velocity()}')
 ##        break

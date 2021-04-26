@@ -107,6 +107,16 @@ void addUIComponent(UIComponent* ui);
     */
   void destroyObject(std::string objectName);
 
+  float getTime();
+
+  void setTimer(float miliseconds);
+
+  void stopTimer();
+
+  void resetTimer();
+
+  void reset();
+
 private:
 
 	bool quit;
@@ -118,6 +128,9 @@ private:
   // std::vector<GameObject*> playerAsGameObjs;
   std::map<std::string, int> destroyedObjs;
 	UniversalForce uforce;
+  float m_timer = 0.0f;
+  float m_init_timer = 0.0f;
+  bool m_timerStopped = false;
 };
 #endif
 

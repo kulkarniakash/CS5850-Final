@@ -1,6 +1,7 @@
 // pybind taken from Akash's and Kimin's lab
 //Engine class taken from Sumanth's assignment-2, written by Shreyas Shivashankar
 #include <Engine.hpp>
+#include<math.h>
 #include <iostream>
 #include "ResourceManager.hpp"
 #include "GlobalAttributes.hpp"
@@ -415,4 +416,39 @@ void Engine::destroyObject(std::string objectName) {
     // }
 }
 
+float Engine::getTime() {
+	float time = m_timer;
+	if (!m_timerStopped) {
+		time -= SDL_GetTicks();
+	}
+	if (time <= 0) {
+		time = 0.0f;
+	}
+	time = (float) time / (float) 1000.0f;
+	time = (int) (time * 100 + .5);
+	time = (float) time/100;
+	return time;
+}
 
+void Engine::setTimer(float miliseconds) {
+	m_timer = miliseconds;
+	m_init_timer = m_timer;
+}
+
+void Engine::resetTimer() {
+	m_timer = m_init_timer;
+}
+
+void Engine::stopTimer() {
+	m_timerStopped = true;
+	m_timer -= SDL_GetTicks();
+}
+
+void Engine::reset() {
+	playerObjs = {};
+	animateObjs = {};
+	gameObjs = {};
+	destroyedObjs = {};
+	//uforce = null;
+	resetTimer();
+}
