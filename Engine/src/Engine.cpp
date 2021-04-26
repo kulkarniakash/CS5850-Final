@@ -160,6 +160,7 @@ void Engine::update() {
 	}
 
 	std::cout << "after aniamteObjs" <<"\n";
+	// convertToGameObjects(playerObjs, animateObjs);
 	
 	uforce.applyForces(&animateObjs);
 	uforce.applyForces(&playerObjs);
@@ -167,17 +168,28 @@ void Engine::update() {
 		std::cout << "after applyforces" <<"\n";
 	
 	for (auto obj : animateObjs) {
-		obj->handleCollision(gameObjs);
+		obj->handleCollision(gameObjs, animateObjs);
 	}
 	
 	for (auto obj : playerObjs) {
-		obj->handleCollision(gameObjs);
+		obj->handleCollision(gameObjs, animateObjs);
 	}
 
 	std::cout << "after handleCollisions" <<"\n";
 
 	Camera::getInstance().update();
 }
+
+// void Engine::convertToGameObjects(std::vector<PlayerObject*> playerObjs, std::vector<AnimateObject*> animateObjs) {
+// 	for (auto pObj: playerObjs) {
+// 		GameObject* obj = dynamic_cast<GameObject*>(pObj);
+// 		playerAsGameObjs.push_back(obj);
+// 	}
+// 	for (auto aObj: animateObjs) {
+// 		GameObject* obj = dynamic_cast<GameObject*>(aObj);
+// 		animAsGameObjs.push_back(obj);
+// 	}
+// }
 
 void Engine::Input()
 {

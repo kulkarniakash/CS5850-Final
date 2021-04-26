@@ -23,6 +23,7 @@
 #define endline '\n'
 #endif
 
+//! @brief enum class representing the possibilities of click events the user can input
 enum class Click {
 	None=0,
 	Left, 
@@ -31,25 +32,35 @@ enum class Click {
 
 using namespace std;
 
-/**
-*Class inherits from Tile Manager. While tile manager
-*can be used for the general purpose of rendering and keeping
-*track of the tile grid state, TileEditor is specifically meant for 
-*creating new custom landscapes by placing tiles in whatever arrangement one desires.
-*this includes a tile selection menu rendered at the left part of the screen from
-*which one can select a certain tile type and then place it in a certain location.
-*The first tile type is always the "erase tile", which after selecting will erase any 
-*selected tile by clicking on it.
+/*! @brief
+ * Class inherits from Tile Manager. While tile manager
+ * can be used for the general purpose of rendering and keeping
+ * track of the tile grid state, TileEditor is specifically meant for
+ * creating new custom landscapes by placing tiles in whatever arrangement one desires.
+ * this includes a tile selection menu rendered at the left part of the screen from
+ * which one can select a certain tile type and then place it in a certain location.
+ * The first tile type is always the "erase tile", which after selecting will erase any
+ * selected tile by clicking on it.
 */
 class TileEditor : public TileManager {
 public:
-	// Takes in the position of the top-left corner of the entire grid, width and height of the entire tile grid( width= no. of horizontal tiles in a row, height= no. of vertical tiles in a column), 
-	// tileTextures = hashmap of TileType: SDL_Texture*, tileTypeGrid= the grid dhowing the position of tiles (by default is NULL)
+	
+    /*!
+     * @brief Constructor for TileEditor
+     * @param pos: Vec2 position of the top-left corner of the entire grid
+     * @param width: int representing the width of the entire tile grid
+     * @param height: int represetning the height of the entire tile grid
+     * @param tileWidth: int representing the width of a tile
+     * @param tileHeight: int representing the height of a tile
+     */
 	TileEditor(Vec2 pos, int width, int height, int tileWidth, int tileHeight);
 
 	static unordered_map<int, std::string> tilePaths;
 
-	// to be called before constructing object!!
+	/*!@brief to be called before constructing object!!
+     @param path: filepath of a tile
+     @param ren: SDL_Renderer we want to render our tile with
+     */
 	static void loadTileTypes(std::string path, SDL_Renderer* ren) {
 		SDL_RWops* file = SDL_RWFromFile(path.c_str(), "r");
 		if (file == nullptr) {
@@ -108,12 +119,33 @@ public:
 	// takes in as input the coordinates of the click and the camera and decides what to do based on whether the tile menu region was
 	// clicked or the rest of the tile editor region. If it was the tile menu, a tile selection is made. Otherwise if it's the rest of
 	// the tile editor, the current tile selection is placed over there.
+    
+    /*!
+     * @brief Handles event when user clicks on a screen
+     * @param clickPos: Vec2 Position where the user clicked
+     * @param camera: Camera that is locked on the user's screen
+     * @param Click: click event the user inputted
+     */
 	void handleClick(Vec2 clickPos, Camera* camera, Click click);
 
+    /*!
+     * @brief Loads the tileMap of a file
+     * @param path: String representing the path of the file
+     */
 	void loadLevelMap(std::string path);
 
+    
+    /*!
+     * @brief renders our tiles and tileMap
+     * @param ren: SDL_Renderer we want to use to render
+     * @param camera: Camera to render what is shown on the user's screen
+     */
 	void render(SDL_Renderer* ren, Camera* camera);
 
+    /*!
+     * @brief saves the user's work to a new file
+     * @param filepath: String representing the file path the user wants to save towards
+     */
 	void saveLevelToFile(string filePath);
 
 private:

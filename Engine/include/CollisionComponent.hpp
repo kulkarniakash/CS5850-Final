@@ -30,6 +30,8 @@ public:
      *  @param objs: A vector of game objects we want to test collisions against
      */
 	void handleCollisions(std::vector<GameObject*> objs);
+	
+	void add_collision_callback(py::object func);
 
     void addCollisionCallback(py::object func);
 

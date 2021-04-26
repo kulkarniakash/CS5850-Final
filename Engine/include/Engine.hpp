@@ -107,6 +107,8 @@ private:
 	std::vector<PlayerObject*> playerObjs;
 	std::vector<AnimateObject*> animateObjs;
 	std::vector<GameObject*> gameObjs;
+  // std::vector<GameObject*> animAsGameObjs;
+  // std::vector<GameObject*> playerAsGameObjs;
 	UniversalForce uforce;
 	// GraphicsEngineRenderer* renderer = nullptr;
 };
