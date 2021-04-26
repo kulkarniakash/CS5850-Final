@@ -10,6 +10,7 @@ namespace py = pybind11;
 
 class CollisionComponent;
 class GameObject;
+namespace py = pybind11;
 
 /*!
  @brief Class that represents an animate object
@@ -55,7 +56,7 @@ public:
      @brief Handles and detects the collision of other objects.
      @param objs: A vector of game objects that we want to detect for collision.
      */
-	void handleCollision(std::vector<GameObject*> objs);
+	void handleCollision(std::vector<GameObject*> objs, std::vector<AnimateObject*> animObjs);
     
     /*!
     @brief Updates the Sprite Component of this object.
