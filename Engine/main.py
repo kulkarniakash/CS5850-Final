@@ -16,46 +16,46 @@ tm.load_level_map("./assets/level1")
 camera = Engine.Camera.get_instance()
 
 
-class Biden(Engine.AnimateObject):
-    def __init__(self, name):
-        super().__init__(name, 25, 25)
-        self.keypressed = {"W": False, "A": False, "S": False, "D": False}
-        self.speed = 3
+# class Biden(Engine.AnimateObject):
+#     def __init__(self, name):
+#         super().__init__(name, 25, 25)
+#         self.keypressed = {"W": False, "A": False, "S": False, "D": False}
+#         self.speed = 3
 
-    def sprite_init(self):
-        dest = Engine.Rect()
-        src = Engine.Rect()
-        dest.x , dest.y, dest.w, dest.h = 0, 0, 25, 35
-        src.x, src.y, src.w, src.h = 0, 0, -1, -1
-        self.tran = Engine.TransformComponent(Engine.Vec2(100,100), Engine.Vec2(10,0))
-        super().add_transform_component(self.tran)
-        self.sprite = Engine.SpriteComponent("./assets/biden.jpg", src)
-        super().add_sprite_component(self.sprite)
+#     def sprite_init(self):
+#         dest = Engine.Rect()
+#         src = Engine.Rect()
+#         dest.x , dest.y, dest.w, dest.h = 0, 0, 25, 35
+#         src.x, src.y, src.w, src.h = 0, 0, -1, -1
+#         self.tran = Engine.TransformComponent(Engine.Vec2(100,100), Engine.Vec2(10,0))
+#         super().add_transform_component(self.tran)
+#         self.sprite = Engine.SpriteComponent("./assets/biden.jpg", src)
+#         super().add_sprite_component(self.sprite)
 
-    def check_bounds(self):
-        if self.tran.get_position().x >= 300:
-            super().set_velocity(Engine.Vec2(-self.tran.get_velocity().x, 0))
+#     def check_bounds(self):
+#         if self.tran.get_position().x >= 300:
+#             super().set_velocity(Engine.Vec2(-self.tran.get_velocity().x, 0))
         
 
-class Sky(Engine.GameObject):
-    def __init__(self, name):
-        super().__init__(name, 100, 100)
+# class Sky(Engine.GameObject):
+#     def __init__(self, name):
+#         super().__init__(name, 100, 100)
 
-    def sprite_init(self):
-        dest = Engine.Rect()
-        src = Engine.Rect()
-        dest.x , dest.y, dest.w, dest.h = 200, 300, 100, 150
-        src.x, src.y, src.w, src.h = 0, 0, -1, -1
-        self.tran = Engine.TransformComponent(Engine.Vec2(200,300), Engine.Vec2(0,0))
-        super().add_transform_component(self.tran)
-        self.sprite = Engine.SpriteComponent("./assets/BGSky.jpg", src)
-        super().add_sprite_component(self.sprite)
+#     def sprite_init(self):
+#         dest = Engine.Rect()
+#         src = Engine.Rect()
+#         dest.x , dest.y, dest.w, dest.h = 200, 300, 100, 150
+#         src.x, src.y, src.w, src.h = 0, 0, -1, -1
+#         self.tran = Engine.TransformComponent(Engine.Vec2(200,300), Engine.Vec2(0,0))
+#         super().add_transform_component(self.tran)
+#         self.sprite = Engine.SpriteComponent("./assets/BGSky.jpg", src)
+#         super().add_sprite_component(self.sprite)
         
         
-biden = Biden("biden")
-sky = Sky("sky")
-biden.sprite_init()
-sky.sprite_init()
+# biden = Biden("biden")
+# sky = Sky("sky")
+# biden.sprite_init()
+# sky.sprite_init()
 
 def go_up(obj):
     obj.update_velocity(Engine.Vec2(0, -obj.speed))
@@ -78,7 +78,7 @@ def radial_gravity(obj):
     col = 12
     w = obj.get_width()
     h = obj.get_height()
-    scale_rad = 0.05
+    scale_rad = 0.09
 ##    cpos = camera.get_position()
     pos = obj.get_transform_component().get_position()
     planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
@@ -244,8 +244,8 @@ camera.bind_to_object(character)
 
 explosion = Explosion("explosion")
 
-engine.add_animate_object(biden)
-engine.add_game_object(sky)
+# engine.add_animate_object(biden)
+#engine.add_game_object(sky)
 engine.add_player_object(character)
 engine.add_UF_callback(radial_gravity)
 engine.add_tilemanager(tm)
@@ -256,7 +256,7 @@ count = 0
 while not engine.program_ended():
     engine.input()
     engine.update()
-    biden.check_bounds()
+    # biden.check_bounds()
     engine.clear()
     engine.render()
     print(round(engine.get_time(), 2))
