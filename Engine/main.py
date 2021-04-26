@@ -230,9 +230,13 @@ class Explosion(Engine.AnimateObject):
         self.character_sprite.perform_animation("explode", True, speed)
 
 
+def callback_sample(obj):
+    print("callback successful")
+
 character = Character("character")
 character.character_sprite_init()
 character.character_controls_init()
+character.add_collision_callback(callback_sample)
 
 camera.bind_to_object(character)
 

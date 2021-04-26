@@ -11,6 +11,10 @@ void CollisionComponent::handleCollisions(std::vector<GameObject*> objs) {
 	for (auto obj : objs) {
 		corr = getCorrection(obj);
 		if (corr != Vec2(0, 0)) {
+			if (m_callbacks.size() > 0) {
+				m_callbacks[0](obj);
+			}
+
 			Vec2 curr_vel = m_animateobject->getTransformComponent()->getVelocity();
 			if (corr.x == 0) {
 				m_animateobject->setVelocity(Vec2(curr_vel.x, 0));
@@ -100,4 +104,8 @@ Vec2 CollisionComponent::getCorrection(GameObject* obj) {
 	}
 
 	return Vec2(-(right - leftOther), 0);
+}
+
+void CollisionComponent::addCollisionCallback(py::object func) {
+	m_callbacks.push_back(func);
 }
