@@ -2,31 +2,49 @@
 #define CHARACTER_SPRITE_COMPONENT_HPP
 #include "SpriteComponent.hpp"
 
+/*!
+ *  @brief Class that represents our CharacterSpriteComonent
+ *  Inherits from our Sprite Component Class
+ *  Handles performing animations of this object
+ */
 class CharacterSpriteComponent : public SpriteComponent { 
 public:
-    //constructor for CharacterSpriteComponent
+    /*!
+     * @brief contstructor of our CharacterSpriteComponent
+     * @param filepath: string that represents the file path of our sprite
+     * @param src: An SDL_Rect representing a rectangle containing our Character Sprite
+     * @param dest: An SDL_Rect representing the destination of our Character Sprite
+     * @param rows: int that represents the number of rows in our sprite sheet
+     * @param cols: int that represents the number of cols in our sprite sheet
+     */
     CharacterSpriteComponent(std::string filePath, SDL_Rect src, SDL_Rect dest, int rows, int cols);
     
-    //destructor fpr CharacterSpriteComponent
+    //! @brief Destructor fpr CharacterSpriteComponent
     ~CharacterSpriteComponent();
 
-    /*! Registers an action (a named range of frames) with given properties.
-        *  @param animationName name of action
-        *  @param startFrame index of first frame of action
-        *  @param endFrame index of last frame of action
+    /*!
+     *  @brief Registers an action (a named range of frames) with given properties.
+     *  @param animationName: string that represents the name of action
+     *  @param startFrame: index that represnts the first frame of action
+     *  @param endFrame: index of last frame of action
     */
     void addAnimation(const std::string& animationName, const int& startFrame, const int& endFrame);
     
-    /*! Plays an action with given name.
-        *  @param animationName name of action to play
-        *  @param isFlipped whether to play the action while rendering frames flipped around
-        *  @param animSpeed speed of the animation
+    /*!
+     *  @briefPlays an action with given name.
+     *  @param animationName: string that represents the name of action to play
+     *  @param isFlipped: boolean to determine whether to play the action while rendering frames flipped around
+     *  @param animSpeed: float that represents speed of the animation
     */
     void performAnimation(const std::string & animationName, const bool& isFlipped, float animSpeed);
     
-    //Updates our sprite
+    //! Updates our sprite, moving onto the next frame of our spritesheet
     void updateFrame();
 
+    /*!
+     *  @brief Updates the position of our Sprite
+     *  @param pos: Vec2 that represents the position we want to update our object to.
+     */
 	void updatePosition(Vec2 pos);
 
     //! Sets whether the action should loop upon reaching its last frame or not.

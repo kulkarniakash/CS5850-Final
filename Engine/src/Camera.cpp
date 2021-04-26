@@ -17,9 +17,12 @@ Camera& Camera::getInstance() {
 }
 
 // Get the correct position of the object given its initial position.
-void Camera::correctObj(GameObject* obj) {
+Vec2 Camera::correctPosition(GameObject* obj) {
 	if (m_gameObject != nullptr) {
-		obj->getTransformComponent()->setPosition(obj->getTransformComponent()->getPosition() - pos);
+		return obj->getTransformComponent()->getPosition() - pos;
+	}
+	else {
+		return obj->getTransformComponent()->getPosition();
 	}
 }
 

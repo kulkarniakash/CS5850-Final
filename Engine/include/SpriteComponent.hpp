@@ -8,24 +8,42 @@
 #include "ResourceManager.hpp"
 
 
-
+/*!
+ * @brief Class that represents our SpriteComponent
+ * handles performing certain animations of this object
+ */
 class SpriteComponent { 
 public:
-    //constructor for SpriteComponent
+    /*!
+     * @brief constructor for SpriteComponent
+     * @param filepath: string that Represents the filepath of our sprite
+     * @param src: SDL_rect representing the rectangle we want to create
+     */
     SpriteComponent(std::string filePath, SDL_Rect src);
     
-    //destructor fpr SpriteComponent
+    //!destructor fpr SpriteComponent
     ~SpriteComponent();
 
-    //renders our sprite
+    //!renders our sprite
     void render();
 
+    /*!
+     * @brief updates the position of this object
+     * @param pos: Vec2 that we want to apply changes to
+     */
 	void updatePosition(Vec2 pos);
 
+    //! @return float value that represents the width of this object
 	float getWidth();
 
+    //! @return float value that represents the height of this object
 	float getHeight();
 
+    /*!
+     * @brief sets the Dimensions of this object
+     * @param width: float value we want this object's width to be
+     * @param height: float value we want this object's height to be
+     */
 	void setDim(float width, float height);
 
 protected:
