@@ -28,22 +28,15 @@ UIComponent::UIComponent(std::string fontPath, SDL_Rect dest, std::string displa
         std::cout << "Renderer is null" << std::endl;
     }
     m_textRect = dest;
-    // if (m_textRect == NULL || m_textRect == nullptr) {
-    //    std::cout << "m_textRect is null" << std::endl;
-    // }
 }
 
 void UIComponent::render() {
-    // std::cout << "in render" << std::endl;
     if (m_texture == NULL || m_texture == nullptr) {
         std::cout << "Texture is null" << std::endl;
     }
     if (m_renderer == NULL || m_renderer == nullptr) {
         std::cout << "Renderer is null" << std::endl;
     }
-    // if (m_textRect == NULL  || m_textRect == nullptr) {
-    //    std::cout << "m_textRect is null" << std::endl;
-    // }
     SDL_RenderCopy(m_renderer, m_texture, NULL, &m_textRect);
 }
 

@@ -233,15 +233,14 @@ class UI(Engine.UIComponent):
         self.dest.x, self.dest.y, self.dest.w, self.dest.h = 50, 100, 200, 100
         super().__init__(fontPath, self.dest, text, fontSize)
 
-    # def mRender(self):
-    #     self.render()
-
 class TimerUI(Engine.UIComponent):
     def __init__(self, text, fontSize):
         self.dest = Engine.Rect()
         fontPath = "assets/gomarice_no_continue.ttf"
         self.dest.x, self.dest.y, self.dest.w, self.dest.h = 50, 0, 200, 100
         super().__init__(fontPath, self.dest, text, fontSize)
+
+game_won = False
 
 testUI = UI("testing", 50)
 
@@ -254,7 +253,7 @@ timerUI = TimerUI("Timer: ", 50)
 character_destroyed = True
 def callback_sample(obj):
     global character_destroyed
-    if character_destroyed:
+    if character_destroyed and game_won is False:
         x, y = character.get_position()
         explosion.explosion_sprite_init(x, y)
         explosion.explode_anim(3)
@@ -300,12 +299,11 @@ count = 0
 while not engine.program_ended():
     engine.input()
     engine.update()
-    # biden.check_bounds()
     engine.clear()
     engine.render()
-    #print(round(engine.get_time(), 2))
     timerUI.update("Timer: " + str(round(engine.get_time(), 2)))
     if (round(engine.get_time(), 2) <= 0):
+        game_won = True
         engine.add_ui_component(youWinUI)
 ##    if count >= 100:
 ##        print(f'velocity = {character.get_transform_component().get_velocity()}')
