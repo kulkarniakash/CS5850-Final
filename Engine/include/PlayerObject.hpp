@@ -50,6 +50,7 @@ public:
     //! Updates this Object's TransformComponent and position of our SpriteComponent
 	void updateTransform();
 
+	//! Destroys the class
 	void Destroy();
 
 private:

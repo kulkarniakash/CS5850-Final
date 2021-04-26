@@ -70,6 +70,7 @@ public:
      */
 	void updateTransform();
 
+	//! Destroys the class
 	void Destroy();
 
     void addCollisionCallback(py::object);
