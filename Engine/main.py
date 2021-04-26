@@ -114,41 +114,47 @@ def gravity(obj):
 
 class Character(Engine.PlayerObject):
     def __init__(self, name):
-        super().__init__(name, 20, 20)
+        super().__init__(name, 100, 100)
         self.flipped = False
+        self.last_anim = 0
+        #super().__init__(name, 20, 20)
         self.speed = 9
 
     def character_sprite_init(self):
         dest = Engine.Rect()
         src = Engine.Rect()
-        dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 200
-        src.x, src.y, src.w, src.h = 0, 0, 50, 37
-        rows, cols = 16, 7
-        self.character_sprite = Engine.CharacterSpriteComponent("./assets/adventurer.jpg", src, rows, cols)
+        dest.x , dest.y, dest.w, dest.h = 0, 0, 80, 200
+        src.x, src.y, src.w, src.h = 0, 0, 65, 65
+        rows, cols = 8, 3
+        self.character_sprite = Engine.CharacterSpriteComponent("./assets/jet2.jpg", src, dest, rows, cols)
         self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0,0))
         super().add_transform_component(self.tran)
-        self.character_sprite.add_animation("idle", 0, 3)
-        self.character_sprite.add_animation("run", 8, 13)
-        self.character_sprite.add_animation("jump", 15, 22)
-        self.character_sprite.add_animation("attack", 40, 50)
+        self.character_sprite.add_animation("up", 0, 2)
+        self.character_sprite.add_animation("side", 6, 8)
+        self.character_sprite.add_animation("down", 21, 23)
         super().add_character_sprite_component(self.character_sprite)
     
     def player_go_up(self, obj):
+        obj.update_animation_up(self.flipped, 3)
         obj.set_controller_velocity(Engine.Vec2(0, -self.speed))
-
+        self.last_anim = 0
 
     def player_go_down(self, obj):
-        obj.update_controller_velocity(Engine.Vec2(0, self.speed))
+        obj.update_animation_down(self.flipped, 3)
+        obj.set_controller_velocity(Engine.Vec2(0, self.speed))
+        self.last_anim = 1
 
     def player_go_right(self, obj):
         self.flipped = False
         obj.update_animation_run(self.flipped, 3)
         obj.set_controller_velocity(Engine.Vec2(self.speed, 0))
+        self.last_anim = 2
 
     def player_go_left(self, obj):
         self.flipped = True
         obj.update_animation_run(self.flipped, 3)
         obj.set_controller_velocity(Engine.Vec2(-self.speed, 0))
+        self.last_anim = 3
 
     def player_release_key_up(self, obj):
         self.check_if_no_input()
@@ -184,37 +190,65 @@ class Character(Engine.PlayerObject):
 
         super().add_controller_component(self.control2)
         
-    def update_animation_idle(self, flipped, speed):
-        self.character_sprite.perform_animation("idle", flipped, speed)
+    def update_animation_up(self, flipped, speed):
+        self.character_sprite.perform_animation("up", flipped, speed)
 
     def update_animation_run(self, flipped, speed):
-        self.character_sprite.perform_animation("run", flipped, speed)
+        self.character_sprite.perform_animation("side", flipped, speed)
 
-    def update_animation_jump(self, flipped, speed):
-        self.character_sprite.perform_animation("jump", flipped, speed)
-
-    def update_animation_attack(self, flipped, speed):
-        self.character_sprite.perform_animation("attack", flipped, speed)
+    def update_animation_down(self, flipped, speed):
+        self.character_sprite.perform_animation("down", flipped, speed)
     
     def check_if_no_input(self):
         if (self.control2.no_key_pressed()):
-            character.update_animation_idle(self.flipped, 3)
+            if self.last_anim == 0:
+                character.update_animation_up(self.flipped, 3)
+            elif self.last_anim == 1:
+                character.update_animation_down(self.flipped, 3)
+            elif self.last_anim == 2:
+                character.update_animation_run(self.flipped, 3)
+            elif self.last_anim == 3:
+                character.update_animation_run(self.flipped, 3)
 
+class Explosion(Engine.AnimateObject):
+    def __init__(self, name):
+        super().__init__(name, 100, 100)
+    def explosion_sprite_init(self):
+        dest = Engine.Rect()
+        src = Engine.Rect()
+        dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 100
+        src.x, src.y, src.w, src.h = 0, 0, 64, 65
+        rows, cols = 5, 5
+        self.character_sprite = Engine.CharacterSpriteComponent("./assets/explosion2.jpg", src, dest, rows, cols)
+        self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0,0))
+        super().add_transform_component(self.tran)
+        self.character_sprite.add_animation("explode", 0, 24)
+        self.character_sprite.set_loop(False)
+        super().add_character_sprite_component(self.character_sprite)
+
+    def explode_anim(self, speed):
+        self.character_sprite.perform_animation("explode", True, speed)
+
+
+def callback_sample(obj):
+    print("callback successful")
 
 character = Character("character")
 character.character_sprite_init()
 character.character_controls_init()
+character.add_collision_callback(callback_sample)
 
 camera.bind_to_object(character)
-##biden.add_controller_component(control)
 
-##obj = Engine.GameObject("sky")
-##obj.add_sprite_component(sprite)
-##tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10))
-##obj.add_transform_component(tran)
+explosion = Explosion("explosion")
+explosion.explosion_sprite_init()
+explosion.explode_anim(3)
 
+engine.add_animate_object(biden)
+engine.add_game_object(sky)
 engine.add_player_object(character)
-##engine.add_animate_object(biden)
+#engine.add_animate_object(explosion)
+#engine.add_UF_callback(gravity)
 engine.add_UF_callback(radial_gravity)
 engine.add_tilemanager(tm)
 engine.start()

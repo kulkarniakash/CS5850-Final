@@ -3,6 +3,10 @@
 #include "AnimateObject.hpp"
 #include "GameObject.hpp"
 #include <vector>
+#include <pybind11/pybind11.h>
+
+namespace py = pybind11;
+
 class AnimateObject;
 
 /*!
@@ -26,11 +30,16 @@ public:
      *  @param objs: A vector of game objects we want to test collisions against
      */
 	void handleCollisions(std::vector<GameObject*> objs);
+	
+	void add_collision_callback(py::object func);
+
+    void addCollisionCallback(py::object func);
 
 private:
 	Vec2 getCorrection(GameObject* obj);
 
 	AnimateObject* m_animateobject;
+    std::vector<py::object> m_callbacks;
 };
 
 #endif

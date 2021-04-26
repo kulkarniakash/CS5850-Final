@@ -41,8 +41,20 @@ void AnimateObject::updateVelocity(Vec2 vel) {
 	m_transformComponent->updateVelocity(vel);
 }
 
-void AnimateObject::handleCollision(std::vector<GameObject*> objs) {
+void AnimateObject::handleCollision(std::vector<GameObject*> objs, std::vector<AnimateObject*> animObjs) {
 	m_collisioncomp->handleCollisions(objs);
+
+	std::vector<GameObject*> gObjs;
+	for (auto aObj: animObjs) {
+		if (this == aObj) {
+			continue;
+		} else {
+			//Changing animate objects to game objects 
+			GameObject* gObj = static_cast<GameObject*>(aObj);
+			gObjs.push_back(gObj);
+		}
+	}
+	m_collisioncomp->handleCollisions(gObjs);
 }
 
 void AnimateObject::setPosition(Vec2 pos) {
@@ -58,6 +70,10 @@ void AnimateObject::setPosition(Vec2 pos) {
 
 void AnimateObject::setVelocity(Vec2 vel) {
 	m_transformComponent->setVelocity(vel);
+}
+
+void AnimateObject::addCollisionCallback(py::object func) {
+	m_collisioncomp->addCollisionCallback(func);
 }
 
 

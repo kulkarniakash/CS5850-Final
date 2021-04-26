@@ -153,20 +153,33 @@ void Engine::update() {
 		obj->updateSprite();
 		obj->updateTransform();
 	}
+
+	// convertToGameObjects(playerObjs, animateObjs);
 	
 	uforce.applyForces(&animateObjs);
 	uforce.applyForces(&playerObjs);
 	
 	for (auto obj : animateObjs) {
-		obj->handleCollision(gameObjs);
+		obj->handleCollision(gameObjs, animateObjs);
 	}
 	
 	for (auto obj : playerObjs) {
-		obj->handleCollision(gameObjs);
+		obj->handleCollision(gameObjs, animateObjs);
 	}
 
 	Camera::getInstance().update();
 }
+
+// void Engine::convertToGameObjects(std::vector<PlayerObject*> playerObjs, std::vector<AnimateObject*> animateObjs) {
+// 	for (auto pObj: playerObjs) {
+// 		GameObject* obj = dynamic_cast<GameObject*>(pObj);
+// 		playerAsGameObjs.push_back(obj);
+// 	}
+// 	for (auto aObj: animateObjs) {
+// 		GameObject* obj = dynamic_cast<GameObject*>(aObj);
+// 		animAsGameObjs.push_back(obj);
+// 	}
+// }
 
 void Engine::Input()
 {

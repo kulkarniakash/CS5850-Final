@@ -76,7 +76,8 @@ PYBIND11_MODULE(Engine, m) {
 		.def("update_position", &AnimateObject::updatePosition)
 		.def("update_velocity", &AnimateObject::updateVelocity)
 		.def("set_position", &AnimateObject::setPosition)
-		.def("set_velocity", &AnimateObject::setVelocity);
+		.def("set_velocity", &AnimateObject::setVelocity)
+		.def("add_collision_callback", &AnimateObject::addCollisionCallback);
 
 	py::class_<PlayerObject, AnimateObject>(m, "PlayerObject")
 		.def(py::init<std::string, float, float>(), py::return_value_policy::reference)
@@ -84,7 +85,8 @@ PYBIND11_MODULE(Engine, m) {
 		.def("get_controller_component", &PlayerObject::getControllerComponent, py::return_value_policy::reference)
 		.def("update_controller_velocity", &PlayerObject::updateControllerVelocity)
 		.def("set_controller_velocity", &PlayerObject::setControllerVelocity)
-		.def("get_controller_velocity", &PlayerObject::getControllerVelocity);
+		.def("get_controller_velocity", &PlayerObject::getControllerVelocity)
+		.def("add_collision_callback", &PlayerObject::addCollisionCallback);
 
 	py::class_<TransformComponent>(m, "TransformComponent")
 		.def(py::init<const Vec2&, const Vec2&>())   // our constructor
@@ -102,10 +104,11 @@ PYBIND11_MODULE(Engine, m) {
 		.def("get_height", &SpriteComponent::getHeight);
 
 	py::class_<CharacterSpriteComponent, SpriteComponent>(m, "CharacterSpriteComponent")
-		.def(py::init<std::string, SDL_Rect, int, int>(), py::return_value_policy::reference)
+		.def(py::init<std::string, SDL_Rect, SDL_Rect, int, int>(), py::return_value_policy::reference)
 		.def("loop_action", &CharacterSpriteComponent::loopAction, py::return_value_policy::reference)
 		.def("add_animation", &CharacterSpriteComponent::addAnimation)
 		.def("perform_animation", &CharacterSpriteComponent::performAnimation)
+		.def("set_loop", &CharacterSpriteComponent::setLoop)
 		.def("update_frame", &CharacterSpriteComponent::updateFrame);
 
 

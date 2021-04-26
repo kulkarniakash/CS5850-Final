@@ -13,10 +13,11 @@ public:
      * @brief contstructor of our CharacterSpriteComponent
      * @param filepath: string that represents the file path of our sprite
      * @param src: An SDL_Rect representing a rectangle containing our Character Sprite
+     * @param dest: An SDL_Rect representing the destination of our Character Sprite
      * @param rows: int that represents the number of rows in our sprite sheet
      * @param cols: int that represents the number of cols in our sprite sheet
      */
-    CharacterSpriteComponent(std::string filePath, SDL_Rect src, int rows, int cols);
+    CharacterSpriteComponent(std::string filePath, SDL_Rect src, SDL_Rect dest, int rows, int cols);
     
     //! @brief Destructor fpr CharacterSpriteComponent
     ~CharacterSpriteComponent();
@@ -48,6 +49,8 @@ public:
 
     //! Sets whether the action should loop upon reaching its last frame or not.
     bool& loopAction();
+
+    void setLoop(bool loop);
     
 
 private:
