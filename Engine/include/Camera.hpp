@@ -12,7 +12,7 @@
 
 class GameObject;
 
-/**
+/*!
  * @brief A enum class for direction.
 */
 enum Direction {
@@ -23,56 +23,56 @@ enum Direction {
 	No
 };
 
-/**
+/*!
  * @brief Camera class that keeps track of position of camera (top-left corner) and moves the camera when given updated.
 */
 class Camera {
 
 private:
-    /**
+    /*!
      * @brief Constructor for Camera object
      */
 	Camera();
 
 	static Camera* instance;
 
-    /**
+    /*!
      * @brief Copy Constructor for Camera Object
      * @param camera: Camera object we want to construct
      */
 	Camera(Camera const &);
     
-    /**
+    /*!
      * @brief Operator Function to assign a Camera object
      * @param camera: Camera object we want to assign
     */
 	void operator=(Camera const&);
 public:
     
-    /**
+    /*!
      * @brief creates an instance of a Camera object
      */
 	static Camera& getInstance();
 
-	/**
+	/*!
 	 * @brief Update the camera's position according to the given direction.
 	*/
 	void update();
 
-	/**
+	/*!
 	 * @brief Updates the gameObjects position to be its correct position
      *   @param obj: GameObject we want to correct the position onto our GameObject
 	*/
 	Vec2 correctPosition(GameObject* obj);
 
-	/**
+	/*!
 	 * @brief Get the camera's top-left corner position.
 	 * @return A Vec2 object indicates the camera's top-left corner position.
 	*/
 	Vec2 getCameraPos();
 
 	
-    /**
+    /*!
      * @brief Sets the camera to 'lock' onto an object.
      * @param obj: GameObject that we want the camera to lock onto.
      */

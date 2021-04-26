@@ -2,14 +2,14 @@
 #define CHARACTER_SPRITE_COMPONENT_HPP
 #include "SpriteComponent.hpp"
 
-/**
+/*!
  *  @brief Class that represents our CharacterSpriteComonent
  *  Inherits from our Sprite Component Class
  *  Handles performing animations of this object
  */
 class CharacterSpriteComponent : public SpriteComponent { 
 public:
-    /**
+    /*!
      * @brief contstructor of our CharacterSpriteComponent
      * @param filepath: string that represents the file path of our sprite
      * @param src: An SDL_Rect representing a rectangle containing our Character Sprite

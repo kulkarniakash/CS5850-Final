@@ -33,12 +33,12 @@ public:
 	*/
 	TileManager(int tileWidth, int tileHeight, Vec2 pos = Vec2(0, 0));
 
-	/**
+	/*!
 	 * @brief Default destructor of TileManager object.
 	*/
 	~TileManager();
 
-	// A static unordered_map which bind each tile type to its relative path.
+	//! A static unordered_map which bind each tile type to its relative path.
 	static std::unordered_map<int, std::string> tilePaths;
 
 	/**
@@ -84,66 +84,71 @@ public:
 		}
 	}
 
-	// Get a specific tile type's relative path by the input tile type.
+	/*! @brief Get a specific tile type's relative path by the input tile type.
+     @param type: index of our tileTypes
+     @return string that representst the path of that tile
+     */
 	static std::string getTilePath(int type) { return tiletypes[type]; }
 
-	/**
+	/*!
 	 * @brief Get the column number of the entire tile grid.
 	 * @return An integer indicates the column number of the entire tile grid.
 	*/
 	int getColNum();
 
-	/**
+	/*!
 	 * @brief Get the row number of the entire tile grid.
 	 * @return An integer indicates the row number of the entire tile grid.
 	*/
 	int getRowNum();
 
-	/**
+	/*!
 	 * @brief Get the width of each single tile.
 	 * @return An integer indicates the width of each single tile.
 	*/
 	int getTileWidth();
 
-	/**
+	/*!
 	 * @brief Get the height of each single tile.
 	 * @return An integer indicates the height of each single tile.
 	*/
 	int getTileHeight();
 
-	/**
+	/*!
 	 * @brief Get the TileManager's current process position.
 	 * @return A Vec2 object indicates the TileManager's current process position.
 	*/
 	Vec2 getPos();
 
-	/**
+	/*!
 	 * @brief Load the level map according to the input file path.
 	 * @param path A string indicates the path of the level map file.
 	*/
 	void loadLevelMap(std::string path);
 
-	/**
+	/*!
 	 * @brief Save the current level to the input file path.
 	 * @param path A string indicates the path of the level map file to be saved.
 	*/
 	void saveLevelMap(std::string path);
 
-	/**
+	/*!
 	 * @brief Calls the render functions to render each individual tile.
 	 * @param ren A pointer to a GraphicsEngineRenderer object indicates the render.
 	 * @param camera A pointer to a Camera object indicates the camera.
+     @return A pointer to a pointer of a GameObject
 	*/
 	GameObject** convertToGameObjects();
 
-	/**
+	/*!
 	 * @brief Get the tile type at a specified position.
 	 * @param row An integer indicates the row number of that specified position.
 	 * @param col An integer indicates the column number of that specified position.
 	 * @return An integer(enum) indicates the tile type of that specified position.
 	*/
 	int getTileTypeAt(int row, int col);
-
+    
+    //! @return the size of tiles
 	int getTileCount();
 
 protected:
