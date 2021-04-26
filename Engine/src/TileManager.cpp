@@ -102,15 +102,6 @@ void TileManager::loadLevelMap(std::string path) {
 		}
 		i++;
 	}
-
-	std::cout << "Tile map\n";
-	for (int i = 0; i < row; i++) {
-		for (int j = 0; j < col; j++) {
-			std::cout << tilemap[i][j] << " ";
-		}
-
-		std::cout << std::endl;
-	}
 }
 
 // Save the current level to the input file path.
