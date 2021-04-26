@@ -7,21 +7,28 @@
 extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;
 
-/**
-*Camera class that keeps track of position of camera (top-left corner)
-*and moves the camera when given updated
-*/
+/*!
+ * @brief Camera class that keeps track of position of camera (top-left corner)
+ * and moves the camera when given updated
+ */
 class Camera {
 public:
-	// x,y position of camera in absolute coordinates. horizontal and vertical speed of the camera
+	/*! @brief Constructs our Camera
+     @param pos: Vec2 that represents the position of our Camera
+     @param xSpeed: float that represents the Horzizontal speed of our Camera
+     @param ySpeed: float that represents the Vertical speed of our Camera
+     */
 	Camera(Vec2 pos, float xSpeed, float ySpeed);
 
-	// updatea the camera psotion according to the direction given
+	/*! @brief updatea the camera psotion according to the direction given
+     @param dir: Direction that we want to update our Camera's Position towards
+     */
 	void update(Direction dir);
 
-	// returns the corrected position of the object given its initial position
+	//! @return Vec2 that is the corrected position of the object given its initial position
 	Vec2 getObjectPos(Vec2 initialPos);
-	// returns the position of the camera
+    
+	//! @return Vec2 that is the position of the camera
 	Vec2 getCameraPos();
 private:
 	// x,y speed of the camera
