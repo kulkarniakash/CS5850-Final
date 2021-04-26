@@ -7,7 +7,6 @@ UIComponent::UIComponent(std::string fontPath, SDL_Rect dest, std::string displa
     if (ResourceManager::getInstance().addResource(fontPath, ResourceType::Font, fontSize) != 0) {
         std::cout << "Error: Could not load font" << std::endl;
     }
-    std::cout << SDL_GetError() << std::endl;
 
     m_displayFont = ResourceManager::getInstance().getResourceFont(fontPath);
     if (m_displayFont == NULL || m_displayFont == nullptr) {
@@ -19,7 +18,6 @@ UIComponent::UIComponent(std::string fontPath, SDL_Rect dest, std::string displa
     if (ResourceManager::getInstance().addTexture("displayTexture", "gRenderer", m_surface) != 0) {
         std::cout << "Error: Could not add texture" << std::endl;
     }
-    std::cout << SDL_GetError() << std::endl;
 
     m_texture = ResourceManager::getInstance().getResourceSDLTexture("displayTexture");
     if (m_texture == NULL || m_texture == nullptr) {
@@ -47,7 +45,6 @@ void UIComponent::render() {
     //    std::cout << "m_textRect is null" << std::endl;
     // }
     SDL_RenderCopy(m_renderer, m_texture, NULL, &m_textRect);
-     std::cout << SDL_GetError() << std::endl;
 }
 
 void UIComponent::update(std::string text) {

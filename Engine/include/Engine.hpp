@@ -14,6 +14,7 @@
 #include "PlayerObject.hpp"
 #include "UniversalForce.hpp"
 #include "TileManager.hpp"
+#include "UIComponent.hpp"
 #include <map>
 #include <pybind11/pybind11.h>
 
