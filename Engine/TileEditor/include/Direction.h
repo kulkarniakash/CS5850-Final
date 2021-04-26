@@ -1,9 +1,8 @@
 #ifndef DIRECTION
 #define DIRECTION
 
-/**
-*simple enum class used to denote direction of camera movement
-*although can easily be used for similar purposes
+/*!
+@brief simple enum class used to denote direction of camera movement, although can easily be used for similar purposes
 */
 enum Direction {
 	Up = 0,
