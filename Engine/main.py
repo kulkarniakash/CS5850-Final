@@ -155,8 +155,6 @@ class Character(Engine.PlayerObject):
         obj.update_animation_run(self.flipped, 3)
         obj.set_controller_velocity(Engine.Vec2(-self.speed, 0))
         self.last_anim = 3
-        engine.destroy_object("character")
-        print('finished destroying')
 
     def player_release_key_up(self, obj):
         self.check_if_no_input()
@@ -234,6 +232,8 @@ class Explosion(Engine.AnimateObject):
 
 def callback_sample(obj):
     print("callback successful")
+    engine.destroy_object("character")
+    print('finished destroying')
 
 character = Character("character")
 character.character_sprite_init()
@@ -262,8 +262,11 @@ while not engine.program_ended():
     engine.update()
     print('after update')
     biden.check_bounds()
+    print('after check bounds')
     engine.clear()
+    print('after clear')
     engine.render()
+    print('after render')
 
 ##    if count >= 100:
 ##        print(f'velocity = {character.get_transform_component().get_velocity()}')
