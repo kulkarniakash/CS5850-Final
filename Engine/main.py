@@ -101,17 +101,6 @@ def radial_gravity(obj):
 def gravity(obj):
     obj.update_velocity(Engine.Vec2(0, 1))
 
-##control = Engine.ControllerComponent()
-##control.add_input_binding("W", go_up, False)
-##control.add_input_binding("S", go_down, False)
-##control.add_input_binding("A", go_left, False)
-##control.add_input_binding("D", go_right, False)
-##control.add_input_release_binding("W", key_release_w)
-##control.add_input_release_binding("S", key_release_s)
-##control.add_input_release_binding("A", key_release_a)
-##control.add_input_release_binding("D", key_release_d)
-
-
 class Character(Engine.PlayerObject):
     def __init__(self, name):
         super().__init__(name, 100, 100)
@@ -236,7 +225,6 @@ class Explosion(Engine.AnimateObject):
 character_destroyed = True
 def callback_sample(obj):
     global character_destroyed
-    #print("callback successful")
     if character_destroyed:
         x, y = character.get_position()
         explosion.explosion_sprite_init(x, y)
@@ -254,13 +242,10 @@ character.add_collision_callback(callback_sample)
 camera.bind_to_object(character)
 
 explosion = Explosion("explosion")
-#explosion.explosion_sprite_init()
 
 engine.add_animate_object(biden)
 engine.add_game_object(sky)
 engine.add_player_object(character)
-#engine.add_animate_object(explosion)
-#engine.add_UF_callback(gravity)
 engine.add_UF_callback(radial_gravity)
 engine.add_tilemanager(tm)
 engine.start()
