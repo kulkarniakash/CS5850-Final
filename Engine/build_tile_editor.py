@@ -21,7 +21,7 @@ if platform.system()=="Linux":
 elif platform.system()=="Darwin":
     ARGUMENTS="-g -D MAC" # -D is a #define sent to the preprocessor.
     INCLUDE_DIR="-I ./TileEditor/include/ -I/Library/Frameworks/SDL2.framework/Headers -I./../common/thirdparty/old/glm"
-    LIBRARIES="-F/Library/Frameworks -framework SDL2"
+    LIBRARIES="-F/Library/Frameworks -framework SDL2 -F/Library/Frameworks -framework SDL2_mixer -F/Library/Frameworks -framework SDL2_ttf -F/Library/Frameworks -framework SDL2_image"
 elif platform.system()=="Windows":
     COMPILER="g++ -std=c++17" # Note we use g++ here as it is more likely what you have
     ARGUMENTS="-g -D MINGW -std=c++17 -static-libgcc -static-libstdc++" 
