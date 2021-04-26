@@ -134,7 +134,9 @@ void Engine::addTileManager(TileManager* tm) {
 }
 
 void Engine::update() {
+	std::cout << "Enters update" <<"\n";
 	for (auto obj : playerObjs) {
+		std::cout << "PlayerObj name" << obj->getGameObjectName() <<"\n";
 		ControllerComponent* contcomp = obj->getControllerComponent();
 
 		if (contcomp != nullptr) {
@@ -150,6 +152,7 @@ void Engine::update() {
 	}
 
 	for (auto obj : animateObjs) {
+		std::cout << "AnimateObj name" << obj->getGameObjectName() <<"\n";
 		obj->updateSprite();
 		obj->updateTransform();
 	}
@@ -345,6 +348,10 @@ void Engine::Shutdown()
 }
 
 void Engine::destroyObject(std::string objectName) {
+		for (auto& it : playerObjs) {
+        std::cout << "printing playerobjs " << it->getGameObjectName() << std::endl;
+    }
+
 	int i = 0;
 	for (auto& it : playerObjs) {
         if (it->getGameObjectName().compare(objectName) == 0) {
@@ -353,6 +360,10 @@ void Engine::destroyObject(std::string objectName) {
 			return;
 		}
 		++i;
+    }
+
+	for (auto& it : playerObjs) {
+        std::cout << "printing playerobjs " << it->getGameObjectName() << std::endl;
     }
 
 	i = 0;
