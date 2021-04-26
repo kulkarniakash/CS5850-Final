@@ -7,7 +7,8 @@ engine = None
 def init_engine():
     engine = Engine.Engine()
     engine.initialize_graphics_subsystem()
-
+engine = Engine.Engine()
+engine.initialize_graphics_subsystem()
 #init_engine()
 tile_width = 20
 tile_height = 20
@@ -232,8 +233,8 @@ class TestUI(Engine.UIComponent):
         self.dest.x, self.dest.y, self.dest.w, self.dest.h = 50, 50, 100, 100
         super().__init__(fontPath, self.dest, text, fontSize)
 
-    def mRender(self):
-        self.render()
+    # def mRender(self):
+    #     self.render()
 
 testUI = TestUI("testing", 50)
 
@@ -255,9 +256,9 @@ def callback_sample(obj):
 def initialize_game(reset):
     global character, character_destroyed, camera, explosion, engine
     character_destroyed = True
-    if (reset is False):
-        engine = Engine.Engine()
-        engine.initialize_graphics_subsystem()
+    # if (reset is False):
+    #     engine = Engine.Engine()
+    #     engine.initialize_graphics_subsystem()
     character = Character("character")
     character.character_sprite_init()
     character.character_controls_init()
@@ -274,8 +275,9 @@ def initialize_game(reset):
     engine.add_tilemanager(tm)
     engine.add_ui_component(testUI)
     engine.set_timer(30000)
-    if (reset is False):
-        engine.start()
+    engine.start()
+    # if (reset is False):
+    #     engine.start()
 
 initialize_game(False)
 
