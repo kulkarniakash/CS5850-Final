@@ -1,9 +1,11 @@
 #include <CharacterSpriteComponent.hpp>
 #include <iostream>
 
-CharacterSpriteComponent::CharacterSpriteComponent(std::string filePath, SDL_Rect src, int rows, int cols) : SpriteComponent(filePath, src) {
+CharacterSpriteComponent::CharacterSpriteComponent(std::string filePath, SDL_Rect src, SDL_Rect dest, int rows, int cols) : SpriteComponent(filePath, src) {
 	m_rows = rows;
 	m_cols = cols;
+	m_dest.w = dest.w;
+	m_dest.h = dest.h;
 }
 
 CharacterSpriteComponent::~CharacterSpriteComponent() {
@@ -71,4 +73,8 @@ void CharacterSpriteComponent::updatePosition(Vec2 pos) {
 
 bool& CharacterSpriteComponent::loopAction(){
     return m_loopAction;
+}
+
+void CharacterSpriteComponent::setLoop(bool loop) {
+	m_loopAction = loop;
 }
