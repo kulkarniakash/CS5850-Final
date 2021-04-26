@@ -18,41 +18,39 @@
     #include <SDL.h>
 #endif
 
-/**
- * This class serves as an interface to
- * the main graphics renderer for our engine.
- */
+//! @brief This class serves as an interface to the main graphics renderer for our engine.
 class GraphicsEngineRenderer{
     public:
-        /**
-         * Constructor
+    
+        /*!
+         * @brief Constructor for GraphicsEngineRenderer
+         * @param w: width of our renderer
+         * @param h: height of our renderer
          */
         GraphicsEngineRenderer(int w, int h);
-        /**
-         * Destructor
-         */
+    
+        //! @brief Destructor
         ~GraphicsEngineRenderer();
-        /**
-         * Set the color for the background whenever
-         * the color is cleared.
+        /*!
+         * @brief Sets the color of the background
+         * @param r: value to show the amount of red
+         * @param g: value to show the amount of green
+         * @param b: value to show the amount of blue
+         * @param a: value to show the amount of transparency
          */
+    
         void SetRenderDrawColor(int r, int g, int b, int a);
-        /**
-         * Clear the screen
-         */
+    
+        //! @brief Clears the screen
         void RenderClear();
-        /**
-         * Render whatever is in the backbuffer to
-         * the screen.
-         */
+    
+        //! @brief Render whatever is in the backbuffer to the screen.
         void RenderPresent();
-        /**
-         * Get Pointer to Window
-         */
+    
+        //! @brief Get Pointer to Window
         SDL_Window* GetWindow();
-        /**
-         * Get Pointer to Renderer
-         */
+    
+        //! @brief Get Pointer to Renderer
         SDL_Renderer* GetRenderer();
 
     private:
