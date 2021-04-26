@@ -19,11 +19,11 @@ SOURCE="./src/*.cpp"
 ARGUMENTS="-D MAC -std=c++14 -shared -fPIC" 
 
 # Which directories do we want to include.
-INCLUDE_DIR="-I ./include/ -I./pybind11/include/ -I/Library/Frameworks/SDL2.framework/Headers `python3.5 -m pybind11 --includes`"
+INCLUDE_DIR="-I ./include/ -I./pybind11/include/ -I/Library/Frameworks/SDL2.framework/Headers `python3.7 -m pybind11 --includes`"
 
 # What libraries do we want to include
 
-LIBRARIES="-F/Library/Frameworks -framework SDL2 -F/Library/Frameworks -framework SDL2_mixer -F/Library/Frameworks -framework SDL2_ttf -F/Library/Frameworks -framework SDL2_image `python3.5-config --includes --ldflags`"
+LIBRARIES="-F/Library/Frameworks -framework SDL2 -F/Library/Frameworks -framework SDL2_mixer -F/Library/Frameworks -framework SDL2_ttf -F/Library/Frameworks -framework SDL2_image `python3.7-config --includes --ldflags`"
 
 # The name of our executable
 EXECUTABLE="Engine.so"

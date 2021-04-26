@@ -21,7 +21,7 @@ public:
      * @param tileHeight: int representing the height of a tile
      * @param tileTextures: an unordered map that contains an index and texture of a tile
      */
-	TileMenu(Vec2 pos, int width, int height, int tileWidth, int tileHeight, unordered_map<int, SDL_Texture*> tileTextures);'
+	TileMenu(Vec2 pos, int width, int height, int tileWidth, int tileHeight, unordered_map<int, SDL_Texture*> tileTextures);
     
     
     /*!
