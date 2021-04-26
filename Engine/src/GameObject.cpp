@@ -13,9 +13,11 @@ GameObject::GameObject(std::string gameObjectName, float w, float h) {
 
 GameObject::~GameObject() {
     std::cout << "GameObject destructor called for " << m_gameObjectName << std::endl;
+    delete m_transformComponent;
+    delete m_spriteComponent;
+    delete m_characterSpriteComponent;
     m_transformComponent = nullptr;
     m_spriteComponent = nullptr;
-    m_transformComponent = nullptr;
     m_characterSpriteComponent = nullptr;
 }
 

@@ -9,6 +9,7 @@ CharacterSpriteComponent::CharacterSpriteComponent(std::string filePath, SDL_Rec
 }
 
 CharacterSpriteComponent::~CharacterSpriteComponent() {
+	std::cout << "CharacterSpriteComponent destructor called" << std::endl;
 	m_texture = nullptr;
 	m_renderer = nullptr;
 	SDL_DestroyTexture(m_texture);

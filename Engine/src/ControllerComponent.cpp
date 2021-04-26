@@ -8,7 +8,8 @@ ControllerComponent::ControllerComponent() {
 }
 
 ControllerComponent::~ControllerComponent() {
-	delete m_gameobject;
+	//delete m_gameobject;
+	std::cout << "ControllerComponent destructor called" << std::endl;
 	m_gameobject = NULL;
 	no_key_pressed = true;
 }

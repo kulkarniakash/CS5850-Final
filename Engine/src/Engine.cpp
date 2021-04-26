@@ -150,27 +150,31 @@ void Engine::update() {
 		obj->updateSprite();
 		obj->updateTransform();
 	}
+	std::cout << "after here" <<"\n";
 
 	for (auto obj : animateObjs) {
 		// std::cout << "AnimateObj name" << obj->getGameObjectName() <<"\n";
 		obj->updateSprite();
 		obj->updateTransform();
 	}
+	std::cout << "after here2" <<"\n";
 
 	// convertToGameObjects(playerObjs, animateObjs);
 	
 	uforce.applyForces(&animateObjs);
 	uforce.applyForces(&playerObjs);
-	
+	std::cout << "after here3" <<"\n";
 	for (auto obj : animateObjs) {
 		std::cout << "animateObj is: " << obj->getGameObjectName() << std::endl;
 		obj->handleCollision(gameObjs, animateObjs);
 	}
+	std::cout << "after here 3.5" <<"\n";
 	
 	for (auto obj : playerObjs) {
 		std::cout << "playerObjs is: " << obj->getGameObjectName() << std::endl;
 		obj->handleCollision(gameObjs, animateObjs);
 	}
+	std::cout << "after here4" <<"\n";
 
 	Camera::getInstance().update();
 }

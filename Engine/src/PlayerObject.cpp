@@ -7,6 +7,7 @@ PlayerObject::PlayerObject(std::string name, float w, float h) : AnimateObject(n
 
 PlayerObject::~PlayerObject() {
 	std::cout << "PlayerObject destructor called for "<< m_gameObjectName <<std::endl;
+	delete m_controllerComponent;
 	m_controllerComponent = nullptr;
 }
 

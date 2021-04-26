@@ -7,6 +7,7 @@ AnimateObject::AnimateObject(std::string name, float w, float h) : GameObject(na
 
 AnimateObject::~AnimateObject() {
     std::cout << "AnimateObject destructor called for " << m_gameObjectName << std::endl;
+	delete m_collisioncomp;
 	m_collisioncomp = nullptr;
 }
 
@@ -47,24 +48,30 @@ void AnimateObject::updateVelocity(Vec2 vel) {
 }
 
 void AnimateObject::handleCollision(std::vector<GameObject*> objs, std::vector<AnimateObject*> animObjs) {
-	std::cout <<"enter handleCollision" << std::endl;
-	m_collisioncomp->handleCollisions(objs);
-std::cout <<"here" << std::endl;
+	//std::cout <<"enter handleCollision" << std::endl;
+	std::cout <<"animateObject handleCollision -1" << std::endl;
+	bool returned = m_collisioncomp->handleCollisions(objs);
+	if (returned) {
+		return;
+	}
+	std::cout <<"animateObject handleCollision 0" << std::endl;
+	//std::cout <<"handleCollision for: " << this->getGameObjectName() << std::endl;
 	std::vector<GameObject*> gObjs;
 	for (auto aObj: animObjs) {
-		std::cout <<"aObj " << aObj->getGameObjectName() << std::endl;
+		//std::cout <<"aObj " << aObj->getGameObjectName() << std::endl;
 		if (this == aObj) {
 			continue;
 		} else {
 			//Changing animate objects to game objects 
 			GameObject* gObj = static_cast<GameObject*>(aObj);
-			std::cout <<"about to push_back" << std::endl;
-			std::cout <<"gObj " << gObj->getGameObjectName() << std::endl;
+		//	std::cout <<"about to push_back" << std::endl;
+		//	std::cout <<"gObj " << gObj->getGameObjectName() << std::endl;
 			gObjs.push_back(gObj);
 		}
 	}
-	std::cout <<"here2" << std::endl;
+	std::cout <<"animateObject handleCollision 1" << std::endl;
 	m_collisioncomp->handleCollisions(gObjs);
+	std::cout <<"animateObject handleCollision 2" << std::endl;
 }
 
 void AnimateObject::setPosition(Vec2 pos) {

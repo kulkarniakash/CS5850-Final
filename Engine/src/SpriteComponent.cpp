@@ -18,9 +18,11 @@ SpriteComponent::SpriteComponent(std::string filePath, SDL_Rect src) {
 }
 
 SpriteComponent::~SpriteComponent() {
+	std::cout << "SpriteComponent destructor called" << std::endl;
     m_texture = nullptr;
     m_renderer = nullptr;
-    // SDL_FreeSurface(m_spriteSheet);
+	SDL_DestroyTexture(m_texture);
+	SDL_DestroyRenderer(m_renderer);
 }
 
 
