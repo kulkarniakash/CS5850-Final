@@ -74,3 +74,7 @@ void CharacterSpriteComponent::updatePosition(Vec2 pos) {
 bool& CharacterSpriteComponent::loopAction(){
     return m_loopAction;
 }
+
+void CharacterSpriteComponent::setLoop(bool loop) {
+	m_loopAction = loop;
+}

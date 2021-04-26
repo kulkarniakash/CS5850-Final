@@ -73,7 +73,6 @@ biden.add_controller_component(control)
 
 class Character(Engine.PlayerObject):
     def __init__(self, name):
-        # super().__init__(name, 100, 200)
         super().__init__(name, 100, 100)
         self.flipped = False
         self.last_anim = 0
@@ -149,13 +148,39 @@ class Character(Engine.PlayerObject):
             elif self.last_anim == 3:
                 character.update_animation_run(self.flipped, 3)
 
+class Explosion(Engine.AnimateObject):
+    def __init__(self, name):
+        super().__init__(name, 100, 100)
+    def explosion_sprite_init(self):
+        dest = Engine.Rect()
+        src = Engine.Rect()
+        dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 100
+        src.x, src.y, src.w, src.h = 0, 0, 64, 65
+        rows, cols = 5, 5
+        self.character_sprite = Engine.CharacterSpriteComponent("./assets/explosion2.jpg", src, dest, rows, cols)
+        self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0,0))
+        super().add_transform_component(self.tran)
+        self.character_sprite.add_animation("explode", 0, 24)
+        self.character_sprite.set_loop(False)
+        super().add_character_sprite_component(self.character_sprite)
+
+    def explode_anim(self, speed):
+        self.character_sprite.perform_animation("explode", True, speed)
+
+
 character = Character("character")
 character.character_sprite_init()
 character.character_controls_init()
 
+explosion = Explosion("explosion")
+explosion.explosion_sprite_init()
+explosion.explode_anim(3)
+
 engine.add_player_object(biden)
 engine.add_game_object(sky)
 engine.add_player_object(character)
+engine.add_animate_object(explosion)
+engine.add_UF_callback(gravity)
 engine.start()
 
 while not engine.program_ended():

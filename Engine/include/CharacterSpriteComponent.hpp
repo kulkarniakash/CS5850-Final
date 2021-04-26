@@ -31,6 +31,8 @@ public:
 
     //! Sets whether the action should loop upon reaching its last frame or not.
     bool& loopAction();
+
+    void setLoop(bool loop);
     
 
 private:

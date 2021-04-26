@@ -96,6 +96,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def("loop_action", &CharacterSpriteComponent::loopAction, py::return_value_policy::reference)
 		.def("add_animation", &CharacterSpriteComponent::addAnimation)
 		.def("perform_animation", &CharacterSpriteComponent::performAnimation)
+		.def("set_loop", &CharacterSpriteComponent::setLoop)
 		.def("update_frame", &CharacterSpriteComponent::updateFrame);
 
 
