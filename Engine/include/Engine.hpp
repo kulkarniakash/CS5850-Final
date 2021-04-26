@@ -113,6 +113,8 @@ public:
 
   void resetTimer();
 
+  void reset();
+
 private:
 
 	bool quit;

@@ -45,7 +45,8 @@ PYBIND11_MODULE(Engine, m) {
 		.def("get_time", &Engine::getTime)
 		.def("set_timer", &Engine::setTimer)
 		.def("stop_timer", &Engine::stopTimer)
-		.def("reset_timer", &Engine::resetTimer);
+		.def("reset_timer", &Engine::resetTimer)
+		.def("reset", &Engine::reset);
 
 	py::class_<TileManager>(m, "TileManager")
 		.def(py::init<int, int, Vec2>(), py::return_value_policy::reference)

@@ -237,14 +237,15 @@ def callback_sample(obj):
         camera.bind_to_object(explosion)
         engine.stop_timer()
         engine.destroy_object("character")
-       # engine.shutdown()
-      #  initialize_game()
+        #engine.reset()
+        #initialize_game(True)
 
-def initialize_game():
+def initialize_game(reset):
     global character, character_destroyed, camera, explosion, engine
     character_destroyed = True
-    engine = Engine.Engine()
-    engine.initialize_graphics_subsystem()
+    if (reset is False):
+        engine = Engine.Engine()
+        engine.initialize_graphics_subsystem()
     character = Character("character")
     character.character_sprite_init()
     character.character_controls_init()
@@ -260,9 +261,10 @@ def initialize_game():
     engine.add_UF_callback(radial_gravity)
     engine.add_tilemanager(tm)
     engine.set_timer(30000)
-    engine.start()
+    if (reset is False):
+        engine.start()
 
-initialize_game()
+initialize_game(False)
 
 count = 0
 while not engine.program_ended():

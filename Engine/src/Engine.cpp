@@ -436,3 +436,12 @@ void Engine::stopTimer() {
 	m_timerStopped = true;
 	m_timer -= SDL_GetTicks();
 }
+
+void Engine::reset() {
+	playerObjs = {};
+	animateObjs = {};
+	gameObjs = {};
+	destroyedObjs = {};
+	//uforce = null;
+	resetTimer();
+}
