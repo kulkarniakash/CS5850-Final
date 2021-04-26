@@ -5,6 +5,8 @@
 #include <vector>
 #include <queue>
 #include <pybind11/pybind11.h>
+#include <stdlib.h>
+#include <iostream>
 
 class AnimateObject;
 

@@ -12,9 +12,11 @@ void CollisionComponent::handleCollisions(std::vector<GameObject*> objs) {
 		if (corr != Vec2(0, 0)) {
 			collided = true;
 			//TODO: call callback functions
-			for (auto callback: callbacks) {
-				callback(obj);
-			}
+				std::cout << callbacks.size() << std::endl;			
+			// for (auto callback: callbacks) {
+			// 	std::cout << callback << std::endl;
+			// 	callback(obj);
+			// }
 		}
 		m_animateobject->updatePosition(corr);
 	}
@@ -102,5 +104,7 @@ Vec2 CollisionComponent::getCorrection(GameObject* obj) {
 
 //TODO: store callbacks in a vector
 void CollisionComponent::add_collision_callback(py::object func) {
+	std::cout << "collided in collisioncomp" << std::endl;
 	callbacks.push_back(func);
+	std::cout << callbacks.size() << std::endl;
 }

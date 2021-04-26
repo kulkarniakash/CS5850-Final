@@ -32,15 +32,41 @@ class Biden(Engine.PlayerObject):
         src = Engine.Rect()
         dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 150
         src.x, src.y, src.w, src.h = 0, 0, -1, -1
-        self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0,0))
+        self.tran = Engine.TransformComponent(Engine.Vec2(150,250), Engine.Vec2(0,0))
         super().add_transform_component(self.tran)
         self.sprite = Engine.SpriteComponent("./assets/biden.jpg", src)
         super().add_sprite_component(self.sprite)
         
+class Blinky(Engine.AnimateObject):
+    def __init__(self, name):
+        super().__init__(name, 20, 30)
+        self.speed = 10
+
+    def sprite_init(self):
+        dest = Engine.Rect()
+        src = Engine.Rect()
+        dest.x , dest.y, dest.w, dest.h = 300, 400, 100, 150
+        src.x, src.y, src.w, src.h = 0, 0, -1, -1
+        self.tran = Engine.TransformComponent(Engine.Vec2(300, 400), Engine.Vec2(0,0))
+        super().add_transform_component(self.tran)
+        self.sprite = Engine.SpriteComponent("./assets/biden.jpg", src)
+        super().add_sprite_component(self.sprite)
+
+    def collision_callback(self):
+        print("called")
+        self.add_collision_callback(sample_callback)
+
+def sample_callback(obj):
+    print("sample call back")
+
 biden = Biden("biden")
 sky = Sky("sky")
 sky.sprite_init()
 biden.sprite_init()
+
+blinky = Blinky("blinky")
+blinky.sprite_init()
+blinky.collision_callback()
 
 camera.bind_to_object(biden)
 
@@ -62,7 +88,6 @@ def gravity(obj):
     pos = obj.get_transform_component().get_position()
     pos_sky = sky.get_transform_component().get_position()
     obj.update_velocity( Engine.Vec2(0.005 *(pos_sky.x + sky.get_width() - pos.x - w / 2), 0.005 *(pos_sky.y + sky.get_height() - pos.y - h / 2)))
-#TODO: collision_callback(obj)
 
 control = Engine.ControllerComponent()
 control.add_input_binding("W", go_up)
@@ -136,6 +161,7 @@ character.update_animation_idle(True, 3)
 #engine.add_player_object(biden)
 engine.add_player_object(biden)
 engine.add_game_object(sky)
+engine.add_animate_object(blinky)
 engine.add_UF_callback(gravity)
 engine.start()
 

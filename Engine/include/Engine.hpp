@@ -63,7 +63,7 @@ public:
    * Request to startup the Graphics Subsystem
    */
 
-    int InitializeGraphicsSubSystem();
+  int InitializeGraphicsSubSystem();
 
 	bool programEnded();
 
@@ -81,14 +81,16 @@ public:
 
   void addCollisionCallback(py::object);
 
+  // void convertToGameObjects(std::vector<PlayerObject*> playerObjs,	std::vector<AnimateObject*> animateObjs);
+
 private:
 
 	bool quit;
 	std::vector<PlayerObject*> playerObjs;
 	std::vector<AnimateObject*> animateObjs;
 	std::vector<GameObject*> gameObjs;
-  std::vector<GameObject*> animAsGameObjs;
-  std::vector<GameObject*> playerAsGameObjs;
+  // std::vector<GameObject*> animAsGameObjs;
+  // std::vector<GameObject*> playerAsGameObjs;
 	UniversalForce uforce;
 	// GraphicsEngineRenderer* renderer = nullptr;
 };

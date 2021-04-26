@@ -120,7 +120,7 @@ void Engine::addUFCallback(py::object func) {
 }
 
 void Engine::update() {
-	std::cout << "Entered C++ update\n";
+	// std::cout << "Entered C++ update\n";
 	for (auto obj : playerObjs) {
 		ControllerComponent* contcomp = obj->getControllerComponent();
 
@@ -131,7 +131,7 @@ void Engine::update() {
 			contcomp->executeCallback();
 			contcomp->executeUnCallback();*/
 		if (contcomp != nullptr) {
-			std::cout << "contcomp is not nullptr\n";
+			// std::cout << "contcomp is not nullptr\n";
 			std::string* keys = contcomp->getKeys();
 			int size = contcomp->getKeysNum();
 			for (int i = 0; i < size; i++) {
@@ -145,20 +145,18 @@ void Engine::update() {
 	for (auto obj : animateObjs) {
 		obj->updateSprite();
 	}
+
+	// convertToGameObjects(playerObjs, animateObjs);
 	
 	uforce.applyForces(&animateObjs);
 	uforce.applyForces(&playerObjs);
 	
 	for (auto obj : animateObjs) {
-		obj->handleCollision(gameObjs);
-		// obj->handleCollision(animAsGameObjs);
-		// obj->handleCollision(playerAsGameObjs);
+		obj->handleCollision(gameObjs, animateObjs);
 	}
 	
 	for (auto obj : playerObjs) {
-		obj->handleCollision(gameObjs);
-		// obj->handleCollision(animAsGameObjs);
-		// obj->handleCollision(playerAsGameObjs);
+		obj->handleCollision(gameObjs, animateObjs);
 	}
 
 	Camera::getInstance().update();
@@ -175,6 +173,17 @@ void Engine::update() {
 		Camera::getInstance().correctObj(obj);
 	}
 }
+
+// void Engine::convertToGameObjects(std::vector<PlayerObject*> playerObjs, std::vector<AnimateObject*> animateObjs) {
+// 	for (auto pObj: playerObjs) {
+// 		GameObject* obj = dynamic_cast<GameObject*>(pObj);
+// 		playerAsGameObjs.push_back(obj);
+// 	}
+// 	for (auto aObj: animateObjs) {
+// 		GameObject* obj = dynamic_cast<GameObject*>(aObj);
+// 		animAsGameObjs.push_back(obj);
+// 	}
+// }
 
 void Engine::Input()
 {

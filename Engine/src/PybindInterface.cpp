@@ -69,7 +69,8 @@ PYBIND11_MODULE(Engine, m) {
 		.def("update_position", &AnimateObject::updatePosition)
 		.def("update_velocity", &AnimateObject::updateVelocity)
 		.def("set_position", &AnimateObject::setPosition)
-		.def("set_velocity", &AnimateObject::setVelocity);
+		.def("set_velocity", &AnimateObject::setVelocity)
+		.def("add_collision_callback", &AnimateObject::addCollisionCallback);
 
 	py::class_<PlayerObject, AnimateObject>(m, "PlayerObject")
 		.def(py::init<std::string, float, float>(), py::return_value_policy::reference)
