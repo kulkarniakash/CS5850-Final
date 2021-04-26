@@ -5,53 +5,77 @@
 #include "TransformComponent.hpp"
 #include "SpriteComponent.hpp"
 #include "CharacterSpriteComponent.hpp"
+#include "Camera.hpp"
 
 class SpriteComponent;
 class CharacterSpriteComponent;
+class Camera;
 
+
+//! @brief class that Represents a GameObject, which contains all of the components
 class GameObject {
 public:
     
-    //constructs a gameObject with no components
+    //! @brief constructs our GameObject
+	GameObject();
+
+    /*!
+     * @brief constructs our GameObject
+     * @param gameObjectName: string that represents the GameObject's Name
+     * @param width: float value of the GameObject's width
+     * @param height: float value of the GameObject's height
+     */
+    
     GameObject(std::string gameObjectName, float width, float height);
 
-    //constructs a GameObject with components
-    //GameObject(TransformComponent transformComponent, ControllerComponent controllerComponent, SpriteComponent spriteComponent);
     
+    /*!
+     * @brief Destructs our GameObject
+     */
     ~GameObject();
 
+    
+    /*!
+     * @brief adds a transformComponent to our GameObject
+     * @param transformComponent: the TransformComponent Object we want to add
+     */
     void addTransformComponent(TransformComponent* transformComponent);
 
-    // void addControllerComponent(ControllerComponent* controllerComponent);
-
+    
+    /*!
+     * @brief adds a SpriteComponent to our GameObject
+     * @param spriteComponent: the SpriteComponent Object we want to add
+     */
     void addSpriteComponent(SpriteComponent* spriteComponent);
 
+    /*!
+     * @brief adds a CharacterSpriteComponent to our GameObject
+     * @param characterSpriteComponent: the characterSpriteComponent Object we want to add
+     */
     void addCharacterSpriteComponent(CharacterSpriteComponent* characterSpriteComponent);
     
-    //gets the TransformComponent
+    //! @return a pointer of our TransformComponent
     TransformComponent* getTransformComponent();
     
-    //gets the ControllerComponent
-    // ControllerComponent* getControllerComponent();
-
+    //! @return a pointer of our CharacterSpriteComponent
     CharacterSpriteComponent* getCharacterSpriteComponent();
     
-    //gets the SpriteComponent
+    //! @return a pointer of our SpriteComponent
     SpriteComponent* getSpriteComponent();
 
+    //! @brief renders this GameObject
     void render();
-
+r of our oat value that represents the width of this GameObject
 	float getWidth();
 
+    //! @return float value that represents the height of this GameObject
 	float getHeight();
 
-    // void update();
     
 protected:
 	float width, height;
     std::string m_gameObjectName;
     TransformComponent* m_transformComponent;
-    // ControllerComponent* m_controllerComponent;
     SpriteComponent* m_spriteComponent;
     CharacterSpriteComponent* m_characterSpriteComponent;
 };

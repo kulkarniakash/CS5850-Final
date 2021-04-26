@@ -72,8 +72,10 @@ void AnimateObject::setVelocity(Vec2 vel) {
 	m_transformComponent->setVelocity(vel);
 }
 
-//TODO: add_collisioncallback in animateObject: m_collisioncompoent->add_collision_callback
 void AnimateObject::addCollisionCallback(py::object func) {
-	std::cout << "collided in animateobj" << std::endl;
-	m_collisioncomp->add_collision_callback(func);
+	m_collisioncomp->addCollisionCallback(func);
 }
+
+
+
+

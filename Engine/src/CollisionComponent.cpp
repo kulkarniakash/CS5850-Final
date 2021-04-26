@@ -7,22 +7,26 @@ CollisionComponent::CollisionComponent(AnimateObject* obj) {
 
 void CollisionComponent::handleCollisions(std::vector<GameObject*> objs) {
 	bool collided = false;
+	Vec2 corr;
 	for (auto obj : objs) {
-		Vec2 corr = getCorrection(obj);
+		corr = getCorrection(obj);
 		if (corr != Vec2(0, 0)) {
-			collided = true;
-			//TODO: call callback functions
-				std::cout << callbacks.size() << std::endl;			
-			// for (auto callback: callbacks) {
-			// 	std::cout << callback << std::endl;
-			// 	callback(obj);
-			// }
+			if (m_callbacks.size() > 0) {
+				m_callbacks[0](obj);
+			}
+
+			Vec2 curr_vel = m_animateobject->getTransformComponent()->getVelocity();
+			if (corr.x == 0) {
+				m_animateobject->setVelocity(Vec2(curr_vel.x, 0));
+			}
+			else if (corr.y == 0) {
+				m_animateobject->setVelocity(Vec2(0, curr_vel.y));
+			}
+			else {
+				m_animateobject->setVelocity(Vec2(0, 0));
+			}
 		}
 		m_animateobject->updatePosition(corr);
-	}
-
-	if (collided) {
-		m_animateobject->setVelocity(Vec2(0, 0));
 	}
 }
 
@@ -63,7 +67,7 @@ Vec2 CollisionComponent::getCorrection(GameObject* obj) {
 	float prevTop = prevPos.y;
 	float prevBottom = prevPos.y + m_animateobject->getHeight();
 
-	if (prevRight <= leftOther) {
+	/*if (prevRight <= leftOther) {
 		return Vec2(-(right - leftOther), 0);
 	}
 
@@ -77,7 +81,7 @@ Vec2 CollisionComponent::getCorrection(GameObject* obj) {
 
 	if (prevBottom <= topOther) {
 		return Vec2(0, -(bottom - topOther));
-	}
+	}*/
 
 	float leftCorr = right - leftOther;
 	float rightCorr = rightOther - left;
@@ -102,9 +106,14 @@ Vec2 CollisionComponent::getCorrection(GameObject* obj) {
 	return Vec2(-(right - leftOther), 0);
 }
 
+<<<<<<< HEAD
 //TODO: store callbacks in a vector
 void CollisionComponent::add_collision_callback(py::object func) {
 	std::cout << "collided in collisioncomp" << std::endl;
 	callbacks.push_back(func);
 	std::cout << callbacks.size() << std::endl;
+=======
+void CollisionComponent::addCollisionCallback(py::object func) {
+	m_callbacks.push_back(func);
+>>>>>>> 200d5c53b89cbe5e9e330f476c5d53dd858dfd34
 }

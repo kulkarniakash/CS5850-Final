@@ -14,6 +14,7 @@ const std::string fontPath = "assets/lazy.ttf";
 const std::string imagePath = "assets/BGSky.jpg";
 const std::string musicPath = "assets/bgmusic.wav";
 
+
 	/*TTF_Font *font = NULL;
 	SDL_Color tcolor;
 
@@ -42,7 +43,6 @@ Engine::~Engine()
 
 int Engine::InitializeGraphicsSubSystem()
 {
-	std::cout << "C++ code cout works\n";
 	TTF_Font *font = NULL;
 	SDL_Color tcolor;
 
@@ -119,24 +119,31 @@ void Engine::addUFCallback(py::object func) {
 	uforce.addCallback(func);
 }
 
+void Engine::addTileManager(TileManager* tm) {
+	GameObject** tiles = tm->convertToGameObjects();
+	int tilesCount = tm->getTileCount();
+
+	if (tiles == nullptr) {
+		std::cout << "Error: could not convert tiles to game objects\n";
+		return;
+	}
+
+	for (int i = 0; i < tilesCount; i++) {
+		gameObjs.push_back(tiles[i]);
+	}
+}
+
 void Engine::update() {
-	// std::cout << "Entered C++ update\n";
 	for (auto obj : playerObjs) {
 		ControllerComponent* contcomp = obj->getControllerComponent();
 
-		/*std::string* keys = contcomp->getKeys();
-		std::cout << "Entered player obj loop\n";
-		int size = contcomp->getKeysNum();
-		for (int i = 0; i < size; i++) {
-			contcomp->executeCallback();
-			contcomp->executeUnCallback();*/
 		if (contcomp != nullptr) {
-			// std::cout << "contcomp is not nullptr\n";
-			std::string* keys = contcomp->getKeys();
-			int size = contcomp->getKeysNum();
-			for (int i = 0; i < size; i++) {
+			// std::string* keys = contcomp->getKeys();
+			// int size = contcomp->getKeysNum();
+			// for (int i = 0; i < size; i++) {
 				contcomp->executeCallback();
-			}
+				contcomp->executeUnCallback();
+			// }
 		}
 		obj->updateSprite();
 		obj->updateTransform();
@@ -144,6 +151,7 @@ void Engine::update() {
 
 	for (auto obj : animateObjs) {
 		obj->updateSprite();
+		obj->updateTransform();
 	}
 
 	// convertToGameObjects(playerObjs, animateObjs);
@@ -160,18 +168,6 @@ void Engine::update() {
 	}
 
 	Camera::getInstance().update();
-
-	for (auto obj : playerObjs) {
-		Camera::getInstance().correctObj(obj);
-	}
-
-	for (auto obj : animateObjs) {
-		Camera::getInstance().correctObj(obj);
-	}
-
-	for (auto obj : gameObjs) {
-		Camera::getInstance().correctObj(obj);
-	}
 }
 
 // void Engine::convertToGameObjects(std::vector<PlayerObject*> playerObjs, std::vector<AnimateObject*> animateObjs) {

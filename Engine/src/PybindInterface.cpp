@@ -39,7 +39,14 @@ PYBIND11_MODULE(Engine, m) {
 		.def("add_animate_object", &Engine::addAnimateObject)
 		.def("add_player_object", &Engine::addPlayerObject)
 		.def("update", &Engine::update)
-		.def("add_UF_callback", &Engine::addUFCallback);
+		.def("add_UF_callback", &Engine::addUFCallback)
+		.def("add_tilemanager", &Engine::addTileManager);
+
+	py::class_<TileManager>(m, "TileManager")
+		.def(py::init<int, int, Vec2>(), py::return_value_policy::reference)
+		.def("load_tile_types", &TileManager::loadTileTypes)
+		.def("load_level_map", &TileManager::loadLevelMap)
+		.def("get_tile_count", &TileManager::getTileCount);
 
 	py::class_<SDL_Rect>(m, "Rect")
 		.def(py::init<>())
@@ -75,7 +82,11 @@ PYBIND11_MODULE(Engine, m) {
 	py::class_<PlayerObject, AnimateObject>(m, "PlayerObject")
 		.def(py::init<std::string, float, float>(), py::return_value_policy::reference)
 		.def("add_controller_component", &PlayerObject::addControllerComponent)
-		.def("get_controller_component", &PlayerObject::getControllerComponent, py::return_value_policy::reference);
+		.def("get_controller_component", &PlayerObject::getControllerComponent, py::return_value_policy::reference)
+		.def("update_controller_velocity", &PlayerObject::updateControllerVelocity)
+		.def("set_controller_velocity", &PlayerObject::setControllerVelocity)
+		.def("get_controller_velocity", &PlayerObject::getControllerVelocity)
+		.def("add_collision_callback", &PlayerObject::addCollisionCallback);
 
 	py::class_<TransformComponent>(m, "TransformComponent")
 		.def(py::init<const Vec2&, const Vec2&>())   // our constructor
@@ -93,17 +104,19 @@ PYBIND11_MODULE(Engine, m) {
 		.def("get_height", &SpriteComponent::getHeight);
 
 	py::class_<CharacterSpriteComponent, SpriteComponent>(m, "CharacterSpriteComponent")
-		.def(py::init<std::string, SDL_Rect, int, int>(), py::return_value_policy::reference)
+		.def(py::init<std::string, SDL_Rect, SDL_Rect, int, int>(), py::return_value_policy::reference)
 		.def("loop_action", &CharacterSpriteComponent::loopAction, py::return_value_policy::reference)
 		.def("add_animation", &CharacterSpriteComponent::addAnimation)
 		.def("perform_animation", &CharacterSpriteComponent::performAnimation)
+		.def("set_loop", &CharacterSpriteComponent::setLoop)
 		.def("update_frame", &CharacterSpriteComponent::updateFrame);
 
 
 	py::class_<ControllerComponent>(m, "ControllerComponent")
 		.def(py::init<>(), py::return_value_policy::reference)   // our constructor
 		.def("add_input_binding", &ControllerComponent::addInputBinding)
-		.def("add_input_release_binding", &ControllerComponent::addInputReleaseBinding);
+		.def("add_input_release_binding", &ControllerComponent::addInputReleaseBinding)
+		.def("no_key_pressed", &ControllerComponent::noKeyPressed);
 		
 	py::class_<Vec2>(m, "Vec2")
 		.def(py::init<float, float>())

@@ -13,75 +13,91 @@
 #include <vector>
 #include "PlayerObject.hpp"
 #include "UniversalForce.hpp"
+#include "TileManager.hpp"
 
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;
 
 
-//Engine class was taken from Sumanth's assignment-2 repo. Written by Shreyas Shivashankar.
+/*!
+ * @brief class that represents our Engine, handles starting, looping, updating and shutting down our engine
+ * taken from Sumanth's assignment-2 repo. Written by Shreyas Shivashankar.
+ */
 class Engine
 {
 
 public:
-  /**
-   * Constructor of Engine
-   */
+  //! @brief Constructor of our Engine
   Engine();
-  /**
-   * Destructor
-   */
+    
+  //! @brief Destrcutor of our Engine
   ~Engine();
-  /**
-   * Input engine
-   */
+  
+  //! @brief Handles all input of our GameObjects
   void Input();
-  /**
-   * Per frame update
-   * @param dt The delta time between 2 consecutive frames
-   */
+  
+  //! @brief Updates all of our Objects
   void update();
-  /**
-   * Per frame render. Renders everything
-   */
+  
+  //! @brief Renders all of our Objects
   void Render();
-  /**
-   * Main Game Loop that runs forever
-   */
+    
+  //! @brief Handles updating our game until user decides to quit
   void MainGameLoop();
-  /**
-   * Initialization and shutdown pattern
+    
+  /*!
+   * @brief Initialization and shutdown pattern
    * Explicitly call 'Start' to launch the engine
    */
   void Start();
-  /**
-   * Initialization and shutdown pattern
+    
+  /*!
+   * @brief Initialization and shutdown pattern
    * Explicitly call 'Shutdown' to terminate the engine
    */
   void Shutdown();
-  /**
-   * Request to startup the Graphics Subsystem
-   */
+    
+    /*!
+     * @brief Request to startup the Graphics Subsystem
+     * @return Int that represents whether setting up our graphics was successful or not.
+     */
+    int InitializeGraphicsSubSystem();
 
-  int InitializeGraphicsSubSystem();
-
+    //! @return Boolean that determine whether the program has ended or not
 	bool programEnded();
 
+    //! @brief Clears our renderer
 	void clear();
 
+    //! @brief Delays our program until it is within our set number of frames
 	void delay(int seconds);
 
+    /*!
+     * @brief Adds a GameObject to our vector of GameObjects
+     * @param obj: GameObject we want to add
+     */
 	void addGameObject(GameObject* obj);
 
+    /*!
+     * @brief Adds a GameObject to our vector of GameObjects
+     * @param obj: AnimateObject we want to add
+     */
 	void addAnimateObject(AnimateObject* obj);
 
+    /*!
+     * @brief Adds a PlayerObject to our vector of GameObjects
+     * @param obj: PlayerObject we want to add
+     */
 	void addPlayerObject(PlayerObject* obj);
 
+    /*!
+     * @brief Adds a UniversalForce function object
+     * @param object: a python function object we want to add
+     */
 	void addUFCallback(py::object);
 
-  void addCollisionCallback(py::object);
-
-  // void convertToGameObjects(std::vector<PlayerObject*> playerObjs,	std::vector<AnimateObject*> animateObjs);
+	void addTileManager(TileManager* tm);
 
 private:
 
