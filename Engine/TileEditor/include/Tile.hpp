@@ -9,46 +9,48 @@
 #include <SDL.h>
 #endif
 
-/**
-*Enum for specifying what tile type we wish to
-*use. If you want to add a new tile type, add it here first
-*/
-/*enum TileType {
-	Empty = 0,
-	Dry,
-	Coal,
-	Lava,
-	Ice, 
-	Grass,
-	Wood,
-	Metal,
-	TileNum
-};*/
 
-/**
-*Represents one tile in the tile grid. Note that the position of the tile is the initial
-*position without accounting for the camera. The render function will take the camera into
-*account.
-*/
+/*!
+ * @brief Represents one tile in the tile grid. Note that the position of the tile is the initial
+ * position without accounting for the camera. The render function will take the camera into account.
+ */
 class Tile {
 public:
+    
+    //! Constructor of our Tile
 	Tile();
 
-	// Takes in position of the top-left corner of the tile, the tile width and height in pixels
-	// the texture to be shown when the tile renders, and the source of the part of the texture to 
-	// be rendered (by default, the entire texture will be rendered (hence setting the sdl rect to 0)
+	/*!
+     @brief Constructour of our Tile
+     @param pos: Vec2 position of the top-left corner of the tile
+     @param width: int that represents tile width
+     @param height: int that represents tile height
+     @param texture: SDL_Texture pointer to show the texture when tile renders
+     @param type: int to determine the type of tile
+     @param src: SDL_Rect to represent the rectangle we want to render
+     */
 	Tile(Vec2 pos, int width, int height, SDL_Texture* texture, int type, SDL_Rect src = SDL_Rect{ 0, 0, 0, 0 });
 
-	// Position of Top-left corner of tile
+	//! @return Vec2 Position of Top-left corner of tile
 	Vec2 getPos();
 
+    //! @return int representing our width
 	int getWidth();
+    
+    //! @return int representing our height
 	int getHeight();
+    
+    //! @return int representing our tileType
 	int getTileType();
+    
+    //! @return SDL_Texture pointer representing our texture
 	SDL_Texture* getTexture();
 
-	// Takes in the renderer and a camera object in order to render the tile in the appropriate position.
-	// the camera figures out the absolute final coordinates of the tile
+	/*!
+     @brief Renders the Tile
+     @param ren: SDL_Renderer we choose to render with
+     @param camera: Camera object which figures out the absolute final coordinates of the tile
+     */
 	void render(SDL_Renderer* ren, Camera* camera=NULL);
 
 private:
