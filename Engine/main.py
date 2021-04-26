@@ -78,14 +78,25 @@ def radial_gravity(obj):
     col = 12
     w = obj.get_width()
     h = obj.get_height()
+    scale_rad = 0.05
 ##    cpos = camera.get_position()
     pos = obj.get_transform_component().get_position()
-    obj.update_velocity( Engine.Vec2(0.001 *(col * tile_width - pos.x - w / 2), 0.001 *
-                                     (row * tile_height - pos.y - h / 2)))
+    planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
+
+    radius = Engine.Vec2(planet_pos.x - pos.x, planet_pos.y - pos.y)
+    norm = radius.x ** 2 + radius.y ** 2
+    norm = norm * scale_rad
+    obj.update_velocity( Engine.Vec2( (radius.x - w / 2) / norm,
+                                     (radius.y - h / 2) / norm))
     row = 8
     col = 32
-    obj.update_velocity( Engine.Vec2(0.001 *(col * tile_width - pos.x - w / 2), 0.001 *
-                                     (row * tile_height - pos.y - h / 2)))
+    planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
+
+    radius = Engine.Vec2(planet_pos.x - pos.x, planet_pos.y - pos.y)
+    norm = radius.x ** 2 + radius.y ** 2
+    norm = norm * scale_rad
+    obj.update_velocity( Engine.Vec2((radius.x - w / 2) / norm, 
+                                     (radius.y - h / 2) / norm))
 
 def gravity(obj):
     obj.update_velocity(Engine.Vec2(0, 1))

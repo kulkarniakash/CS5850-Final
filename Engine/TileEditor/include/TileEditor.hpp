@@ -17,6 +17,12 @@
 #include<SDL_image.h>
 #endif
 
+#if defined(MINGW)
+#define endline '\r'
+#else
+#define endline '\n'
+#endif
+
 enum class Click {
 	None=0,
 	Left, 
@@ -24,7 +30,6 @@ enum class Click {
 };
 
 using namespace std;
-
 
 /**
 *Class inherits from Tile Manager. While tile manager
@@ -68,11 +73,11 @@ public:
 				type = (std::stoi(cur));
 				cur = "";
 			}
-			else if (gData[i] == '\r') {
+			else if (gData[i] == endline) {
 				tilePaths[type] = cur;
 				cur = "";
 				type = 0;
-				i++;
+				// i++;
 			}
 			else {
 				cur.push_back(gData[i]);

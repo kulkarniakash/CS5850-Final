@@ -91,7 +91,7 @@ void TileManager::loadLevelMap(std::string path) {
 			if (gData[i] == '\r') {
 				c = 0;
 				r++;
-				i++;
+				// i++;
 			}
 			else {
 				c++;

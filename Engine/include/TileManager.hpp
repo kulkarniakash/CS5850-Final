@@ -75,7 +75,7 @@ public:
 				tiletypes.insert(std::make_pair(type, cur));
 				cur = "";
 				type = 0;
-				i++;
+				// i++;
 			}
 			else {
 				cur.push_back(gData[i]);

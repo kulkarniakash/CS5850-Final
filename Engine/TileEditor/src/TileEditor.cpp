@@ -1,6 +1,12 @@
 #include<TileEditor.hpp>
 #include<fstream>
 
+#if defined(MINGW)
+#define endline '\r'
+#else
+#define endline '\n'
+#endif
+
 std::unordered_map<int, std::string> TileEditor::tilePaths = std::unordered_map<int, std::string>{};
 
 TileEditor::TileEditor(Vec2 pos, int width, int height, int tileWidth, int tileHeight) : TileManager(pos, 
@@ -76,7 +82,7 @@ void TileEditor::loadLevelMap(std::string path) {
 	// parse the file to get the tile map
 	int i = 0;
 	std::string cur = "";
-	while (gData[i] != '\r') {
+	while (gData[i] != endline) {
 		if (gData[i] == ' ') {
 			height = stoi(cur);
 			cur = "";
@@ -99,13 +105,13 @@ void TileEditor::loadLevelMap(std::string path) {
 	int r = 0, c = 0;
 	int count = 0;
 	while (gData[i] != 0) {
-		if (gData[i] == ' ' || gData[i] == '\r') {
+		if (gData[i] == ' ' || gData[i] == endline) {
 			count++;
 			int type = (stoi(cur));
 			cur = "";
 			Vec2 pos(c * tileWidth, r * tileHeight);
 			tileGrid[r][c] = Tile(pos, tileWidth, tileHeight, TileManager::tileTextures.at(type), type);
-			if (gData[i] == '\r') {
+			if (gData[i] == endline) {
 				c = 0;
 				r++;
 				// i++;
