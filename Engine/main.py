@@ -229,11 +229,14 @@ class Explosion(Engine.AnimateObject):
     def explode_anim(self, speed):
         self.character_sprite.perform_animation("explode", True, speed)
 
-
+notDestroyed = True
 def callback_sample(obj):
-    print("callback successful")
-    engine.destroy_object("character")
-    print('finished destroying')
+    global notDestroyed
+    #print("callback successful")
+    if notDestroyed: 
+        engine.destroy_object("character")
+        notDestroyed = False
+        print('finished destroying')
 
 character = Character("character")
 character.character_sprite_init()
