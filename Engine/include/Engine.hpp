@@ -14,7 +14,7 @@
 #include "PlayerObject.hpp"
 #include "UniversalForce.hpp"
 #include "TileManager.hpp"
-
+#include <map>
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;
@@ -107,6 +107,7 @@ private:
 	std::vector<PlayerObject*> playerObjs;
 	std::vector<AnimateObject*> animateObjs;
 	std::vector<GameObject*> gameObjs;
+  std::map<std::string, int> destroyedObjs;
   // std::vector<GameObject*> animAsGameObjs;
   // std::vector<GameObject*> playerAsGameObjs;
 	UniversalForce uforce;

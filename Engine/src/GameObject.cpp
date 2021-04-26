@@ -14,11 +14,14 @@ GameObject::GameObject(std::string gameObjectName, float w, float h) {
 GameObject::~GameObject() {
     std::cout << "GameObject destructor called for " << m_gameObjectName << std::endl;
     delete m_transformComponent;
-    delete m_spriteComponent;
-    delete m_characterSpriteComponent;
+    if (m_spriteComponent != nullptr) {
+        delete m_spriteComponent;
+        m_spriteComponent = nullptr;
+    } else {
+        delete m_characterSpriteComponent;
+        m_characterSpriteComponent = nullptr;
+    }
     m_transformComponent = nullptr;
-    m_spriteComponent = nullptr;
-    m_characterSpriteComponent = nullptr;
 }
 
 TransformComponent* GameObject::getTransformComponent() {

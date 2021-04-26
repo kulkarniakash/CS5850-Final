@@ -12,21 +12,13 @@ CollisionComponent::~CollisionComponent() {
 }
 
 bool CollisionComponent::handleCollisions(std::vector<GameObject*> objs) {
-	std::cout <<"enter handleCollision in CollisionComponent" << std::endl;
 	bool collided = false;
 	Vec2 corr;
 	for (auto obj : objs) {
-		std::cout <<"current m_animateobject: " << m_animateobject->getGameObjectName() << std::endl;
-		 std::cout <<"current obj: " << obj->getGameObjectName() << std::endl;
 		corr = getCorrection(obj);
-	//	std::cout <<"getCorrection passed" << std::endl;
 		if (corr != Vec2(0, 0)) {
-			//std::cout <<"m_callbacks passed" << std::endl;
-			//std::cout <<"current m_animateobject: " << m_animateobject->getGameObjectName() << std::endl;
 			TransformComponent* trans = m_animateobject->getTransformComponent();
-		//	std::cout <<"trans passed" << std::endl;
 			Vec2 curr_vel = trans->getVelocity();
-			//std::cout <<"getVelocity passed" << std::endl;
 			if (corr.x == 0) {
 				m_animateobject->setVelocity(Vec2(curr_vel.x, 0));
 			}
@@ -37,28 +29,16 @@ bool CollisionComponent::handleCollisions(std::vector<GameObject*> objs) {
 				m_animateobject->setVelocity(Vec2(0, 0));
 			}
 		}
-	//	std::cout <<"about to call updatePosition" << std::endl;
 		m_animateobject->updatePosition(corr);
-		//std::cout <<"updatePosition passed" << std::endl;
 		 
 		if (corr != Vec2(0, 0)) {
 			if (m_callbacks.size() > 0) {
-				std::cout <<"about to do m_callbacks " << std::endl;
 				m_callbacks[0](obj);
-				std::cout <<"m_callbacks returned " << std::endl;
 				return true;
 			}
 		}
 	}
 	return false;
-	// for (auto obj:objs) {
-	// 	corr = getCorrection(obj);
-	// 	if (corr != Vec2(0, 0)) {
-	// 		if (m_callbacks.size() > 0 && doCallback) {
-	// 			m_callbacks[0](obj);
-	// 		}
-	// 	}
-	// }
 }
 
 Vec2 CollisionComponent::getCorrection(GameObject* obj) {

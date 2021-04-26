@@ -34,6 +34,7 @@ SDL_Event event; // used to store any events from the OS
 
 Engine::Engine()
 {
+
 }
 
 // Proper shutdown and destroy initialized objects
@@ -134,7 +135,6 @@ void Engine::addTileManager(TileManager* tm) {
 }
 
 void Engine::update() {
-	std::cout << "Enters update" <<"\n";
 	for (auto obj : playerObjs) {
 		// std::cout << "PlayerObj name" << obj->getGameObjectName() <<"\n";
 		ControllerComponent* contcomp = obj->getControllerComponent();
@@ -150,31 +150,23 @@ void Engine::update() {
 		obj->updateSprite();
 		obj->updateTransform();
 	}
-	std::cout << "after here" <<"\n";
 
 	for (auto obj : animateObjs) {
-		// std::cout << "AnimateObj name" << obj->getGameObjectName() <<"\n";
 		obj->updateSprite();
 		obj->updateTransform();
 	}
-	std::cout << "after here2" <<"\n";
 
 	// convertToGameObjects(playerObjs, animateObjs);
 	
 	uforce.applyForces(&animateObjs);
 	uforce.applyForces(&playerObjs);
-	std::cout << "after here3" <<"\n";
 	for (auto obj : animateObjs) {
-		std::cout << "animateObj is: " << obj->getGameObjectName() << std::endl;
 		obj->handleCollision(gameObjs, animateObjs);
 	}
-	std::cout << "after here 3.5" <<"\n";
 	
 	for (auto obj : playerObjs) {
-		std::cout << "playerObjs is: " << obj->getGameObjectName() << std::endl;
 		obj->handleCollision(gameObjs, animateObjs);
 	}
-	std::cout << "after here4" <<"\n";
 
 	Camera::getInstance().update();
 }
@@ -192,7 +184,6 @@ void Engine::update() {
 
 void Engine::Input()
 {
-	std::cout << "enter input " << std::endl;
 	SDL_Event e;
     while (SDL_PollEvent(&e))
     {
@@ -262,7 +253,6 @@ void Engine::clear() {
 
 void Engine::Render()
 {
-	std::cout << "enter render " << std::endl;
 	/*SDL_Texture* bgimage = ResourceManager::getInstance().getResourceSDLTexture(imagePath.c_str());
 	TTF_Font* font = ResourceManager::getInstance().getResourceFont(fontPath);
 	SDL_Renderer* gRenderer = ResourceManager::getInstance().getResourceSDLRenderer("gRenderer");
@@ -284,15 +274,21 @@ void Engine::Render()
 	SDL_FreeSurface(txt_surf);*/
 	clear();
 	for (auto obj : animateObjs) {
-		obj->render();
+		if (destroyedObjs.find(obj->getGameObjectName()) == destroyedObjs.end()) {
+			obj->render();
+		}
 	}
 
 	for (auto obj : playerObjs) {
-		obj->render();
+		if (destroyedObjs.find(obj->getGameObjectName()) == destroyedObjs.end()) {
+			obj->render();
+		}
 	}
 
 	for (auto obj : gameObjs) {
-		obj->render();
+		if (destroyedObjs.find(obj->getGameObjectName()) == destroyedObjs.end()) {
+			obj->render();
+		}
 	}
 
 
@@ -369,39 +365,36 @@ void Engine::Shutdown()
 }
 
 void Engine::destroyObject(std::string objectName) {
-	// 	for (auto it : playerObjs) {
-    //     std::cout << "printing playerobjs " << it->getGameObjectName() << std::endl;
+	destroyedObjs.insert(std::make_pair(objectName, 1));
+	// int i = 0;
+	// for (auto it : playerObjs) {
+    //     if (it->getGameObjectName().compare(objectName) == 0) {
+	// 		it->Destroy();
+	// 		playerObjs.erase(playerObjs.begin() + i);
+	// 		//return;
+	// 	}
+	// 	++i;
     // }
 
-	int i = 0;
-	for (auto it : playerObjs) {
-        if (it->getGameObjectName().compare(objectName) == 0) {
-			it->Destroy();
-			playerObjs.erase(playerObjs.begin() + i);
-			//return;
-		}
-		++i;
-    }
+	// i = 0;
+	// for (auto it : animateObjs) {
+    //     if (it->getGameObjectName().compare(objectName) == 0) {
+	// 		it->Destroy();
+	// 		playerObjs.erase(playerObjs.begin() + i);
+	// 		//return;
+	// 	}
+	// 	++i;
+    // }
 
-	i = 0;
-	for (auto it : animateObjs) {
-        if (it->getGameObjectName().compare(objectName) == 0) {
-			it->Destroy();
-			playerObjs.erase(playerObjs.begin() + i);
-			//return;
-		}
-		++i;
-    }
-
-	i = 0;
-	for (auto it : gameObjs) {
-        if (it->getGameObjectName().compare(objectName) == 0) {
-			it->Destroy();
-			playerObjs.erase(playerObjs.begin() + i);
-			//return;
-		}
-		++i;
-    }
+	// i = 0;
+	// for (auto it : gameObjs) {
+    //     if (it->getGameObjectName().compare(objectName) == 0) {
+	// 		it->Destroy();
+	// 		playerObjs.erase(playerObjs.begin() + i);
+	// 		//return;
+	// 	}
+	// 	++i;
+    // }
 
 	// for (auto it : playerObjs) {
     //     std::cout << "printing playerobjs " << it->getGameObjectName() << std::endl;
@@ -413,7 +406,6 @@ void Engine::destroyObject(std::string objectName) {
 	// for (auto it : gameObjs) {
     //     std::cout << "printing gameObjs " << it->getGameObjectName() << std::endl;
     // }
-	 std::cout << "end of destroyObject " << std::endl;
 }
 
 
