@@ -109,10 +109,10 @@ int Engine::InitializeGraphicsSubSystem()
 		return -1;
 	}
 
-	if (ResourceManager::getInstance().addResource(fontPath, ResourceType::Font, 40)) {
-		printf("Error: Could not load font\n");
-		return -1;
-	}
+	// if (ResourceManager::getInstance().addResource(fontPath, ResourceType::Font, 40)) {
+	// 	printf("Error: Could not load font\n");
+	// 	return -1;
+	// }
 
     return 0;
 }
@@ -273,6 +273,7 @@ void Engine::Render()
 
 	SDL_DestroyTexture(txt_texture);
 	SDL_FreeSurface(txt_surf);*/
+	
 	clear();
 	for (auto obj : animateObjs) {
 		if (destroyedObjs.find(obj->getGameObjectName()) == destroyedObjs.end()) {
@@ -291,7 +292,9 @@ void Engine::Render()
 			obj->render();
 		}
 	}
-
+	for (auto comp : uiComponents) {
+		comp->render();
+	}
 
 	/*renderer->SetRenderDrawColor(0x0, 0x0, 0x0, 0xFF);
 	renderer->RenderClear();
@@ -317,6 +320,10 @@ void Engine::addAnimateObject(AnimateObject* obj) {
 
 void Engine::addPlayerObject(PlayerObject* obj) {
 	playerObjs.push_back(obj);
+}
+
+void Engine::addUIComponent(UIComponent* ui) {
+	uiComponents.push_back(ui);
 }
 
 void Engine::MainGameLoop()

@@ -225,6 +225,18 @@ class Explosion(Engine.AnimateObject):
     def explode_anim(self, speed):
         self.character_sprite.perform_animation("explode", True, speed)
 
+class TestUI(Engine.UIComponent):
+    def __init__(self, text, fontSize):
+        self.dest = Engine.Rect()
+        fontPath = "assets/lazy.ttf"
+        self.dest.x, self.dest.y, self.dest.w, self.dest.h = 50, 50, 100, 100
+        super().__init__(fontPath, self.dest, text, fontSize)
+
+    def mRender(self):
+        self.render()
+
+testUI = TestUI("testing", 50)
+
 character_destroyed = True
 def callback_sample(obj):
     global character_destroyed
@@ -260,6 +272,7 @@ def initialize_game(reset):
     engine.add_player_object(character)
     engine.add_UF_callback(radial_gravity)
     engine.add_tilemanager(tm)
+    engine.add_ui_component(testUI)
     engine.set_timer(30000)
     if (reset is False):
         engine.start()

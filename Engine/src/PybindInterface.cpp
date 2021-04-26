@@ -12,6 +12,7 @@
 #include "AnimateObject.hpp"
 #include "PlayerObject.hpp"
 #include "Camera.hpp"
+//#include "UIComponent.hpp"
 
 namespace py = pybind11;
 
@@ -38,6 +39,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def("add_game_object", &Engine::addGameObject)
 		.def("add_animate_object", &Engine::addAnimateObject)
 		.def("add_player_object", &Engine::addPlayerObject)
+		.def("add_ui_component", &Engine::addUIComponent)
 		.def("update", &Engine::update)
 		.def("add_UF_callback", &Engine::addUFCallback)
 		.def("add_tilemanager", &Engine::addTileManager)
@@ -137,6 +139,10 @@ PYBIND11_MODULE(Engine, m) {
 		.def("bind_to_object", &Camera::bindToObject)
 		.def("get_instance", &Camera::getInstance, py::return_value_policy::reference);
 
+	py::class_<UIComponent>(m, "UIComponent")
+		.def(py::init<std::string, SDL_Rect, std::string, int>(), py::return_value_policy::reference)
+		.def("render", &UIComponent::render)
+		.def("update", &UIComponent::update);
 	// We do not need to expose everything to our users!
 	//            .def("getSDLWindow", &SDLGraphicsProgram::getSDLWindow, py::return_value_policy::reference) 
 }
