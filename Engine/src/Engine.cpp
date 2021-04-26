@@ -344,5 +344,36 @@ void Engine::Shutdown()
     SDL_Quit();
 }
 
+void Engine::destroyObject(std::string objectName) {
+	int i = 0;
+	for (auto& it : playerObjs) {
+        if (it->getGameObjectName().compare(objectName) == 0) {
+			it->Destroy();
+			playerObjs.erase(playerObjs.begin() + i);
+			return;
+		}
+		++i;
+    }
+
+	i = 0;
+	for (auto& it : animateObjs) {
+        if (it->getGameObjectName().compare(objectName) == 0) {
+			it->Destroy();
+			playerObjs.erase(playerObjs.begin() + i);
+			return;
+		}
+		++i;
+    }
+
+	i = 0;
+	for (auto& it : gameObjs) {
+        if (it->getGameObjectName().compare(objectName) == 0) {
+			it->Destroy();
+			playerObjs.erase(playerObjs.begin() + i);
+			return;
+		}
+		++i;
+    }
+}
 
 

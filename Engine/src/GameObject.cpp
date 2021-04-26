@@ -12,7 +12,11 @@ GameObject::GameObject(std::string gameObjectName, float w, float h) {
 }
 
 GameObject::~GameObject() {
-    
+    std::cout << "GameObject destructor called for " << m_gameObjectName << std::endl;
+    m_transformComponent = nullptr;
+    m_spriteComponent = nullptr;
+    m_transformComponent = nullptr;
+    m_characterSpriteComponent = nullptr;
 }
 
 TransformComponent* GameObject::getTransformComponent() {
@@ -63,4 +67,12 @@ float GameObject::getHeight()
 
 float GameObject::getWidth() {
 	return width;
+}
+
+void GameObject::Destroy() {
+    delete this;
+}
+
+std::string GameObject::getGameObjectName() {
+    return m_gameObjectName;
 }

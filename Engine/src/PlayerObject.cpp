@@ -1,7 +1,13 @@
 #include "PlayerObject.hpp"
+#include <iostream>
 
 PlayerObject::PlayerObject(std::string name, float w, float h) : AnimateObject(name, w, h) {
 	controlVelocity = Vec2(0, 0);
+}
+
+PlayerObject::~PlayerObject() {
+	std::cout << "PlayerObject destructor called for "<< m_gameObjectName <<std::endl;
+	m_controllerComponent = nullptr;
 }
 
 void PlayerObject::addControllerComponent(ControllerComponent* controllerComponent) {
@@ -37,4 +43,8 @@ void PlayerObject::updateTransform() {
 	else if (m_spriteComponent != nullptr) {
 		m_spriteComponent->updatePosition(m_transformComponent->getPosition());
 	}
+}
+
+void PlayerObject::Destroy() {
+    delete this;
 }

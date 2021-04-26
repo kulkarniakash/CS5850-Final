@@ -155,6 +155,8 @@ class Character(Engine.PlayerObject):
         obj.update_animation_run(self.flipped, 3)
         obj.set_controller_velocity(Engine.Vec2(-self.speed, 0))
         self.last_anim = 3
+        engine.destroy_object("character")
+        print('finished destroying')
 
     def player_release_key_up(self, obj):
         self.check_if_no_input()
@@ -252,7 +254,9 @@ engine.start()
 count = 0
 while not engine.program_ended():
     engine.input()
+    print('after input')
     engine.update()
+    print('after update')
     biden.check_bounds()
     engine.clear()
     engine.render()

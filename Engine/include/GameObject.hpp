@@ -72,6 +72,10 @@ public:
     //! @return float value that represents the height of this GameObject
 	float getHeight();
 
+    void Destroy();
+
+    std::string getGameObjectName();
+
     
 protected:
 	float width, height;

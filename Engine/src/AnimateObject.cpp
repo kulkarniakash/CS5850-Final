@@ -5,6 +5,11 @@ AnimateObject::AnimateObject(std::string name, float w, float h) : GameObject(na
 	m_collisioncomp = new CollisionComponent(this);
 }
 
+AnimateObject::~AnimateObject() {
+    std::cout << "AnimateObject destructor called for " << m_gameObjectName << std::endl;
+	m_collisioncomp = nullptr;
+}
+
 void AnimateObject::updateSprite() {
     if (m_characterSpriteComponent != nullptr) {
         m_characterSpriteComponent->updateFrame();
@@ -60,6 +65,6 @@ void AnimateObject::setVelocity(Vec2 vel) {
 	m_transformComponent->setVelocity(vel);
 }
 
-
-
-
+void AnimateObject::Destroy() {
+    delete this;
+}

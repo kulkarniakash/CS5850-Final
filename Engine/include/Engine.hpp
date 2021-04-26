@@ -99,6 +99,8 @@ public:
 
 	void addTileManager(TileManager* tm);
 
+  void destroyObject(std::string objectName);
+
 private:
 
 	bool quit;
