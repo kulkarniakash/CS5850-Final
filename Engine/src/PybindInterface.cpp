@@ -92,7 +92,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def("get_height", &SpriteComponent::getHeight);
 
 	py::class_<CharacterSpriteComponent, SpriteComponent>(m, "CharacterSpriteComponent")
-		.def(py::init<std::string, SDL_Rect, int, int>(), py::return_value_policy::reference)
+		.def(py::init<std::string, SDL_Rect, SDL_Rect, int, int>(), py::return_value_policy::reference)
 		.def("loop_action", &CharacterSpriteComponent::loopAction, py::return_value_policy::reference)
 		.def("add_animation", &CharacterSpriteComponent::addAnimation)
 		.def("perform_animation", &CharacterSpriteComponent::performAnimation)

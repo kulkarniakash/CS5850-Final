@@ -5,7 +5,7 @@
 class CharacterSpriteComponent : public SpriteComponent { 
 public:
     //constructor for CharacterSpriteComponent
-    CharacterSpriteComponent(std::string filePath, SDL_Rect src, int rows, int cols);
+    CharacterSpriteComponent(std::string filePath, SDL_Rect src, SDL_Rect dest, int rows, int cols);
     
     //destructor fpr CharacterSpriteComponent
     ~CharacterSpriteComponent();

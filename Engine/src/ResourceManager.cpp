@@ -203,7 +203,7 @@ int ResourceManager::addTexture(std::string textureSpecifier, std::string render
 	if (!mapSDLRenderer[rendererSpecifier]) indicator = 1;
 	else {
 		SDL_Renderer* r = mapSDLRenderer[rendererSpecifier];
-		SDL_Surface* surface = SDL_LoadBMP(textureSpecifier.c_str());
+		SDL_Surface* surface = IMG_Load(textureSpecifier.c_str());
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(r, surface);
 		if (!texture) indicator = 2;
 		else mapSDLTexture[textureSpecifier] = texture;

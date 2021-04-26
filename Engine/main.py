@@ -73,39 +73,46 @@ biden.add_controller_component(control)
 
 class Character(Engine.PlayerObject):
     def __init__(self, name):
-        super().__init__(name, 100, 200)
+        # super().__init__(name, 100, 200)
+        super().__init__(name, 100, 100)
         self.flipped = False
+        self.last_anim = 0
 
     def character_sprite_init(self):
         dest = Engine.Rect()
         src = Engine.Rect()
-        dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 200
-        src.x, src.y, src.w, src.h = 0, 0, 50, 37
-        rows, cols = 16, 7
-        self.character_sprite = Engine.CharacterSpriteComponent("./assets/adventurer.jpg", src, rows, cols)
+        dest.x , dest.y, dest.w, dest.h = 0, 0, 80, 200
+        src.x, src.y, src.w, src.h = 0, 0, 65, 65
+        rows, cols = 8, 3
+        self.character_sprite = Engine.CharacterSpriteComponent("./assets/jet.jpg", src, dest, rows, cols)
         self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0,0))
         super().add_transform_component(self.tran)
-        self.character_sprite.add_animation("idle", 0, 3)
-        self.character_sprite.add_animation("run", 8, 13)
-        self.character_sprite.add_animation("jump", 15, 22)
-        self.character_sprite.add_animation("attack", 40, 50)
+        self.character_sprite.add_animation("up", 0, 2)
+        self.character_sprite.add_animation("side", 6, 8)
+        self.character_sprite.add_animation("down", 21, 23)
         super().add_character_sprite_component(self.character_sprite)
     
     def player_go_up(self, obj):
+        obj.update_animation_up(self.flipped, 3)
         obj.update_position(Engine.Vec2(0, -1))
+        self.last_anim = 0
 
     def player_go_down(self, obj):
+        obj.update_animation_down(self.flipped, 3)
         obj.update_position(Engine.Vec2(0, 1))
+        self.last_anim = 1
 
     def player_go_right(self, obj):
         self.flipped = False
         obj.update_animation_run(self.flipped, 3)
         obj.update_position(Engine.Vec2(1, 0))
+        self.last_anim = 2
 
     def player_go_left(self, obj):
         self.flipped = True
         obj.update_animation_run(self.flipped, 3)
         obj.update_position(Engine.Vec2(-1, 0))
+        self.last_anim = 3
 
     def player_release_key(self, obj):
         self.check_if_no_input()
@@ -122,22 +129,25 @@ class Character(Engine.PlayerObject):
         self.control2.add_input_release_binding("D", self.player_release_key)
         super().add_controller_component(self.control2)
         
-    def update_animation_idle(self, flipped, speed):
-        self.character_sprite.perform_animation("idle", flipped, speed)
+    def update_animation_up(self, flipped, speed):
+        self.character_sprite.perform_animation("up", flipped, speed)
 
     def update_animation_run(self, flipped, speed):
-        self.character_sprite.perform_animation("run", flipped, speed)
+        self.character_sprite.perform_animation("side", flipped, speed)
 
-    def update_animation_jump(self, flipped, speed):
-        self.character_sprite.perform_animation("jump", flipped, speed)
-
-    def update_animation_attack(self, flipped, speed):
-        self.character_sprite.perform_animation("attack", flipped, speed)
+    def update_animation_down(self, flipped, speed):
+        self.character_sprite.perform_animation("down", flipped, speed)
     
     def check_if_no_input(self):
         if (self.control2.no_key_pressed()):
-            character.update_animation_idle(self.flipped, 3)
-
+            if self.last_anim == 0:
+                character.update_animation_up(self.flipped, 3)
+            elif self.last_anim == 1:
+                character.update_animation_down(self.flipped, 3)
+            elif self.last_anim == 2:
+                character.update_animation_run(self.flipped, 3)
+            elif self.last_anim == 3:
+                character.update_animation_run(self.flipped, 3)
 
 character = Character("character")
 character.character_sprite_init()
