@@ -27,6 +27,8 @@ public:
      @param h: float that represents the height of the object.
      */
 	AnimateObject(std::string name, float w, float h);
+
+	~AnimateObject();
     
     /*!
      @brief Updates the position of the object.
@@ -67,6 +69,9 @@ public:
      @brief Updates the Transform Component of this object.
      */
 	void updateTransform();
+
+	//! Destroys the class
+	void Destroy();
 
     void addCollisionCallback(py::object);
 

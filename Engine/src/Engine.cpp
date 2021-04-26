@@ -34,6 +34,7 @@ SDL_Event event; // used to store any events from the OS
 
 Engine::Engine()
 {
+
 }
 
 // Proper shutdown and destroy initialized objects
@@ -135,6 +136,7 @@ void Engine::addTileManager(TileManager* tm) {
 
 void Engine::update() {
 	for (auto obj : playerObjs) {
+		// std::cout << "PlayerObj name" << obj->getGameObjectName() <<"\n";
 		ControllerComponent* contcomp = obj->getControllerComponent();
 
 		if (contcomp != nullptr) {
@@ -158,7 +160,6 @@ void Engine::update() {
 	
 	uforce.applyForces(&animateObjs);
 	uforce.applyForces(&playerObjs);
-	
 	for (auto obj : animateObjs) {
 		obj->handleCollision(gameObjs, animateObjs);
 	}
@@ -274,15 +275,21 @@ void Engine::Render()
 	
 	clear();
 	for (auto obj : animateObjs) {
-		obj->render();
+		if (destroyedObjs.find(obj->getGameObjectName()) == destroyedObjs.end()) {
+			obj->render();
+		}
 	}
 
 	for (auto obj : playerObjs) {
-		obj->render();
+		if (destroyedObjs.find(obj->getGameObjectName()) == destroyedObjs.end()) {
+			obj->render();
+		}
 	}
 
 	for (auto obj : gameObjs) {
-		obj->render();
+		if (destroyedObjs.find(obj->getGameObjectName()) == destroyedObjs.end()) {
+			obj->render();
+		}
 	}
 	for (auto comp : uiComponents) {
 		comp->render();
@@ -364,5 +371,48 @@ void Engine::Shutdown()
     SDL_Quit();
 }
 
+void Engine::destroyObject(std::string objectName) {
+	destroyedObjs.insert(std::make_pair(objectName, 1));
+	// int i = 0;
+	// for (auto it : playerObjs) {
+    //     if (it->getGameObjectName().compare(objectName) == 0) {
+	// 		it->Destroy();
+	// 		playerObjs.erase(playerObjs.begin() + i);
+	// 		//return;
+	// 	}
+	// 	++i;
+    // }
+
+	// i = 0;
+	// for (auto it : animateObjs) {
+    //     if (it->getGameObjectName().compare(objectName) == 0) {
+	// 		it->Destroy();
+	// 		playerObjs.erase(playerObjs.begin() + i);
+	// 		//return;
+	// 	}
+	// 	++i;
+    // }
+
+	// i = 0;
+	// for (auto it : gameObjs) {
+    //     if (it->getGameObjectName().compare(objectName) == 0) {
+	// 		it->Destroy();
+	// 		playerObjs.erase(playerObjs.begin() + i);
+	// 		//return;
+	// 	}
+	// 	++i;
+    // }
+
+	// for (auto it : playerObjs) {
+    //     std::cout << "printing playerobjs " << it->getGameObjectName() << std::endl;
+    // }
+	
+	// for (auto it : animateObjs) {
+    //     std::cout << "printing animateObjs " << it->getGameObjectName() << std::endl;
+    // }
+	// for (auto it : gameObjs) {
+    //     std::cout << "printing gameObjs " << it->getGameObjectName() << std::endl;
+    // }
+}
 
 

@@ -42,7 +42,8 @@ PYBIND11_MODULE(Engine, m) {
 		.def("add_ui_component", &Engine::addUIComponent)
 		.def("update", &Engine::update)
 		.def("add_UF_callback", &Engine::addUFCallback)
-		.def("add_tilemanager", &Engine::addTileManager);
+		.def("add_tilemanager", &Engine::addTileManager)
+		.def("destroy_object", &Engine::destroyObject);
 
 	py::class_<TileManager>(m, "TileManager")
 		.def(py::init<int, int, Vec2>(), py::return_value_policy::reference)

@@ -21,6 +21,8 @@ public:
      */
 	PlayerObject(std::string name, float w, float h);
 
+	~PlayerObject();
+
     /*!
      *  @brief adds a ControllerComponent to this Object
      *  @param controllerComponent: A ControllerComponent we want to add
@@ -47,6 +49,9 @@ public:
 
     //! Updates this Object's TransformComponent and position of our SpriteComponent
 	void updateTransform();
+
+	//! Destroys the class
+	void Destroy();
 
 private:
 	ControllerComponent* m_controllerComponent;

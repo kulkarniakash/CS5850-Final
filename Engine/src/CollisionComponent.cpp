@@ -1,21 +1,24 @@
 #include "CollisionComponent.hpp"
 #include <algorithm>
+#include <iostream>
 
 CollisionComponent::CollisionComponent(AnimateObject* obj) {
 	m_animateobject = obj;
 }
 
-void CollisionComponent::handleCollisions(std::vector<GameObject*> objs) {
+CollisionComponent::~CollisionComponent() {
+	std::cout << "CollisionComponent destructor called" << std::endl;
+	m_animateobject = nullptr;
+}
+
+bool CollisionComponent::handleCollisions(std::vector<GameObject*> objs) {
 	bool collided = false;
 	Vec2 corr;
 	for (auto obj : objs) {
 		corr = getCorrection(obj);
 		if (corr != Vec2(0, 0)) {
-			if (m_callbacks.size() > 0) {
-				m_callbacks[0](obj);
-			}
-
-			Vec2 curr_vel = m_animateobject->getTransformComponent()->getVelocity();
+			TransformComponent* trans = m_animateobject->getTransformComponent();
+			Vec2 curr_vel = trans->getVelocity();
 			if (corr.x == 0) {
 				m_animateobject->setVelocity(Vec2(curr_vel.x, 0));
 			}
@@ -27,7 +30,15 @@ void CollisionComponent::handleCollisions(std::vector<GameObject*> objs) {
 			}
 		}
 		m_animateobject->updatePosition(corr);
+		 
+		if (corr != Vec2(0, 0)) {
+			if (m_callbacks.size() > 0) {
+				m_callbacks[0](obj);
+				return true;
+			}
+		}
 	}
+	return false;
 }
 
 Vec2 CollisionComponent::getCorrection(GameObject* obj) {

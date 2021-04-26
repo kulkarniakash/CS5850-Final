@@ -29,7 +29,7 @@ public:
      *  @brief handles the collision of our Object
      *  @param objs: A vector of game objects we want to test collisions against
      */
-	void handleCollisions(std::vector<GameObject*> objs);
+	bool handleCollisions(std::vector<GameObject*> objs);
 	
 	void add_collision_callback(py::object func);
 
