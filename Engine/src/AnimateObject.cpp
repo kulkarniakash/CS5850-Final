@@ -68,3 +68,10 @@ void AnimateObject::setVelocity(Vec2 vel) {
 void AnimateObject::Destroy() {
     delete this;
 }
+void AnimateObject::addCollisionCallback(py::object func) {
+	m_collisioncomp->addCollisionCallback(func);
+}
+
+
+
+

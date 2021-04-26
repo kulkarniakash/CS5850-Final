@@ -4,6 +4,10 @@
 #include "Vec2.hpp"
 #include "CollisionComponent.hpp"
 #include <string>
+#include <pybind11/pybind11.h>
+
+namespace py = pybind11;
+
 class CollisionComponent;
 class GameObject;
 
@@ -68,6 +72,9 @@ public:
 	void Destroy();
 
 private:
+    void addCollisionCallback(py::object);
+
+protected:
 	CollisionComponent* m_collisioncomp;
 };
 #endif
