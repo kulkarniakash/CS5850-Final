@@ -13,6 +13,11 @@
 #include "Vec2.hpp"
 #include "GameObject.hpp"
 
+#if defined(MINGW)
+#define endline '\r'
+#else
+#define endline '\n'
+#endif
 
 extern std::unordered_map<int, std::string> tiletypes;
 
@@ -70,7 +75,7 @@ public:
 				type = std::stoi(cur);
 				cur = "";
 			}
-			else if (gData[i] == '\r') {
+			else if (gData[i] == endline) {
 				// tilePaths[type] = cur;
 				tiletypes.insert(std::make_pair(type, cur));
 				cur = "";

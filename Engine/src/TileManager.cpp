@@ -1,5 +1,11 @@
 #include "TileManager.hpp"
 
+#if defined(MINGW)
+#define endline '\r'
+#else
+#define endline '\n'
+#endif
+
 // Initialize the tilePaths.
 std::unordered_map<int, std::string> TileManager::tilePaths = std::unordered_map<int, std::string>{};
 
@@ -60,7 +66,7 @@ void TileManager::loadLevelMap(std::string path) {
 	// parse the file to get the tile map
 	int i = 0;
 	std::string cur = "";
-	while (gData[i] != '\r') {
+	while (gData[i] != endline) {
 		if (gData[i] == ' ') {
 			row = stoi(cur);
 			cur = "";
@@ -80,7 +86,7 @@ void TileManager::loadLevelMap(std::string path) {
 	
 	int r = 0, c = 0;
 	while (gData[i] != 0) {
-		if (gData[i] == ' ' || gData[i] == '\r') {
+		if (gData[i] == ' ' || gData[i] == endline) {
 			int type = (stoi(cur));
 			cur = "";
 			if (type != 0) {
@@ -88,7 +94,7 @@ void TileManager::loadLevelMap(std::string path) {
 			}
 
 			tilemap[r][c] = type;
-			if (gData[i] == '\r') {
+			if (gData[i] == endline) {
 				c = 0;
 				r++;
 				// i++;
