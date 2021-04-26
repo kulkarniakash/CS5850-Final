@@ -48,10 +48,10 @@ void GameObject::render() {
     // m_spriteComponent->render();
     // have one m_spriteComponent and just call it (since characterspritecomponent is inherited from spritecomponent)
     if (m_characterSpriteComponent != nullptr) {
-		m_characterSpriteComponent->updatePosition(m_transformComponent->getPosition());
+		m_characterSpriteComponent->updatePosition(Camera::getInstance().correctPosition(this));
         m_characterSpriteComponent->render();
     } else if (m_spriteComponent != nullptr) {
-		m_spriteComponent->updatePosition(m_transformComponent->getPosition());
+		m_spriteComponent->updatePosition(Camera::getInstance().correctPosition(this));
         m_spriteComponent->render();
     }
 }

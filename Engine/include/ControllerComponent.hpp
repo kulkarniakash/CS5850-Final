@@ -31,20 +31,21 @@ public:
     //! @brief handles the input of our ControllerComponent
     void handleInput();
 
-    /*!
-     * @brief adds in a keybinding to this object
-     * @param key: string that represents the key we want to bind
-     * @param callback: a python function that we want the object to perform upon pressing the key
-     */
-	void addInputBinding(std::string key, py::object callback);
-    
-    
-    /*!
-     * @brief adds in a keybinding upon releasing to this object
-     * @param key: string that represents the key we want to bind when released
-     * @param callback: a python function that we want the object to perform upon releasing the key
-     */
-	void addInputReleaseBinding(std::string key, py::object callback);
+	/*!
+	* @brief adds in a keybinding to this object
+	* @param key: string that represents the key we want to bind
+	* @param callback: a python function that we want the object to perform upon pressing the key
+	* @param isPersistent: whether to call the callback function persistently for a key press
+	*/
+	void addInputBinding(std::string key, py::object callback, bool isPersistent);
+
+	/*!
+	 * @brief adds in a keybinding upon releasing to this object
+	 * @param key: string that represents the key we want to bind when released
+	 * @param callback: a python function that we want the object to perform upon releasing the key
+	 * @param isPersistent: whether to call the callback function persistently for a key press
+	 */
+	void addInputReleaseBinding(std::string key, py::object callback, bool isPersistent);
 
     /*!
      * @brief goes through our map of keys and gives us a pointer of those keys
@@ -88,9 +89,16 @@ public:
 	bool noKeyPressed();
     
 private:
+	void executeNonPersistCallback(int key);
+
+	void executeNonPersistUnCallback(int key);
+
 	std::unordered_map<std::string, py::object> keyToFuncMap;
+	std::unordered_map<std::string, bool> keyToPersist;
 	std::unordered_map<std::string, py::object> unkeyToFuncMap;
+	std::unordered_map<std::string, bool> unkeyToPersist;
 	std::unordered_map<std::string, bool> keypressed;
+	std::unordered_map<std::string, bool> prevKeyPressed;
 	PlayerObject* m_gameobject;
 	bool no_key_pressed = true;
 };

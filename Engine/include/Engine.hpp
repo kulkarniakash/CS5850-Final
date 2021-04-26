@@ -13,6 +13,7 @@
 #include <vector>
 #include "PlayerObject.hpp"
 #include "UniversalForce.hpp"
+#include "TileManager.hpp"
 
 #include <pybind11/pybind11.h>
 
@@ -95,6 +96,8 @@ public:
      * @param object: a python function object we want to add
      */
 	void addUFCallback(py::object);
+
+	void addTileManager(TileManager* tm);
 
 private:
 
