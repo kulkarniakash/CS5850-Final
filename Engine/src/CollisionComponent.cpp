@@ -106,14 +106,6 @@ Vec2 CollisionComponent::getCorrection(GameObject* obj) {
 	return Vec2(-(right - leftOther), 0);
 }
 
-<<<<<<< HEAD
-//TODO: store callbacks in a vector
-void CollisionComponent::add_collision_callback(py::object func) {
-	std::cout << "collided in collisioncomp" << std::endl;
-	callbacks.push_back(func);
-	std::cout << callbacks.size() << std::endl;
-=======
 void CollisionComponent::addCollisionCallback(py::object func) {
 	m_callbacks.push_back(func);
->>>>>>> 200d5c53b89cbe5e9e330f476c5d53dd858dfd34
 }

@@ -65,7 +65,8 @@ public:
 
     //! @brief renders this GameObject
     void render();
-r of our oat value that represents the width of this GameObject
+
+    //! @return float value that represents the width of this GameObject
 	float getWidth();
 
     //! @return float value that represents the height of this GameObject

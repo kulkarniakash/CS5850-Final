@@ -51,22 +51,16 @@ public:
      @param pos: Vec2 that represents the velocity of the object we want to change it to.
      */
 	void setVelocity(Vec2 vel);
-<<<<<<< HEAD
-
-	void handleCollision(std::vector<GameObject*> objs, std::vector<AnimateObject*> animObjs);
-
-=======
     
     /*!
      @brief Handles and detects the collision of other objects.
      @param objs: A vector of game objects that we want to detect for collision.
      */
-	void handleCollision(std::vector<GameObject*> objs);
+	void handleCollision(std::vector<GameObject*> objs, std::vector<AnimateObject*> animObjs);
     
     /*!
     @brief Updates the Sprite Component of this object.
      */
->>>>>>> 200d5c53b89cbe5e9e330f476c5d53dd858dfd34
 	void updateSprite();
 
     /*!
@@ -74,15 +68,9 @@ public:
      */
 	void updateTransform();
 
-<<<<<<< HEAD
-	void addCollisionCallback(py::object func);
-
-private:
-=======
     void addCollisionCallback(py::object);
 
 protected:
->>>>>>> 200d5c53b89cbe5e9e330f476c5d53dd858dfd34
 	CollisionComponent* m_collisioncomp;
 };
 #endif
