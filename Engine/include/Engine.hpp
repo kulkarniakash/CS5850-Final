@@ -14,6 +14,7 @@
 #include "PlayerObject.hpp"
 #include "UniversalForce.hpp"
 #include "TileManager.hpp"
+#include "UIComponent.hpp"
 #include <map>
 #include <pybind11/pybind11.h>
 
@@ -99,6 +100,7 @@ public:
 
 	void addTileManager(TileManager* tm);
 
+void addUIComponent(UIComponent* ui);
   /*!
     * @brief Destroys the specified object
     * @param objectName: Name of the object to be destroyed
@@ -111,6 +113,9 @@ private:
 	std::vector<PlayerObject*> playerObjs;
 	std::vector<AnimateObject*> animateObjs;
 	std::vector<GameObject*> gameObjs;
+  std::vector<UIComponent*> uiComponents;
+  // std::vector<GameObject*> animAsGameObjs;
+  // std::vector<GameObject*> playerAsGameObjs;
   std::map<std::string, int> destroyedObjs;
 	UniversalForce uforce;
 };

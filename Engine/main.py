@@ -222,6 +222,18 @@ class Explosion(Engine.AnimateObject):
     def explode_anim(self, speed):
         self.character_sprite.perform_animation("explode", True, speed)
 
+class TestUI(Engine.UIComponent):
+    def __init__(self, text, fontSize):
+        self.dest = Engine.Rect()
+        fontPath = "assets/lazy.ttf"
+        self.dest.x, self.dest.y, self.dest.w, self.dest.h = 50, 50, 100, 100
+        super().__init__(fontPath, self.dest, text, fontSize)
+
+    def mRender(self):
+        self.render()
+
+testUI = TestUI("testing", 50)
+
 character_destroyed = True
 def callback_sample(obj):
     global character_destroyed
@@ -248,6 +260,7 @@ engine.add_game_object(sky)
 engine.add_player_object(character)
 engine.add_UF_callback(radial_gravity)
 engine.add_tilemanager(tm)
+engine.add_ui_component(testUI)
 engine.start()
 
 count = 0
@@ -257,7 +270,7 @@ while not engine.program_ended():
     biden.check_bounds()
     engine.clear()
     engine.render()
-
+   # testUI.mRender()
 ##    if count >= 100:
 ##        print(f'velocity = {character.get_transform_component().get_velocity()}')
 ##        break
