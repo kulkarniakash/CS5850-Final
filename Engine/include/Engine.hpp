@@ -14,6 +14,7 @@
 #include "PlayerObject.hpp"
 #include "UniversalForce.hpp"
 #include "TileManager.hpp"
+#include "UIComponent.hpp"
 
 #include <pybind11/pybind11.h>
 
@@ -99,12 +100,15 @@ public:
 
 	void addTileManager(TileManager* tm);
 
+void addUIComponent(UIComponent* ui);
+
 private:
 
 	bool quit;
 	std::vector<PlayerObject*> playerObjs;
 	std::vector<AnimateObject*> animateObjs;
 	std::vector<GameObject*> gameObjs;
+  std::vector<UIComponent*> uiComponents;
   // std::vector<GameObject*> animAsGameObjs;
   // std::vector<GameObject*> playerAsGameObjs;
 	UniversalForce uforce;

@@ -12,7 +12,7 @@
 #include "AnimateObject.hpp"
 #include "PlayerObject.hpp"
 #include "Camera.hpp"
-#include "UIComponent.hpp"
+//#include "UIComponent.hpp"
 
 namespace py = pybind11;
 
@@ -39,6 +39,7 @@ PYBIND11_MODULE(Engine, m) {
 		.def("add_game_object", &Engine::addGameObject)
 		.def("add_animate_object", &Engine::addAnimateObject)
 		.def("add_player_object", &Engine::addPlayerObject)
+		.def("add_ui_component", &Engine::addUIComponent)
 		.def("update", &Engine::update)
 		.def("add_UF_callback", &Engine::addUFCallback)
 		.def("add_tilemanager", &Engine::addTileManager);

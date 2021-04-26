@@ -3,17 +3,17 @@
 
 class UIComponent {
     public:
-    UIComponent(std::string fontPath, SDL_Rect src, std::string displayText, int fontSize);
+        UIComponent(std::string fontPath, SDL_Rect dest, std::string displayText, int fontSize);
 
-    void render();
+        void render();
 
-    void update(std::string text);
+        void update(std::string text);
 
     private:
-    SDL_Rect* m_textRect;
-    SDL_Color White;
-    SDL_Surface * m_surface;
-    SDL_Texture * m_texture;
-    SDL_Renderer * m_renderer;
-    TTF_Font* m_displayFont;
+        SDL_Rect m_textRect;
+        SDL_Color White;
+        SDL_Surface * m_surface;
+        SDL_Texture * m_texture;
+        SDL_Renderer * m_renderer;
+        TTF_Font* m_displayFont;
 };
