@@ -84,7 +84,7 @@ class Character(Engine.PlayerObject):
         dest.x , dest.y, dest.w, dest.h = 0, 0, 80, 200
         src.x, src.y, src.w, src.h = 0, 0, 65, 65
         rows, cols = 8, 3
-        self.character_sprite = Engine.CharacterSpriteComponent("./assets/jet.jpg", src, dest, rows, cols)
+        self.character_sprite = Engine.CharacterSpriteComponent("./assets/jet2.jpg", src, dest, rows, cols)
         self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0,0))
         super().add_transform_component(self.tran)
         self.character_sprite.add_animation("up", 0, 2)
