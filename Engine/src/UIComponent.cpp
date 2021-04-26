@@ -3,8 +3,8 @@
 #include <iostream>
 
 UIComponent::UIComponent(std::string fontPath, SDL_Rect dest, std::string displayText, int fontSize) {
-    std::cout << fontPath << std::endl;
-    if (ResourceManager::getInstance().addResource(fontPath, ResourceType::Font, fontSize) != 0) {
+    int a = ResourceManager::getInstance().addResource(fontPath, ResourceType::Font, fontSize);
+    if (a != 0 && a != 1) {
         std::cout << "Error: Could not load font" << std::endl;
     }
 

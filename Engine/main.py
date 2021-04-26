@@ -226,17 +226,30 @@ class Explosion(Engine.AnimateObject):
     def explode_anim(self, speed):
         self.character_sprite.perform_animation("explode", True, speed)
 
-class TestUI(Engine.UIComponent):
+class UI(Engine.UIComponent):
     def __init__(self, text, fontSize):
         self.dest = Engine.Rect()
-        fontPath = "assets/lazy.ttf"
-        self.dest.x, self.dest.y, self.dest.w, self.dest.h = 50, 50, 100, 100
+        fontPath = "assets/gomarice_no_continue.ttf"
+        self.dest.x, self.dest.y, self.dest.w, self.dest.h = 50, 100, 200, 100
         super().__init__(fontPath, self.dest, text, fontSize)
 
     # def mRender(self):
     #     self.render()
 
-testUI = TestUI("testing", 50)
+class TimerUI(Engine.UIComponent):
+    def __init__(self, text, fontSize):
+        self.dest = Engine.Rect()
+        fontPath = "assets/gomarice_no_continue.ttf"
+        self.dest.x, self.dest.y, self.dest.w, self.dest.h = 50, 0, 200, 100
+        super().__init__(fontPath, self.dest, text, fontSize)
+
+testUI = UI("testing", 50)
+
+youLoseUI = UI("You lose!", 50)
+
+youWinUI = UI("You win!", 50)
+
+timerUI = TimerUI("Timer: ", 50)
 
 character_destroyed = True
 def callback_sample(obj):
@@ -250,6 +263,7 @@ def callback_sample(obj):
         camera.bind_to_object(explosion)
         engine.stop_timer()
         engine.destroy_object("character")
+        engine.add_ui_component(youLoseUI)
         #engine.reset()
         #initialize_game(True)
 
@@ -273,8 +287,9 @@ def initialize_game(reset):
     engine.add_player_object(character)
     engine.add_UF_callback(radial_gravity)
     engine.add_tilemanager(tm)
-    engine.add_ui_component(testUI)
-    engine.set_timer(30000)
+    engine.add_ui_component(timerUI)
+  #  engine.add_ui_component(testUI)
+    engine.set_timer(5000)
     engine.start()
     # if (reset is False):
     #     engine.start()
@@ -288,7 +303,10 @@ while not engine.program_ended():
     # biden.check_bounds()
     engine.clear()
     engine.render()
-    print(round(engine.get_time(), 2))
+    #print(round(engine.get_time(), 2))
+    timerUI.update("Timer: " + str(round(engine.get_time(), 2)))
+    if (round(engine.get_time(), 2) <= 0):
+        engine.add_ui_component(youWinUI)
 ##    if count >= 100:
 ##        print(f'velocity = {character.get_transform_component().get_velocity()}')
 ##        break
