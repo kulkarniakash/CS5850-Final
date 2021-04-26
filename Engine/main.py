@@ -229,6 +229,17 @@ class Explosion(Engine.AnimateObject):
     def explode_anim(self, speed):
         self.character_sprite.perform_animation("explode", True, speed)
 
+class TestUI(Engine.UIComponent):
+    def __init__(self, text, fontSize):
+        src = Engine.Rect()
+        fontPath = "assets/lazy.ttf"
+        src.x, src.y, src.w, src.h = 50, 50, 100, 100
+        super().__init__(fontPath, src, text, fontSize)
+
+    def mRender(self):
+        self.render()
+
+testUI = TestUI("testing", 40)
 
 def callback_sample(obj):
     print("callback successful")
@@ -260,7 +271,7 @@ while not engine.program_ended():
     biden.check_bounds()
     engine.clear()
     engine.render()
-
+    testUI.mRender()
 ##    if count >= 100:
 ##        print(f'velocity = {character.get_transform_component().get_velocity()}')
 ##        break
