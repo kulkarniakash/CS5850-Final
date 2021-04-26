@@ -101,17 +101,6 @@ def radial_gravity(obj):
 def gravity(obj):
     obj.update_velocity(Engine.Vec2(0, 1))
 
-##control = Engine.ControllerComponent()
-##control.add_input_binding("W", go_up, False)
-##control.add_input_binding("S", go_down, False)
-##control.add_input_binding("A", go_left, False)
-##control.add_input_binding("D", go_right, False)
-##control.add_input_release_binding("W", key_release_w)
-##control.add_input_release_binding("S", key_release_s)
-##control.add_input_release_binding("A", key_release_a)
-##control.add_input_release_binding("D", key_release_d)
-
-
 class Character(Engine.PlayerObject):
     def __init__(self, name):
         super().__init__(name, 100, 100)
@@ -210,17 +199,21 @@ class Character(Engine.PlayerObject):
             elif self.last_anim == 3:
                 character.update_animation_run(self.flipped, 3)
 
+    def get_position(self):
+        position = character.get_transform_component().get_position()
+        return position.x, position.y
+
 class Explosion(Engine.AnimateObject):
     def __init__(self, name):
         super().__init__(name, 100, 100)
-    def explosion_sprite_init(self):
+    def explosion_sprite_init(self, x, y):
         dest = Engine.Rect()
         src = Engine.Rect()
         dest.x , dest.y, dest.w, dest.h = 0, 0, 100, 100
         src.x, src.y, src.w, src.h = 0, 0, 64, 65
         rows, cols = 5, 5
         self.character_sprite = Engine.CharacterSpriteComponent("./assets/explosion2.jpg", src, dest, rows, cols)
-        self.tran = Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(0,0))
+        self.tran = Engine.TransformComponent(Engine.Vec2(x,y), Engine.Vec2(0,0))
         super().add_transform_component(self.tran)
         self.character_sprite.add_animation("explode", 0, 24)
         self.character_sprite.set_loop(False)
@@ -229,9 +222,17 @@ class Explosion(Engine.AnimateObject):
     def explode_anim(self, speed):
         self.character_sprite.perform_animation("explode", True, speed)
 
-
+character_destroyed = True
 def callback_sample(obj):
-    print("callback successful")
+    global character_destroyed
+    if character_destroyed:
+        x, y = character.get_position()
+        explosion.explosion_sprite_init(x, y)
+        explosion.explode_anim(3)
+        engine.add_animate_object(explosion)
+        character_destroyed = False
+        camera.bind_to_object(explosion)
+        engine.destroy_object("character")
 
 character = Character("character")
 character.character_sprite_init()
@@ -241,14 +242,10 @@ character.add_collision_callback(callback_sample)
 camera.bind_to_object(character)
 
 explosion = Explosion("explosion")
-explosion.explosion_sprite_init()
-explosion.explode_anim(3)
 
 engine.add_animate_object(biden)
 engine.add_game_object(sky)
 engine.add_player_object(character)
-#engine.add_animate_object(explosion)
-#engine.add_UF_callback(gravity)
 engine.add_UF_callback(radial_gravity)
 engine.add_tilemanager(tm)
 engine.start()

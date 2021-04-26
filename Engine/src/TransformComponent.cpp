@@ -1,4 +1,4 @@
-
+#include <iostream>
 #include <TransformComponent.hpp>
 
 TransformComponent::TransformComponent(const Vec2 & position, const Vec2 & velocity): m_position(position), m_velocity(velocity) {
@@ -7,7 +7,7 @@ TransformComponent::TransformComponent(const Vec2 & position, const Vec2 & veloc
 
 
 TransformComponent::~TransformComponent() {
-    
+    std::cout << "TransformComponent destructor called" << std::endl;
 }
 
 void TransformComponent::update() {
@@ -27,6 +27,8 @@ Vec2 TransformComponent::getPosition() {
 }
 
 Vec2 TransformComponent::getVelocity() {
+	//std::cout << m_velocity.x << std::endl;
+	//std::cout << m_velocity.y << std::endl;
 	return m_velocity;
 }
 
