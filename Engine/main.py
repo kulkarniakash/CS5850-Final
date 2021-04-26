@@ -3,9 +3,12 @@ import Engine
 # Bug in pybind: don't do this: obj.add_transform_component(Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10)))
 # do this: obj.add_transform_component(tran)
 # where the argument value is stored in another variable
-engine = Engine.Engine()
-engine.initialize_graphics_subsystem()
+engine = None
+def init_engine():
+    engine = Engine.Engine()
+    engine.initialize_graphics_subsystem()
 
+#init_engine()
 tile_width = 20
 tile_height = 20
 
@@ -234,23 +237,32 @@ def callback_sample(obj):
         camera.bind_to_object(explosion)
         engine.stop_timer()
         engine.destroy_object("character")
+       # engine.shutdown()
+      #  initialize_game()
 
-character = Character("character")
-character.character_sprite_init()
-character.character_controls_init()
-character.add_collision_callback(callback_sample)
+def initialize_game():
+    global character, character_destroyed, camera, explosion, engine
+    character_destroyed = True
+    engine = Engine.Engine()
+    engine.initialize_graphics_subsystem()
+    character = Character("character")
+    character.character_sprite_init()
+    character.character_controls_init()
+    character.add_collision_callback(callback_sample)
 
-camera.bind_to_object(character)
+    camera.bind_to_object(character)
 
-explosion = Explosion("explosion")
+    explosion = Explosion("explosion")
 
-# engine.add_animate_object(biden)
-#engine.add_game_object(sky)
-engine.add_player_object(character)
-engine.add_UF_callback(radial_gravity)
-engine.add_tilemanager(tm)
-engine.set_timer(30000)
-engine.start()
+    # engine.add_animate_object(biden)
+    #engine.add_game_object(sky)
+    engine.add_player_object(character)
+    engine.add_UF_callback(radial_gravity)
+    engine.add_tilemanager(tm)
+    engine.set_timer(30000)
+    engine.start()
+
+initialize_game()
 
 count = 0
 while not engine.program_ended():
