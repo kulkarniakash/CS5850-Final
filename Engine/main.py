@@ -232,6 +232,7 @@ def callback_sample(obj):
         engine.add_animate_object(explosion)
         character_destroyed = False
         camera.bind_to_object(explosion)
+        engine.stop_timer()
         engine.destroy_object("character")
 
 character = Character("character")
@@ -248,6 +249,7 @@ engine.add_game_object(sky)
 engine.add_player_object(character)
 engine.add_UF_callback(radial_gravity)
 engine.add_tilemanager(tm)
+engine.set_timer(30000)
 engine.start()
 
 count = 0
@@ -257,7 +259,7 @@ while not engine.program_ended():
     biden.check_bounds()
     engine.clear()
     engine.render()
-
+    print(round(engine.get_time(), 2))
 ##    if count >= 100:
 ##        print(f'velocity = {character.get_transform_component().get_velocity()}')
 ##        break

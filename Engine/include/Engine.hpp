@@ -105,6 +105,14 @@ public:
     */
   void destroyObject(std::string objectName);
 
+  float getTime();
+
+  void setTimer(float miliseconds);
+
+  void stopTimer();
+
+  void resetTimer();
+
 private:
 
 	bool quit;
@@ -113,6 +121,9 @@ private:
 	std::vector<GameObject*> gameObjs;
   std::map<std::string, int> destroyedObjs;
 	UniversalForce uforce;
+  float m_timer = 0.0f;
+  float m_init_timer = 0.0f;
+  bool m_timerStopped = false;
 };
 #endif
 
