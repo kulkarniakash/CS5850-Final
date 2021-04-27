@@ -6,6 +6,7 @@
 #include "SpriteComponent.hpp"
 #include "CharacterSpriteComponent.hpp"
 #include "Camera.hpp"
+#include "SoundComponent.hpp"
 
 class SpriteComponent;
 class CharacterSpriteComponent;
@@ -54,6 +55,13 @@ public:
      */
     void addCharacterSpriteComponent(CharacterSpriteComponent* characterSpriteComponent);
     
+    
+    /*!
+     * @brief adds a SoundComponent to our GameObject
+     * @param soundComponent: the SoundComponent Object we want to add
+     */
+    void addSoundComponent(SoundComponent * soundComponent);
+    
     //! @return a pointer of our TransformComponent
     TransformComponent* getTransformComponent();
     
@@ -62,6 +70,9 @@ public:
     
     //! @return a pointer of our SpriteComponent
     SpriteComponent* getSpriteComponent();
+    
+    //! @return a pointer of our Sound Component
+    SoundComponent * getSoundComponent();
 
     //! @brief renders this GameObject
     void render();
@@ -85,5 +96,6 @@ protected:
     TransformComponent* m_transformComponent;
     SpriteComponent* m_spriteComponent;
     CharacterSpriteComponent* m_characterSpriteComponent;
+    SoundComponent * m_soundComponent;
 };
 #endif 
