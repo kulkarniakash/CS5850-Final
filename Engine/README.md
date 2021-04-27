@@ -4,6 +4,8 @@
 
 *To play the game, use the WASD keys to control the spaceship. The objective of the goal is to avoid crashing into planets and comets for the given time. You are trying to survive by waiting for your spaceship's barrier to recharge. You will be dragged and pulled towards the planet due to their gravitational fields. Try to balance out your movement with the pull to avoid collisions!*
 
+*Our "WoW" factor (special game feature) is our physics engine with its gravitational fields! We were able to create a realistic gravitational field with objects to simulate an orbit system, which we utilized to create our game.*
+
 ## Game/Engine Publicity
 
 **Project Website**: *https://rumanstheddy.github.io/CS4850-FinalProject-website/* (See part 3)
