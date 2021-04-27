@@ -63,4 +63,4 @@ The following are the requirements for a 1-page .html page.
 
 This website will be the first place I look to grab your project files and binaries. 
 
-[https://rumanstheddy.github.io/CS4850-FinalProject-website/]
+https://rumanstheddy.github.io/CS4850-FinalProject-website/
