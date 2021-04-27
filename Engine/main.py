@@ -65,34 +65,29 @@ class Sky(Engine.GameObject):
 
 def go_up(obj):
     obj.update_velocity(Engine.Vec2(0, -obj.speed))
-##    obj.update()
 
 def go_down(obj):
     obj.update_velocity(Engine.Vec2(0, obj.speed))
-##    obj.update()
 
 def go_right(obj):
     obj.update_velocity(Engine.Vec2(obj.speed, 0))
-##    obj.update()
 
 def go_left(obj):
     obj.update_velocity(Engine.Vec2(-obj.speed, 0))
-##    obj.update()
 
 
 
 def radial_gravity(obj):
 
     ice = (23, 35)
-    black_diamond =  (32, 15)
+    black_diamond =  (33, 13)
     small_red = (17, 65)
 
     row = 8
     col = 12
     w = obj.get_width()
     h = obj.get_height()
-    scale_rad = 0.07
-##    cpos = camera.get_position()
+    scale_rad = 0.15
     pos = obj.get_transform_component().get_position()
     planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
 
@@ -102,8 +97,8 @@ def radial_gravity(obj):
     strength = 2
     obj.update_velocity( Engine.Vec2(strength * (radius.x - w / 2) / norm, 
                                      strength * (radius.y - h / 2) / norm))
-    row = 8
-    col = 32
+    row = 3
+    col = 34
     planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
     strength = 1
     radius = Engine.Vec2(planet_pos.x - pos.x, planet_pos.y - pos.y)
@@ -138,7 +133,7 @@ def radial_gravity(obj):
     radius = Engine.Vec2(planet_pos.x - pos.x, planet_pos.y - pos.y)
     norm = radius.x ** 2 + radius.y ** 2
     norm = norm * scale_rad
-    strength = 7
+    strength = 5
     obj.update_velocity( Engine.Vec2(strength * (radius.x - w / 2) / norm, 
                                      strength * (radius.y - h / 2) / norm))
 def gravity(obj):
@@ -149,8 +144,7 @@ class Character(Engine.PlayerObject):
         super().__init__(name, 40, 40)
         self.flipped = False
         self.last_anim = 0
-        #super().__init__(name, 20, 20)
-        self.speed = 15
+        self.speed = 8
 
     def character_sprite_init(self):
         dest = Engine.Rect()
@@ -304,15 +298,10 @@ def callback_sample(obj):
         engine.add_ui_component(youLoseUI)
         character.get_sound_component().play_sound_effect("./assets/explosion.wav", 20)
         character.get_sound_component().play_sound_effect("./assets/youLose.wav", 60)
-        #engine.reset()
-        #initialize_game(True)
 
 def initialize_game(reset):
     global character, character_destroyed, camera, explosion, engine
     character_destroyed = True
-    # if (reset is False):
-    #     engine = Engine.Engine()
-    #     engine.initialize_graphics_subsystem()
     character = Character("character")
     character.character_sprite_init()
     character.character_controls_init()
@@ -323,19 +312,12 @@ def initialize_game(reset):
     
 
     camera.bind_to_object(character)
-
-    # engine.add_animate_object(biden)
-    # engine.add_game_object(sky)
     engine.add_player_object(character)
-    # engine.add_game_object(musicObject)
     engine.add_UF_callback(radial_gravity)
     engine.add_tilemanager(tm)
     engine.add_ui_component(timerUI)
-  #  engine.add_ui_component(testUI)
     engine.set_timer(30000)
     engine.start()
-    # if (reset is False):
-    #     engine.start()
 
 initialize_game(False)
 

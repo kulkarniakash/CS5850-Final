@@ -7,27 +7,14 @@
 #include "GlobalAttributes.hpp"
 #include "ControllerComponent.hpp"
 #include "Camera.hpp"
+#include <chrono>
+#include <time.h>
 
 class ControllerComponent;
 class ResourceManager;
-
-const std::string fontPath = "assets/lazy.ttf";
-const std::string imagePath = "assets/BGSky.jpg";
-const std::string musicPath = "assets/bgmusic.wav";
-
-
-	/*TTF_Font *font = NULL;
-	SDL_Color tcolor;
-
-	SDL_Surface *txt_surf = NULL;
-	SDL_Texture *txt_texture = NULL;
-
-	SDL_Surface *image;
-	SDL_RWops *rwop;
-
-	SDL_Texture *img_texture = NULL;
-
-	Mix_Music *bgMusic = NULL;*/
+const int FRAMECAP = 1000/60;
+float dt = 0.0f;
+int countedFrames = 0;
 
 bool running = true; // used to determine if we're running the game
 
@@ -80,13 +67,6 @@ int Engine::InitializeGraphicsSubSystem()
 		return -1;
 	}
 
-    // this->renderer = new GraphicsEngineRenderer(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-    /*if (nullptr == renderer) {
-        exit(1);
-
-    }*/
-
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
     {
         printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
@@ -99,21 +79,10 @@ int Engine::InitializeGraphicsSubSystem()
 		return -1;
 	}
 
-	if (ResourceManager::getInstance().addJPG(imagePath, "gRenderer")) {
-		printf("Error: Could not load background image\n");
-		return -1;
-	}
-
 	if (ResourceManager::getInstance().addResource("assets/bgmusic.wav", ResourceType::BackgroundMusic)) {
 		printf("Error: Could not load background music\n");
 		return -1;
 	}
-
-	// if (ResourceManager::getInstance().addResource(fontPath, ResourceType::Font, 40)) {
-	// 	printf("Error: Could not load font\n");
-	// 	return -1;
-	// }
-
     return 0;
 }
 
@@ -171,17 +140,6 @@ void Engine::update() {
 
 	Camera::getInstance().update();
 }
-
-// void Engine::convertToGameObjects(std::vector<PlayerObject*> playerObjs, std::vector<AnimateObject*> animateObjs) {
-// 	for (auto pObj: playerObjs) {
-// 		GameObject* obj = dynamic_cast<GameObject*>(pObj);
-// 		playerAsGameObjs.push_back(obj);
-// 	}
-// 	for (auto aObj: animateObjs) {
-// 		GameObject* obj = dynamic_cast<GameObject*>(aObj);
-// 		animAsGameObjs.push_back(obj);
-// 	}
-// }
 
 void Engine::Input()
 {
@@ -254,26 +212,6 @@ void Engine::clear() {
 
 void Engine::Render()
 {
-	/*SDL_Texture* bgimage = ResourceManager::getInstance().getResourceSDLTexture(imagePath.c_str());
-	TTF_Font* font = ResourceManager::getInstance().getResourceFont(fontPath);
-	SDL_Renderer* gRenderer = ResourceManager::getInstance().getResourceSDLRenderer("gRenderer");
-	SDL_Color tcolor = SDL_Color();
-	tcolor.r = 200;
-	tcolor.g = 150;
-	tcolor.b = 60;
-	SDL_Surface* txt_surf = TTF_RenderText_Solid(font, "This is a Test!", tcolor);
-	SDL_Texture* txt_texture = SDL_CreateTextureFromSurface(gRenderer, txt_surf);
-
-    SDL_SetRenderDrawColor(gRenderer, 0x0, 0x0, 0x0, 0xFF);
-    SDL_RenderClear(gRenderer);
-
-	SDL_RenderCopy(gRenderer, bgimage, NULL, NULL);
-    SDL_RenderCopy(gRenderer, txt_texture, NULL, NULL);
-    SDL_RenderPresent(gRenderer);
-
-	SDL_DestroyTexture(txt_texture);
-	SDL_FreeSurface(txt_surf);*/
-	
 	clear();
 	for (auto obj : animateObjs) {
 		if (destroyedObjs.find(obj->getGameObjectName()) == destroyedObjs.end()) {
@@ -296,17 +234,23 @@ void Engine::Render()
 		comp->render();
 	}
 
-	/*renderer->SetRenderDrawColor(0x0, 0x0, 0x0, 0xFF);
-	renderer->RenderClear();
-	SDL_RenderCopy(renderer->GetRenderer(), img_texture, NULL, NULL);
-	SDL_RenderCopy(renderer->GetRenderer(), txt_texture, NULL, NULL);
-	renderer->RenderPresent();*/
-	
 	SDL_RenderPresent(ResourceManager::getInstance().getResourceSDLRenderer("gRenderer"));
 }
 
 void Engine::delay(int seconds) {
-	SDL_Delay(seconds);
+ 	Uint32 startTicks = SDL_GetTicks();
+    
+    float avgFPS = countedFrames / (startTicks / 1000.f);
+    countedFrames++;
+    
+    int endTicks = SDL_GetTicks();
+
+    //delays updating and rendering to a specified frame rate
+    if ((endTicks - startTicks) < FRAMECAP) {
+        SDL_Delay(FRAMECAP - (endTicks - startTicks));
+    }
+    
+    dt = std::chrono::duration<float, std::chrono::milliseconds::period>(endTicks - startTicks).count();
 }
 
 // Only meant for inanimate objects!!!
@@ -328,13 +272,13 @@ void Engine::addUIComponent(UIComponent* ui) {
 
 void Engine::MainGameLoop()
 {
-	Mix_Music* bgMusic = ResourceManager::getInstance().getResourceBackgroundMusic(musicPath);
-	if (Mix_PlayingMusic() == 0)
-	{
-		//Play the music
-		Mix_VolumeMusic(30);
-		Mix_PlayMusic(bgMusic, -1);
-	}
+	// Mix_Music* bgMusic = ResourceManager::getInstance().getResourceBackgroundMusic(musicPath);
+	// if (Mix_PlayingMusic() == 0)
+	// {
+	// 	//Play the music
+	// 	Mix_VolumeMusic(30);
+	// 	Mix_PlayMusic(bgMusic, -1);
+	// }
 
     while (running)
     {
@@ -374,46 +318,6 @@ void Engine::Shutdown()
 
 void Engine::destroyObject(std::string objectName) {
 	destroyedObjs.insert(std::make_pair(objectName, 1));
-	// int i = 0;
-	// for (auto it : playerObjs) {
-    //     if (it->getGameObjectName().compare(objectName) == 0) {
-	// 		it->Destroy();
-	// 		playerObjs.erase(playerObjs.begin() + i);
-	// 		//return;
-	// 	}
-	// 	++i;
-    // }
-
-	// i = 0;
-	// for (auto it : animateObjs) {
-    //     if (it->getGameObjectName().compare(objectName) == 0) {
-	// 		it->Destroy();
-	// 		playerObjs.erase(playerObjs.begin() + i);
-	// 		//return;
-	// 	}
-	// 	++i;
-    // }
-
-	// i = 0;
-	// for (auto it : gameObjs) {
-    //     if (it->getGameObjectName().compare(objectName) == 0) {
-	// 		it->Destroy();
-	// 		playerObjs.erase(playerObjs.begin() + i);
-	// 		//return;
-	// 	}
-	// 	++i;
-    // }
-
-	// for (auto it : playerObjs) {
-    //     std::cout << "printing playerobjs " << it->getGameObjectName() << std::endl;
-    // }
-	
-	// for (auto it : animateObjs) {
-    //     std::cout << "printing animateObjs " << it->getGameObjectName() << std::endl;
-    // }
-	// for (auto it : gameObjs) {
-    //     std::cout << "printing gameObjs " << it->getGameObjectName() << std::endl;
-    // }
 }
 
 float Engine::getTime() {
@@ -449,6 +353,5 @@ void Engine::reset() {
 	animateObjs = {};
 	gameObjs = {};
 	destroyedObjs = {};
-	//uforce = null;
 	resetTimer();
 }
