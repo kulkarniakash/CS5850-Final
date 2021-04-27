@@ -1,6 +1,6 @@
 #include <CharacterSpriteComponent.hpp>
 #include <iostream>
-
+// Sprite Animation inspired by Kimin and Danny's assignment 2.
 CharacterSpriteComponent::CharacterSpriteComponent(std::string filePath, SDL_Rect src, SDL_Rect dest, int rows, int cols) : SpriteComponent(filePath, src) {
 	m_rows = rows;
 	m_cols = cols;
