@@ -2,7 +2,6 @@ project-solution/**
 .vs
 *.exe
 *.la
-Engine/include/SDL2/**
 .vscode
 *.pyd
 *.so
