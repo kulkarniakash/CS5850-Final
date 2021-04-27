@@ -3,10 +3,6 @@ import Engine
 # Bug in pybind: don't do this: obj.add_transform_component(Engine.TransformComponent(Engine.Vec2(0,0), Engine.Vec2(5,10)))
 # do this: obj.add_transform_component(tran)
 # where the argument value is stored in another variable
-engine = None
-def init_engine():
-    engine = Engine.Engine()
-    engine.initialize_graphics_subsystem()
 engine = Engine.Engine()
 engine.initialize_graphics_subsystem()
 #init_engine()
@@ -16,7 +12,6 @@ tile_height = 20
 tm = Engine.TileManager(tile_width, tile_height, Engine.Vec2(0,0))
 Engine.TileManager.load_tile_types("./assets/Tiles")
 tm.load_level_map("./assets/level1")
-
 camera = Engine.Camera.get_instance()
 
 
@@ -306,10 +301,8 @@ def initialize_game(reset):
     character.character_controls_init()
     character.add_collision_callback(callback_sample)
     
-    
     explosion = Explosion("explosion")
     
-
     camera.bind_to_object(character)
     engine.add_player_object(character)
     engine.add_UF_callback(radial_gravity)

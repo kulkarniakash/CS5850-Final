@@ -18,7 +18,6 @@ SoundComponent::~SoundComponent() {
 }
 
 void SoundComponent::addBackgroundMusic(std::string const & filePath) {
-    std::cout << "Adding background Music \n";
     
     for (auto it: m_mapBackgroundMusic) {
         if (it.first == filePath) {
