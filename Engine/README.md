@@ -10,6 +10,8 @@
 
 ## Compilation Instructions
 
+The Readme that it included in the repository is compatible with Windows.
+
 *For Windows:*
 - Check TileEditor README and follow instructions
 - sh mingw64build.sh
