@@ -79,11 +79,13 @@ public:
 	void addPlayerObject(PlayerObject* obj);
 
     /*!
+	 * @brief Returns the size of our map of keys released.
      * @return int: size of our map of keys released.
      */
 	int getUnKeysNum();
 
     /*!
+	 * @brief Returns a bool that determines whether any keys were pressed.
      * @return bool: determines whether any keys were pressed.
      */
 	bool noKeyPressed();

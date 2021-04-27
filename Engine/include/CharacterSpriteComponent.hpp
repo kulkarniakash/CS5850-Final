@@ -47,9 +47,13 @@ public:
      */
 	void updatePosition(Vec2 pos);
 
-    //! Sets whether the action should loop upon reaching its last frame or not.
+    /*!
+     *  @brief Return if the character sprite animation is looped or not.
+     *  @return bool that determines if the character sprite animation is looped or not.
+     */
     bool& loopAction();
 
+    //! Sets whether the action should loop upon reaching its last frame or not.
     void setLoop(bool loop);
     
 

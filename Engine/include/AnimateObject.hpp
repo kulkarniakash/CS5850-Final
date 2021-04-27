@@ -73,6 +73,10 @@ public:
 	//! Destroys the class
 	void Destroy();
 
+    /*!
+		@brief Upon a collision, add the inputted argument as a callback.
+		@param object: A python function object
+     */
     void addCollisionCallback(py::object);
 
 protected:
