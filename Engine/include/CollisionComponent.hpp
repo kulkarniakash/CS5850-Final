@@ -31,8 +31,10 @@ public:
      */
 	bool handleCollisions(std::vector<GameObject*> objs);
 	
-	void add_collision_callback(py::object func);
-
+	 /*!
+     *  @brief  Upon a collision, add the inputted argument as a callback.
+     *  @param func: A python function object
+     */
     void addCollisionCallback(py::object func);
 
 private:

@@ -15,7 +15,7 @@ You will have some flexibility and creativity in how the overall game making eng
 
 ## Team
 
-Team Name: *Edit this to something cool here*
+Team Name: *Pog*
 
 *TODO*:
 Update your Team member Names here (Up to 4).

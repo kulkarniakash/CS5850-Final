@@ -98,23 +98,49 @@ public:
     */
 	void addUFCallback(py::object);
 
+  /*!
+    * @brief Add a Tile Manager to the Engine by converting tiles to GameObjects
+    * @param tm: TileManager to be added to the Engine
+    */
 	void addTileManager(TileManager* tm);
 
-void addUIComponent(UIComponent* ui);
+  /*!
+    * @brief Add a UIComponent to the Engine into the vector field uiComponents.
+    * @param ui: UIComponent to be added to the Engine
+    */
+  void addUIComponent(UIComponent* ui);
+
   /*!
     * @brief Destroys the specified object
     * @param objectName: Name of the object to be destroyed
     */
   void destroyObject(std::string objectName);
 
+  /*!
+    * @brief Return the timer time in a float format.
+    * @return float timer time
+    */
   float getTime();
 
+  /*!
+    * @brief Set the timer to the given miliseconds.
+    * @param miliseconds time in miliseconds to set the timer to
+    */
   void setTimer(float miliseconds);
 
+  /*!
+    * @brief Pause the timer
+    */
   void stopTimer();
 
+  /*!
+    * @brief Resets the timer to the initial set time.
+    */
   void resetTimer();
 
+  /*!
+    * @brief Resets the game. Resets the vector fields and the
+    */
   void reset();
 
 private:
@@ -124,8 +150,6 @@ private:
 	std::vector<AnimateObject*> animateObjs;
 	std::vector<GameObject*> gameObjs;
   std::vector<UIComponent*> uiComponents;
-  // std::vector<GameObject*> animAsGameObjs;
-  // std::vector<GameObject*> playerAsGameObjs;
   std::map<std::string, int> destroyedObjs;
 	UniversalForce uforce;
   float m_timer = 0.0f;
