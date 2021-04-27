@@ -22,6 +22,10 @@ GameObject::~GameObject() {
     }
     delete m_transformComponent;
     m_transformComponent = nullptr;
+    
+    std::cout << "Attempting to delete sound Component! \n";
+    delete m_soundComponent;
+    m_soundComponent = nullptr;
 }
 
 TransformComponent* GameObject::getTransformComponent() {

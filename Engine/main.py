@@ -41,25 +41,27 @@ camera = Engine.Camera.get_instance()
 #             super().set_velocity(Engine.Vec2(-self.tran.get_velocity().x, 0))
         
 
-# class Sky(Engine.GameObject):
-#     def __init__(self, name):
-#         super().__init__(name, 100, 100)
+class Sky(Engine.GameObject):
+    def __init__(self, name):
+         super().__init__(name, 100, 100)
 
-#     def sprite_init(self):
-#         dest = Engine.Rect()
-#         src = Engine.Rect()
-#         dest.x , dest.y, dest.w, dest.h = 200, 300, 100, 150
-#         src.x, src.y, src.w, src.h = 0, 0, -1, -1
-#         self.tran = Engine.TransformComponent(Engine.Vec2(200,300), Engine.Vec2(0,0))
-#         super().add_transform_component(self.tran)
-#         self.sprite = Engine.SpriteComponent("./assets/BGSky.jpg", src)
-#         super().add_sprite_component(self.sprite)
+    def sprite_init(self):
+        dest = Engine.Rect()
+        src = Engine.Rect()
+        dest.x , dest.y, dest.w, dest.h = 200, 300, 100, 150
+        src.x, src.y, src.w, src.h = 0, 0, -1, -1
+        self.tran = Engine.TransformComponent(Engine.Vec2(200,300), Engine.Vec2(0,0))
+        super().add_transform_component(self.tran)
+        self.sprite = Engine.SpriteComponent("./assets/BGSky.jpg", src)
+        super().add_sprite_component(self.sprite)
         
         
 # biden = Biden("biden")
 # sky = Sky("sky")
 # biden.sprite_init()
 # sky.sprite_init()
+
+
 
 def go_up(obj):
     obj.update_velocity(Engine.Vec2(0, -obj.speed))
@@ -276,7 +278,21 @@ def initialize_game(reset):
     character.character_sprite_init()
     character.character_controls_init()
     character.add_collision_callback(callback_sample)
-
+    
+    # characterSound = Engine.SoundComponent()
+    # characterSound.add_sound_effect("./assets/explosion.wav")
+    # characterSound.add_sound_effect("./assets/youLose.wav")
+    # characterSound.add_sound_effect("./assets/youWin.wav")
+    # character.add_sound_component(characterSound)
+    
+    
+    musicObject = Sky("musicBackground")
+    backgroundMusic = Engine.SoundComponent()
+    backgroundMusic.add_background_music("./assets/bgmusic.wav")
+    musicObject.add_sound_component(backgroundMusic)
+    backgroundMusic.play_background_music("./assets/bgmusic.wav", 10)
+    
+    
     camera.bind_to_object(character)
 
     explosion = Explosion("explosion")
@@ -305,9 +321,12 @@ while not engine.program_ended():
     if (round(engine.get_time(), 2) <= 0):
         game_won = True
         engine.add_ui_component(youWinUI)
-##    if count >= 100:
-##        print(f'velocity = {character.get_transform_component().get_velocity()}')
-##        break
+        character.get_sound_component().play_sound_effect("./assets/youWin.wav", 10)
+    if count == 100:
+        count += 1
+        character.get_sound_component().play_sound_effect("./assets/explosion.wav", 50)
+    elif count == 300:
+        character.get_sound_component().play_sound_effect("./assets/youLose.wav",20)
     engine.delay(20)
     count += 1
 engine.shutdown()

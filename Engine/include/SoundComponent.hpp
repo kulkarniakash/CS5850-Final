@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <memory>
 
 /*!
  * @brief class that Represents a SoundComponent
@@ -45,8 +46,8 @@ public:
     
     
 private:
-    std::unordered_map<std::string, Mix_Chunk*> m_mapSoundEffect;
-    std::unordered_map<std::string, Mix_Music*> m_mapBackgroundMusic;
+    std::unordered_map<std::string, Mix_Chunk *> m_mapSoundEffect;
+    std::unordered_map<std::string, Mix_Music *> m_mapBackgroundMusic;
 
 };
 

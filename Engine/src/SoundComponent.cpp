@@ -1,4 +1,4 @@
-#include <"SoundComponent.hpp">
+#include "SoundComponent.hpp"
 #include <stdio.h>
 
 SoundComponent::SoundComponent() {
@@ -6,16 +6,20 @@ SoundComponent::SoundComponent() {
 }
 
 SoundComponent::~SoundComponent() {
+    std::cout << "SoundComponent destructor called" << std::endl;
     for (auto it: m_mapSoundEffect) {
-        Mix_freeChunk(it.second);
+        Mix_FreeChunk(it.second);
     }
     
     for (auto it: m_mapBackgroundMusic) {
-        Mix_freeMusic(it.second);
+        Mix_FreeMusic(it.second);
     }
+     
 }
 
-SoundComponent::addBackgroundMusic(std::string const & filePath) {
+void SoundComponent::addBackgroundMusic(std::string const & filePath) {
+    std::cout << "Adding background Music \n";
+    
     for (auto it: m_mapBackgroundMusic) {
         if (it.first == filePath) {
             std::cout << "Music already added \n";
@@ -31,7 +35,7 @@ SoundComponent::addBackgroundMusic(std::string const & filePath) {
     }
 }
 
-SoundComponent::addSoundEffect(std::string const & filePath) {
+void SoundComponent::addSoundEffect(std::string const & filePath) {
     for (auto it: m_mapSoundEffect) {
         if (it.first == filePath) {
             std::cout << "Sound effect already added \n";
@@ -43,14 +47,14 @@ SoundComponent::addSoundEffect(std::string const & filePath) {
         std::cout << "Sound effect failed to load \n";
     }
     else {
-        m_mapBackgroundMusic[filePath] = sound;
+        m_mapSoundEffect[filePath] =  sound;
     }
 }
 
-SoundComponent::playSoundEffect(std::string const & filePath, int volume) {
+void SoundComponent::playSoundEffect(std::string const & filePath, int volume) {
     for (auto it: m_mapSoundEffect) {
         if (it.first == filePath) {
-            Mix_PlayChunk(-1,it.second, 0);
+            Mix_PlayChannel(-1,it.second, 0);
             Mix_VolumeChunk(it.second, volume);
             return;
         }
@@ -58,13 +62,14 @@ SoundComponent::playSoundEffect(std::string const & filePath, int volume) {
     std::cout << "Sound effect not found \n";
 }
 
-SoundComponent::playBackgroundMusic(std::string const & filePath, int volume) {
+void SoundComponent::playBackgroundMusic(std::string const & filePath, int volume) {
     for (auto it: m_mapBackgroundMusic) {
         if (it.first == filePath) {
             if (Mix_PlayingMusic() == 0) {
-                    //Play the music
-                    Mix_VolumeMusic(volume);
-                    Mix_PlayMusic(it.second, -1);
+                //Play the music
+                Mix_VolumeMusic(volume);
+                Mix_PlayMusic(it.second, -1);
+                return;
             }
         }
     }
