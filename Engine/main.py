@@ -79,12 +79,19 @@ def go_left(obj):
     obj.update_velocity(Engine.Vec2(-obj.speed, 0))
 ##    obj.update()
 
+
+
 def radial_gravity(obj):
+
+    ice = (23, 35)
+    black_diamond =  (32, 15)
+    small_red = (17, 65)
+
     row = 8
     col = 12
     w = obj.get_width()
     h = obj.get_height()
-    scale_rad = 0.09
+    scale_rad = 0.07
 ##    cpos = camera.get_position()
     pos = obj.get_transform_component().get_position()
     planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
@@ -92,28 +99,58 @@ def radial_gravity(obj):
     radius = Engine.Vec2(planet_pos.x - pos.x, planet_pos.y - pos.y)
     norm = radius.x ** 2 + radius.y ** 2
     norm = norm * scale_rad
-    obj.update_velocity( Engine.Vec2( (radius.x - w / 2) / norm,
-                                     (radius.y - h / 2) / norm))
+    strength = 2
+    obj.update_velocity( Engine.Vec2(strength * (radius.x - w / 2) / norm, 
+                                     strength * (radius.y - h / 2) / norm))
     row = 8
     col = 32
+    planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
+    strength = 1
+    radius = Engine.Vec2(planet_pos.x - pos.x, planet_pos.y - pos.y)
+    norm = radius.x ** 2 + radius.y ** 2
+    norm = norm * scale_rad
+    obj.update_velocity( Engine.Vec2(strength * (radius.x - w / 2) / norm, 
+                                     strength * (radius.y - h / 2) / norm))
+
+    row, col = ice
+    planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
+
+    radius = Engine.Vec2(planet_pos.x - pos.x, planet_pos.y - pos.y)
+    norm = radius.x ** 2 + radius.y ** 2
+    strength = 6
+    norm = norm * scale_rad
+    obj.update_velocity( Engine.Vec2(strength * (radius.x - w / 2) / norm, 
+                                     strength * (radius.y - h / 2) / norm))
+
+    row,col = black_diamond
     planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
 
     radius = Engine.Vec2(planet_pos.x - pos.x, planet_pos.y - pos.y)
     norm = radius.x ** 2 + radius.y ** 2
     norm = norm * scale_rad
-    obj.update_velocity( Engine.Vec2((radius.x - w / 2) / norm, 
-                                     (radius.y - h / 2) / norm))
+    strength = 1
+    obj.update_velocity( Engine.Vec2(strength * (radius.x - w / 2) / norm, 
+                                     strength * (radius.y - h / 2) / norm))
 
+    row,col = small_red
+    planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
+
+    radius = Engine.Vec2(planet_pos.x - pos.x, planet_pos.y - pos.y)
+    norm = radius.x ** 2 + radius.y ** 2
+    norm = norm * scale_rad
+    strength = 7
+    obj.update_velocity( Engine.Vec2(strength * (radius.x - w / 2) / norm, 
+                                     strength * (radius.y - h / 2) / norm))
 def gravity(obj):
     obj.update_velocity(Engine.Vec2(0, 1))
 
 class Character(Engine.PlayerObject):
     def __init__(self, name):
-        super().__init__(name, 100, 100)
+        super().__init__(name, 40, 40)
         self.flipped = False
         self.last_anim = 0
         #super().__init__(name, 20, 20)
-        self.speed = 9
+        self.speed = 15
 
     def character_sprite_init(self):
         dest = Engine.Rect()
@@ -174,10 +211,10 @@ class Character(Engine.PlayerObject):
 
     def character_controls_init(self):
         self.control2 = Engine.ControllerComponent()
-        self.control2.add_input_binding("W", self.player_go_up, False)
-        self.control2.add_input_binding("S", self.player_go_down, False)
-        self.control2.add_input_binding("D", self.player_go_right, False)
-        self.control2.add_input_binding("A", self.player_go_left, False)
+        self.control2.add_input_binding("W", self.player_go_up, True)
+        self.control2.add_input_binding("S", self.player_go_down, True)
+        self.control2.add_input_binding("D", self.player_go_right, True)
+        self.control2.add_input_binding("A", self.player_go_left, True)
         self.control2.add_input_release_binding("W", self.player_release_key_up, False)
         self.control2.add_input_release_binding("S", self.player_release_key_down, False)
         self.control2.add_input_release_binding("D", self.player_release_key_right, False)
@@ -295,7 +332,7 @@ def initialize_game(reset):
     engine.add_tilemanager(tm)
     engine.add_ui_component(timerUI)
   #  engine.add_ui_component(testUI)
-    engine.set_timer(5000)
+    engine.set_timer(30000)
     engine.start()
     # if (reset is False):
     #     engine.start()
