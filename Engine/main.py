@@ -78,16 +78,16 @@ def go_left(obj):
 
 
 def radial_gravity(obj):
+    big_red = (18, 12)
+    ice = (33, 35)
+    brown = (13,34)
+    black_diamond =  (13, 34)
+    small_red = (27, 65)
 
-    ice = (23, 35)
-    black_diamond =  (33, 13)
-    small_red = (17, 65)
-
-    row = 8
-    col = 12
+    row, col = big_red
     w = obj.get_width()
     h = obj.get_height()
-    scale_rad = 0.15
+    scale_rad = 0.13
     pos = obj.get_transform_component().get_position()
     planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
 
@@ -97,8 +97,7 @@ def radial_gravity(obj):
     strength = 2
     obj.update_velocity( Engine.Vec2(strength * (radius.x - w / 2) / norm, 
                                      strength * (radius.y - h / 2) / norm))
-    row = 3
-    col = 34
+    row, col = brown
     planet_pos = Engine.Vec2(col * tile_width, row * tile_height)
     strength = 1
     radius = Engine.Vec2(planet_pos.x - pos.x, planet_pos.y - pos.y)
@@ -112,7 +111,7 @@ def radial_gravity(obj):
 
     radius = Engine.Vec2(planet_pos.x - pos.x, planet_pos.y - pos.y)
     norm = radius.x ** 2 + radius.y ** 2
-    strength = 6
+    strength = 5
     norm = norm * scale_rad
     obj.update_velocity( Engine.Vec2(strength * (radius.x - w / 2) / norm, 
                                      strength * (radius.y - h / 2) / norm))
@@ -133,7 +132,7 @@ def radial_gravity(obj):
     radius = Engine.Vec2(planet_pos.x - pos.x, planet_pos.y - pos.y)
     norm = radius.x ** 2 + radius.y ** 2
     norm = norm * scale_rad
-    strength = 5
+    strength = 4
     obj.update_velocity( Engine.Vec2(strength * (radius.x - w / 2) / norm, 
                                      strength * (radius.y - h / 2) / norm))
 def gravity(obj):

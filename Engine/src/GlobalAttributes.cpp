@@ -18,5 +18,5 @@ const std::unordered_map<Uint8, std::string> keymapinv({
 
 const Uint8* keystate = SDL_GetKeyboardState(NULL);
 
-int SCREEN_WIDTH = 640;
-int SCREEN_HEIGHT = 480;
+int SCREEN_WIDTH = 1000;
+int SCREEN_HEIGHT = 800;
