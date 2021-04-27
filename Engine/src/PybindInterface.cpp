@@ -64,7 +64,9 @@ PYBIND11_MODULE(Engine, m) {
 		.def_readwrite("h", &SDL_Rect::h);
 
 	py::class_<GameObject>(m, "GameObject")
-		.def(py::init<std::string, float, float>(), py::return_value_policy::reference)   // our constructor
+		.def(py::init<std::string, float, float>(), py::return_value_policy::reference)// our constructor
+        .def("get_sound_component", &GameObject::getSoundComponent)
+        .def("add_sound_component", &GameObject::addSoundComponent)
 		.def("get_transform_component", &GameObject::getTransformComponent, py::return_value_policy::reference) // Expose member methods
 		.def("add_transform_component", &GameObject::addTransformComponent)
 		.def("add_sprite_component", &GameObject::addSpriteComponent)
@@ -118,6 +120,13 @@ PYBIND11_MODULE(Engine, m) {
 		.def("perform_animation", &CharacterSpriteComponent::performAnimation)
 		.def("set_loop", &CharacterSpriteComponent::setLoop)
 		.def("update_frame", &CharacterSpriteComponent::updateFrame);
+    
+    py::class_<SoundComponent>(m, "SoundComponent")
+        .def(py::init<>(), py::return_value_policy::reference)
+        .def("add_background_music", &SoundComponent::addBackgroundMusic)
+        .def("add_sound_effect", &SoundComponent::addSoundEffect)
+        .def("play_sound_effect", &SoundComponent::playSoundEffect)
+        .def("play_background_music", &SoundComponent::playBackgroundMusic);
 
 
 	py::class_<ControllerComponent>(m, "ControllerComponent")

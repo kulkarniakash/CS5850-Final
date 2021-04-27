@@ -22,6 +22,10 @@ GameObject::~GameObject() {
     }
     delete m_transformComponent;
     m_transformComponent = nullptr;
+    
+    std::cout << "Attempting to delete sound Component! \n";
+    delete m_soundComponent;
+    m_soundComponent = nullptr;
 }
 
 TransformComponent* GameObject::getTransformComponent() {
@@ -35,6 +39,9 @@ CharacterSpriteComponent* GameObject::getCharacterSpriteComponent() {
     return m_characterSpriteComponent;
 }
 
+SoundComponent* GameObject::getSoundComponent() {
+    return m_soundComponent;
+}
 
 void GameObject::addTransformComponent(TransformComponent* transformComponent) {
     m_transformComponent = transformComponent;
@@ -50,6 +57,10 @@ void GameObject::addCharacterSpriteComponent(CharacterSpriteComponent* character
     m_characterSpriteComponent = characterSpriteComponent;
 	m_characterSpriteComponent->updatePosition(m_transformComponent->getPosition());
 	m_characterSpriteComponent->setDim(width, height);
+}
+
+void GameObject::addSoundComponent(SoundComponent * soundComponent) {
+    m_soundComponent = soundComponent;
 }
 
 void GameObject::render() {
