@@ -65,7 +65,7 @@ PYBIND11_MODULE(Engine, m) {
 
 	py::class_<GameObject>(m, "GameObject")
 		.def(py::init<std::string, float, float>(), py::return_value_policy::reference)// our constructor
-        .def("get_sound_component", &GameObject::getSoundComponent, py::return_value_policy::reference)
+        .def("get_sound_component", &GameObject::getSoundComponent)
         .def("add_sound_component", &GameObject::addSoundComponent)
 		.def("get_transform_component", &GameObject::getTransformComponent, py::return_value_policy::reference) // Expose member methods
 		.def("add_transform_component", &GameObject::addTransformComponent)

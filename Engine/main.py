@@ -279,27 +279,16 @@ def initialize_game(reset):
     character.character_controls_init()
     character.add_collision_callback(callback_sample)
     
-    # characterSound = Engine.SoundComponent()
-    # characterSound.add_sound_effect("./assets/explosion.wav")
-    # characterSound.add_sound_effect("./assets/youLose.wav")
-    # characterSound.add_sound_effect("./assets/youWin.wav")
-    # character.add_sound_component(characterSound)
     
+    explosion = Explosion("explosion")
     
-    musicObject = Sky("musicBackground")
-    backgroundMusic = Engine.SoundComponent()
-    backgroundMusic.add_background_music("./assets/bgmusic.wav")
-    musicObject.add_sound_component(backgroundMusic)
-    backgroundMusic.play_background_music("./assets/bgmusic.wav", 10)
-    
-    
+
     camera.bind_to_object(character)
 
-    explosion = Explosion("explosion")
-
     # engine.add_animate_object(biden)
-    #engine.add_game_object(sky)
+    # engine.add_game_object(sky)
     engine.add_player_object(character)
+    # engine.add_game_object(musicObject)
     engine.add_UF_callback(radial_gravity)
     engine.add_tilemanager(tm)
     engine.add_ui_component(timerUI)
@@ -310,6 +299,21 @@ def initialize_game(reset):
     #     engine.start()
 
 initialize_game(False)
+
+
+characterSound = Engine.SoundComponent()
+characterSound.add_sound_effect("./assets/explosion.wav")
+characterSound.add_sound_effect("./assets/youLose.wav")
+characterSound.add_sound_effect("./assets/youWin.wav")
+character.add_sound_component(characterSound)
+
+    
+    
+musicObject = Sky("musicBackground")
+backgroundMusic = Engine.SoundComponent()
+backgroundMusic.add_background_music("./assets/bgmusic.wav")
+musicObject.add_sound_component(backgroundMusic)
+musicObject.get_sound_component().play_background_music("./assets/bgmusic.wav", 10)
 
 count = 0
 while not engine.program_ended():
