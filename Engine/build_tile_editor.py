@@ -2,7 +2,7 @@ import os
 import platform
 
 # (1)==================== COMMON CONFIGURATION OPTIONS ======================= #
-COMPILER="clang++ -std=c++17"   # The compiler we want to use 
+COMPILER="g++ -std=c++17"   # The compiler we want to use 
                                 #(You may try g++ if you have trouble)
 SOURCE="./TileEditor/src/*.cpp"    # Where the source code lives
 EXECUTABLE="./bin/tile_editor"        # Name of the final executable
@@ -17,7 +17,7 @@ LIBRARIES=""            # What libraries do we want to include
 if platform.system()=="Linux":
     ARGUMENTS="-g -D LINUX" # -D is a #define sent to preprocessor
     INCLUDE_DIR="-I ./TileEditor/include/ -I ./../common/thirdparty/glm/"
-    LIBRARIES="-lSDL2 -ldl"
+    LIBRARIES="-lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer -ldl `python3.8-config --ldflags`"
 elif platform.system()=="Darwin":
     ARGUMENTS="-g -D MAC" # -D is a #define sent to the preprocessor.
     INCLUDE_DIR="-I ./TileEditor/include/ -I/Library/Frameworks/SDL2.framework/Headers -I./../common/thirdparty/old/glm"
