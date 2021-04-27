@@ -265,6 +265,8 @@ def callback_sample(obj):
         engine.stop_timer()
         engine.destroy_object("character")
         engine.add_ui_component(youLoseUI)
+        character.get_sound_component().play_sound_effect("./assets/explosion.wav", 20)
+        character.get_sound_component().play_sound_effect("./assets/youLose.wav", 60)
         #engine.reset()
         #initialize_game(True)
 
@@ -326,11 +328,6 @@ while not engine.program_ended():
         game_won = True
         engine.add_ui_component(youWinUI)
         character.get_sound_component().play_sound_effect("./assets/youWin.wav", 10)
-    if count == 100:
-        count += 1
-        character.get_sound_component().play_sound_effect("./assets/explosion.wav", 50)
-    elif count == 300:
-        character.get_sound_component().play_sound_effect("./assets/youLose.wav",20)
     engine.delay(20)
     count += 1
 engine.shutdown()
