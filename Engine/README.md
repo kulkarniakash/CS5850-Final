@@ -1,14 +1,29 @@
 ## Add any additional notes here
 
-*your additional notes, or things TA's and instructors should know*
+*Follow compilation instructions to build and run the game.*
+
+*To play the game, use the WASD keys to control the spaceship. The objective of the goal is to avoid crashing into planets and comets for the given time. You are trying to survive by waiting for your spaceship's barrier to recharge. You will be dragged and pulled towards the planet due to their gravitational fields. Try to balance out your movement with the pull to avoid collisions!*
 
 ## Game/Engine Publicity
 
-**Project Website**: *please edit the project website with a link here* (See part 3)
+**Project Website**: *https://rumanstheddy.github.io/CS4850-FinalProject-website/* (See part 3)
 
 ## Compilation Instructions
 
-*Please edit if there are any special build instructions beyond running `python3 build.py`*
+*For Windows:*
+- Check TileEditor README and follow instructions
+- sh mingw64build.sh
+- python3 main.py -m ./Engine.pyd
+
+*For Linux:*
+- Check TileEditor README and follow instructions
+- python3 linuxbuild.py
+- python3 main.py
+
+*For Mac:*
+- Check TileEditor README and follow instructions
+- python3 macbuild.py
+- python3 main.py
 
 ## Project Hieararchy
 
