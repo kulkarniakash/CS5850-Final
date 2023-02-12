@@ -12,7 +12,6 @@ std::unordered_map<int, std::string> TileEditor::tilePaths = std::unordered_map<
 TileEditor::TileEditor(Vec2 pos, int width, int height, int tileWidth, int tileHeight) : TileManager(pos, 
 	width, height, tileWidth, tileHeight) {
 
-	// hard coded for now, change later!!
 	int tileMenuColumns = 2;
 	int tileMenuRows = 8;
 
@@ -114,7 +113,6 @@ void TileEditor::loadLevelMap(std::string path) {
 			if (gData[i] == endline) {
 				c = 0;
 				r++;
-				// i++;
 			}
 			else {
 				c++;
